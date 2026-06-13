@@ -31,7 +31,7 @@
   [hidden]{display:none!important}
   body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
 
   .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:20}
   .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
@@ -100,14 +100,16 @@
     .dot{width:14px;height:14px;font-size:9px;border-radius:4px}
   }
 
-  /* PC master-detail: team list on the left, standings on the right */
-  .compview{display:grid;grid-template-columns:330px minmax(0,1fr);gap:26px;align-items:start}
-  .teams-col .cards{grid-template-columns:1fr;gap:10px}
-  @media(min-width:861px){
-    .detail{position:sticky;top:14px}
-    .teams-col{max-height:calc(100vh - 40px);overflow:auto;padding-right:2px}
-  }
+  /* PC master-detail: compact team table left, standings right */
+  .compview{display:grid;grid-template-columns:minmax(360px,440px) minmax(0,1fr);gap:24px;align-items:start}
   @media(max-width:860px){ .compview{grid-template-columns:1fr} }
+  .teams-table .team-row{cursor:pointer}
+  .teams-table .team-row:hover td{background:rgba(34,46,98,.04)}
+  .teams-table .team-row.sel td{background:var(--psc-navy-tint);font-weight:600}
+  .teams-table .team-row.sel td:first-child{box-shadow:inset 3px 0 0 var(--psc-navy)}
+  .teams-table .tname{font-weight:600;font-size:13.5px;line-height:1.25}
+  .teams-table .tsub{font-size:11px;color:var(--muted)}
+  .teams-table td{vertical-align:middle}
 
   .detail{margin-top:8px}
   .detail-card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);overflow:hidden}
@@ -198,7 +200,17 @@
   <div class="compview" id="compView">
   <section class="block teams-col" id="teamsBlock">
     <h2 class="sec">Our teams</h2>
-    <div class="cards" id="cards"></div>
+    <div class="detail-card">
+      <div class="tablewrap">
+        <table class="teams-table">
+          <thead><tr>
+            <th class="num">#</th><th>Team</th>
+            <th class="num">P</th><th class="num">W</th><th class="num">L</th><th>Form</th>
+          </tr></thead>
+          <tbody id="cards"></tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
   <section class="block detail" id="detail" hidden>
@@ -292,23 +304,20 @@ function setTab(pred){
 function renderCards(){
   const c = DATA.competitions[currentComp];
   $("#cards").innerHTML = c.teams.map((t,i)=>{
-    const st = statusFor(t);
-    const posBlock = t.of
-      ? `<div class="pos"><span class="pos-label">Position</span><br><b>${t.position}</b> / ${t.of}</div>`
-      : `<div class="pos" style="font-size:14px"><b style="font-size:16px">${t.division}</b></div>`;
-    const sub = t.of ? t.division : "Cup run";
-    return `<div class="card" data-i="${i}" role="button" tabindex="0" aria-selected="${i===0?'true':'false'}">
-      <p class="team">${t.name}</p>
-      ${sub ? `<p class="div">${sub}</p>` : `<p class="div" style="visibility:hidden">–</p>`}
-      <div class="posrow">${posBlock}<span class="badge ${st}">${statusLabel[st]}</span></div>
-      <div class="stats"><span>P <b>${t.played}</b></span><span>W <b>${t.won}</b></span><span>L <b>${t.lost}</b></span></div>
-      ${t.form&&t.form.length?`<div class="form">${t.form.map(f=>`<span class="dot ${f}">${f}</span>`).join("")}</div>`:""}
-    </div>`;
+    const sub = t.of ? t.division : "Cup";
+    const pos = t.of ? t.position : "–";
+    const form = (t.form||[]).slice(-5);
+    return `<tr class="team-row" data-i="${i}" role="button" tabindex="0" aria-label="${t.name}">
+      <td class="num"><span class="rankdot">${pos}</span></td>
+      <td><div class="tname">${t.name}</div>${sub?`<div class="tsub">${sub}</div>`:''}</td>
+      <td class="num">${t.played}</td><td class="num">${t.won}</td><td class="num">${t.lost}</td>
+      <td>${form.length?`<span class="sform">${form.map(f=>`<span class="d ${f}">${f}</span>`).join("")}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+    </tr>`;
   }).join("");
-  document.querySelectorAll(".card").forEach(card=>{
-    const pick = ()=>selectTeam(+card.dataset.i);
-    card.addEventListener("click",pick);
-    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+  document.querySelectorAll(".team-row").forEach(row=>{
+    const pick = ()=>selectTeam(+row.dataset.i);
+    row.addEventListener("click",pick);
+    row.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
   });
 }
 
@@ -363,7 +372,7 @@ function renderDetail(){
 
 function selectTeam(i){
   currentTeam = i;
-  document.querySelectorAll(".card").forEach(c=>c.setAttribute("aria-selected", +c.dataset.i===i ? "true":"false"));
+  document.querySelectorAll(".team-row").forEach(r=>r.classList.toggle("sel", +r.dataset.i===i));
   renderDetail();
 }
 function selectComp(i){
