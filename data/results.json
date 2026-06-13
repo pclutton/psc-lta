@@ -8,6 +8,7 @@
     {
       "id": "summer",
       "name": "Middlesex Summer League",
+      "status": "current",
       "teams": [
         {
           "name": "Men's 1st",
@@ -104,6 +105,7 @@
     {
       "id": "winter",
       "name": "Winter Floodlit League",
+      "status": "completed",
       "teams": [
         {
           "name": "Men's 1st",
@@ -147,6 +149,7 @@
     {
       "id": "cup",
       "name": "Cup competitions",
+      "status": "current",
       "teams": [
         {
           "name": "Middlesex Cup — Men",

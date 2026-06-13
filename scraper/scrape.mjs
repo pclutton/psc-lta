@@ -207,7 +207,7 @@ async function main() {
       throw new Error("No team links found on the club page — selectors need confirming (see scraper/debug/).");
     }
 
-    const buckets = new Map(cfg.competitionRules.map((r) => [r.id, { id: r.id, name: r.name, teams: [] }]));
+    const buckets = new Map(cfg.competitionRules.map((r) => [r.id, { id: r.id, name: r.name, status: r.status || "current", teams: [] }]));
     for (const link of links) {
       try {
         const draw = await scrapeDraw(page, link);

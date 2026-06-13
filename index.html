@@ -51,6 +51,11 @@
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
   .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
   .tab[aria-selected="true"]{background:var(--psc-navy);border-color:var(--psc-navy);color:#fff;font-weight:600}
+  .tfin{font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:#eef0f7;color:var(--muted);padding:1px 6px;border-radius:999px;margin-left:6px;vertical-align:1px}
+  .tab[aria-selected="true"] .tfin{background:rgba(255,255,255,.22);color:#fff}
+  .dt-status{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .dt-status.current{background:var(--psc-navy-tint);color:var(--psc-navy-dark)}
+  .dt-status.completed{background:#eef0f7;color:var(--muted)}
 
   section.block{margin:0 0 34px}
   h2.sec{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 0 14px;font-weight:700}
@@ -151,6 +156,7 @@
     <div class="detail-head">
       <span class="dt-team" id="dtTeam"></span>
       <span class="dt-div" id="dtDiv"></span>
+      <span class="dt-status" id="dtStatus" hidden></span>
       <a id="dtLink" href="#" target="_blank" rel="noopener">View on LTA ↗</a>
     </div>
 
@@ -198,15 +204,12 @@ function statusFor(t){
 function isPsc(name){ return /paddington/i.test(name); }
 
 function renderTabs(){
-  $("#tabs").innerHTML = DATA.competitions.map((c,i)=>
-    `<button class="tab" role="tab" data-i="${i}" aria-selected="${i===0?'true':'false'}">${c.name}</button>`
-  ).join("");
+  $("#tabs").innerHTML = DATA.competitions.map((c,i)=>{
+    const fin = c.status === "completed";
+    return `<button class="tab" role="tab" data-i="${i}" aria-selected="false">${c.name}${fin?' <span class="tfin">Finished</span>':''}</button>`;
+  }).join("");
   document.querySelectorAll(".tab").forEach(tab=>{
-    tab.addEventListener("click",()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));
-      tab.setAttribute("aria-selected","true");
-      selectComp(+tab.dataset.i);
-    });
+    tab.addEventListener("click",()=>selectComp(+tab.dataset.i));
   });
 }
 
@@ -233,10 +236,16 @@ function renderCards(){
 }
 
 function renderDetail(){
-  const t = DATA.competitions[currentComp].teams[currentTeam];
+  const comp = DATA.competitions[currentComp];
+  const t = comp.teams[currentTeam];
   $("#detail").hidden = false;
   $("#dtTeam").textContent = t.name;
   $("#dtDiv").textContent = t.of ? t.division : "Cup competition";
+  const status = $("#dtStatus");
+  const done = comp.status === "completed";
+  status.hidden = false;
+  status.className = "dt-status " + (done ? "completed" : "current");
+  status.textContent = done ? "Season finished" : "In progress";
   const link = $("#dtLink");
   if(t.leagueUrl){ link.href = t.leagueUrl; link.hidden = false; } else { link.hidden = true; }
 
@@ -267,7 +276,7 @@ function renderDetail(){
       <span class="mdate">${f.date}</span>
       <span class="mteams"><b>${f.home}</b> ${f.away?`<span class="vs">v</span> <b>${f.away}</b>`:""}${f.note?`<br><span class="vs">${f.note}</span>`:""}</span>
       <span class="score" style="color:var(--muted);font-weight:600">${f.time||""}</span>
-    </li>`).join("") : `<li class="empty">No upcoming fixtures</li>`;
+    </li>`).join("") : `<li class="empty">${done ? "Season complete — no further fixtures" : "No upcoming fixtures"}</li>`;
 }
 
 function selectTeam(i){
@@ -275,7 +284,12 @@ function selectTeam(i){
   document.querySelectorAll(".card").forEach(c=>c.setAttribute("aria-selected", +c.dataset.i===i ? "true":"false"));
   renderDetail();
 }
-function selectComp(i){ currentComp = i; renderCards(); selectTeam(0); }
+function selectComp(i){
+  currentComp = i;
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", +t.dataset.i===i ? "true":"false"));
+  renderCards();
+  selectTeam(0);
+}
 
 function boot(data){
   DATA = data;
@@ -284,7 +298,8 @@ function boot(data){
   if(data.sourceUrl){ $("#sourceLink").href = data.sourceUrl; }
   $("#sampleBanner").hidden = !data.sample;
   renderTabs();
-  selectComp(0);
+  const firstCurrent = data.competitions.findIndex(c=>c.status !== "completed");
+  selectComp(firstCurrent >= 0 ? firstCurrent : 0);
 }
 
 fetch("./data/results.json", {cache:"no-store"})

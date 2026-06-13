@@ -5,9 +5,9 @@
   "baseUrl": "https://competitions.lta.org.uk",
   "season": "Summer 2026",
   "competitionRules": [
-    { "id": "winter", "name": "Winter Floodlit League", "match": ["floodlit", "winter"] },
-    { "id": "cup", "name": "Cup competitions", "match": ["cup"] },
-    { "id": "summer", "name": "Middlesex Summer League", "match": ["summer", "league"] }
+    { "id": "winter", "name": "Winter Floodlit League", "match": ["floodlit", "winter"], "status": "completed" },
+    { "id": "cup", "name": "Cup competitions", "match": ["cup"], "status": "current" },
+    { "id": "summer", "name": "Middlesex Summer League", "match": ["summer", "league"], "status": "current" }
   ],
   "defaultCompetition": "summer"
 }
