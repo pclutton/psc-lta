@@ -51,6 +51,9 @@
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
   .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
   .tab[aria-selected="true"]{background:var(--psc-navy);border-color:var(--psc-navy);color:#fff;font-weight:600}
+  .tab--players{margin-left:auto;border-color:var(--psc-gold)}
+  .tab--players[aria-selected="false"]{color:var(--psc-navy-dark)}
+  @media(max-width:560px){.tab--players{margin-left:0}}
   .tfin{font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:#eef0f7;color:var(--muted);padding:1px 6px;border-radius:999px;margin-left:6px;vertical-align:1px}
   .tab[aria-selected="true"] .tfin{background:rgba(255,255,255,.22);color:#fff}
   .dt-status{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
@@ -158,7 +161,7 @@
 <main class="wrap">
   <div class="tabs" role="tablist" id="tabs"></div>
 
-  <section class="block">
+  <section class="block" id="teamsBlock">
     <h2 class="sec">Our teams</h2>
     <div class="cards" id="cards"></div>
   </section>
@@ -232,13 +235,21 @@ function statusFor(t){
 function isPsc(name){ return /paddington/i.test(name); }
 
 function renderTabs(){
-  $("#tabs").innerHTML = DATA.competitions.map((c,i)=>{
+  let html = DATA.competitions.map((c,i)=>{
     const fin = c.status === "completed";
-    return `<button class="tab" role="tab" data-i="${i}" aria-selected="false">${c.name}${fin?' <span class="tfin">Finished</span>':''}</button>`;
+    return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${fin?' <span class="tfin">Finished</span>':''}</button>`;
   }).join("");
+  if((DATA.players||[]).length){
+    html += `<button class="tab tab--players" role="tab" data-view="players" aria-selected="false">🏆 Players</button>`;
+  }
+  $("#tabs").innerHTML = html;
   document.querySelectorAll(".tab").forEach(tab=>{
-    tab.addEventListener("click",()=>selectComp(+tab.dataset.i));
+    tab.addEventListener("click",()=> tab.dataset.view === "players" ? selectPlayersView() : selectComp(+tab.dataset.i));
   });
+}
+
+function setTab(pred){
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", pred(t) ? "true" : "false"));
 }
 
 function renderCards(){
@@ -316,9 +327,18 @@ function selectTeam(i){
 }
 function selectComp(i){
   currentComp = i;
-  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", +t.dataset.i===i ? "true":"false"));
+  setTab(t => t.dataset.view === "comp" && +t.dataset.i === i);
+  $("#teamsBlock").hidden = false;
+  $("#playersBlock").hidden = true;
   renderCards();
   selectTeam(0);
+}
+
+function selectPlayersView(){
+  setTab(t => t.dataset.view === "players");
+  $("#teamsBlock").hidden = true;
+  $("#detail").hidden = true;
+  $("#playersBlock").hidden = false;
 }
 
 // Tidy LTA names (often all-lowercase) to consistent capitalisation. Handles word
@@ -333,9 +353,7 @@ function titleCaseName(s){
 
 function renderPlayers(){
   const players = (DATA.players || []);
-  const block = $("#playersBlock");
-  if(!players.length){ block.hidden = true; return; }
-  block.hidden = false;
+  if(!players.length) return; // no players → no tab, block stays hidden
   const medals = ["🥇","🥈","🥉"];
   $("#players").innerHTML = players.map((p,i)=>{
     const name = titleCaseName(p.name);
