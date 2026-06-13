@@ -1,0 +1,181 @@
+{
+  "clubName": "Paddington Sports Club",
+  "season": "Summer 2026",
+  "sourceUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24",
+  "generatedAt": "2026-06-13T07:00:00Z",
+  "sample": true,
+  "competitions": [
+    {
+      "id": "summer",
+      "name": "Middlesex Summer League",
+      "teams": [
+        {
+          "name": "Men's 1st",
+          "division": "Division 1",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24",
+          "position": 2, "of": 8, "played": 5, "won": 4, "lost": 1, "points": 21,
+          "form": ["W", "W", "L", "W", "W"],
+          "standings": [
+            {"rank": 1, "name": "Cumberland LTC", "played": 5, "won": 5, "lost": 0, "sets": "38–12", "points": 25},
+            {"rank": 2, "name": "Paddington Sports Club", "played": 5, "won": 4, "lost": 1, "sets": "33–17", "points": 21},
+            {"rank": 3, "name": "Hampstead LTC", "played": 5, "won": 3, "lost": 2, "sets": "28–22", "points": 17},
+            {"rank": 4, "name": "Highgate CC", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
+            {"rank": 5, "name": "Will to Win Regent's", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 13},
+            {"rank": 6, "name": "Ealing LTC", "played": 5, "won": 2, "lost": 3, "sets": "21–29", "points": 12},
+            {"rank": 7, "name": "Hadley Wood LTC", "played": 5, "won": 1, "lost": 4, "sets": "16–34", "points": 8},
+            {"rank": 8, "name": "Pims LTC", "played": 5, "won": 0, "lost": 5, "sets": "14–36", "points": 6}
+          ],
+          "results": [
+            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Ealing LTC", "homeScore": 5, "awayScore": 1},
+            {"date": "31 May", "home": "Hampstead LTC", "away": "Paddington Sports Club", "homeScore": 2, "awayScore": 4},
+            {"date": "24 May", "home": "Paddington Sports Club", "away": "Cumberland LTC", "homeScore": 2, "awayScore": 4},
+            {"date": "17 May", "home": "Highgate CC", "away": "Paddington Sports Club", "homeScore": 1, "awayScore": 5}
+          ],
+          "fixtures": [
+            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Hadley Wood LTC", "time": "14:00"},
+            {"date": "21 Jun", "home": "Pims LTC", "away": "Paddington Sports Club", "time": "10:00"},
+            {"date": "28 Jun", "home": "Paddington Sports Club", "away": "Will to Win Regent's", "time": "14:00"}
+          ]
+        },
+        {
+          "name": "Men's 2nd",
+          "division": "Division 4",
+          "position": 1, "of": 8, "played": 5, "won": 5, "lost": 0, "points": 25,
+          "form": ["W", "W", "W", "W", "W"],
+          "standings": [
+            {"rank": 1, "name": "Paddington Sports Club", "played": 5, "won": 5, "lost": 0, "sets": "36–14", "points": 25},
+            {"rank": 2, "name": "Brondesbury CC", "played": 5, "won": 4, "lost": 1, "sets": "31–19", "points": 20},
+            {"rank": 3, "name": "Northwood LTC", "played": 5, "won": 3, "lost": 2, "sets": "26–24", "points": 16},
+            {"rank": 4, "name": "Winchmore Hill LTC", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 12},
+            {"rank": 5, "name": "Teddington LTC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8},
+            {"rank": 6, "name": "Pinner LTC", "played": 5, "won": 0, "lost": 5, "sets": "16–34", "points": 6}
+          ],
+          "results": [
+            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Winchmore Hill LTC", "homeScore": 6, "awayScore": 0},
+            {"date": "31 May", "home": "Northwood LTC", "away": "Paddington Sports Club", "homeScore": 2, "awayScore": 4}
+          ],
+          "fixtures": [
+            {"date": "14 Jun", "home": "Teddington LTC", "away": "Paddington Sports Club", "time": "14:00"}
+          ]
+        },
+        {
+          "name": "Ladies' 1st",
+          "division": "Division 1",
+          "position": 3, "of": 8, "played": 5, "won": 3, "lost": 2, "points": 17,
+          "form": ["W", "L", "W", "W", "L"],
+          "standings": [
+            {"rank": 1, "name": "Cumberland LTC", "played": 5, "won": 5, "lost": 0, "sets": "37–13", "points": 24},
+            {"rank": 2, "name": "Chiswick LTC", "played": 5, "won": 4, "lost": 1, "sets": "30–20", "points": 20},
+            {"rank": 3, "name": "Paddington Sports Club", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 17},
+            {"rank": 4, "name": "Hampstead LTC", "played": 5, "won": 2, "lost": 3, "sets": "24–26", "points": 13},
+            {"rank": 5, "name": "Ealing LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 9},
+            {"rank": 6, "name": "Highgate CC", "played": 5, "won": 0, "lost": 5, "sets": "13–37", "points": 5}
+          ],
+          "results": [
+            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Hampstead LTC", "homeScore": 4, "awayScore": 2},
+            {"date": "31 May", "home": "Chiswick LTC", "away": "Paddington Sports Club", "homeScore": 4, "awayScore": 2}
+          ],
+          "fixtures": [
+            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Ealing LTC", "time": "11:00"}
+          ]
+        },
+        {
+          "name": "Ladies' 2nd",
+          "division": "Division 3",
+          "position": 2, "of": 8, "played": 5, "won": 4, "lost": 1, "points": 21,
+          "form": ["W", "W", "W", "L", "W"],
+          "standings": [
+            {"rank": 1, "name": "Will to Win Regent's", "played": 5, "won": 5, "lost": 0, "sets": "35–15", "points": 24},
+            {"rank": 2, "name": "Paddington Sports Club", "played": 5, "won": 4, "lost": 1, "sets": "32–18", "points": 21},
+            {"rank": 3, "name": "Finchley Manor LTC", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
+            {"rank": 4, "name": "Campden Hill LTC", "played": 5, "won": 2, "lost": 3, "sets": "22–28", "points": 12},
+            {"rank": 5, "name": "Brondesbury CC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8},
+            {"rank": 6, "name": "Bishop's Park LTC", "played": 5, "won": 0, "lost": 5, "sets": "16–34", "points": 6}
+          ],
+          "results": [
+            {"date": "7 Jun", "home": "Campden Hill LTC", "away": "Paddington Sports Club", "homeScore": 1, "awayScore": 5}
+          ],
+          "fixtures": [
+            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Brondesbury CC", "time": "11:00"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "winter",
+      "name": "Winter Floodlit League",
+      "teams": [
+        {
+          "name": "Men's 1st",
+          "division": "Floodlit Division 2",
+          "position": 3, "of": 6, "played": 5, "won": 3, "lost": 2, "points": 16,
+          "form": ["W", "L", "W", "W", "L"],
+          "standings": [
+            {"rank": 1, "name": "Chiswick LTC", "played": 5, "won": 4, "lost": 1, "sets": "31–19", "points": 20},
+            {"rank": 2, "name": "Campden Hill LTC", "played": 5, "won": 4, "lost": 1, "sets": "30–20", "points": 19},
+            {"rank": 3, "name": "Paddington Sports Club", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
+            {"rank": 4, "name": "Brondesbury CC", "played": 5, "won": 2, "lost": 3, "sets": "24–26", "points": 13},
+            {"rank": 5, "name": "Finchley Manor LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 9},
+            {"rank": 6, "name": "Bishop's Park LTC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8}
+          ],
+          "results": [
+            {"date": "15 Mar", "home": "Paddington Sports Club", "away": "Brondesbury CC", "homeScore": 4, "awayScore": 2},
+            {"date": "1 Mar", "home": "Campden Hill LTC", "away": "Paddington Sports Club", "homeScore": 4, "awayScore": 2}
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Ladies' 2nd",
+          "division": "Floodlit Division 3",
+          "position": 1, "of": 6, "played": 5, "won": 5, "lost": 0, "points": 25,
+          "form": ["W", "W", "W", "W", "W"],
+          "standings": [
+            {"rank": 1, "name": "Paddington Sports Club", "played": 5, "won": 5, "lost": 0, "sets": "34–16", "points": 25},
+            {"rank": 2, "name": "Hampstead LTC", "played": 5, "won": 3, "lost": 2, "sets": "28–22", "points": 17},
+            {"rank": 3, "name": "Ealing LTC", "played": 5, "won": 3, "lost": 2, "sets": "26–24", "points": 16},
+            {"rank": 4, "name": "Highgate CC", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 12},
+            {"rank": 5, "name": "Pinner LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 8},
+            {"rank": 6, "name": "Teddington LTC", "played": 5, "won": 1, "lost": 4, "sets": "20–30", "points": 7}
+          ],
+          "results": [
+            {"date": "15 Mar", "home": "Paddington Sports Club", "away": "Highgate CC", "homeScore": 5, "awayScore": 1}
+          ],
+          "fixtures": []
+        }
+      ]
+    },
+    {
+      "id": "cup",
+      "name": "Cup competitions",
+      "teams": [
+        {
+          "name": "Middlesex Cup — Men",
+          "division": "Quarter-final",
+          "position": 0, "of": 0, "played": 2, "won": 2, "lost": 0,
+          "form": ["W", "W"],
+          "standings": [],
+          "results": [
+            {"date": "22 May", "home": "Northwood LTC", "away": "Paddington Sports Club", "homeScore": 3, "awayScore": 6, "note": "Round 1"}
+          ],
+          "fixtures": [
+            {"date": "19 Jun", "home": "Paddington Sports Club", "away": "Winchmore Hill LTC", "time": "18:30", "note": "Quarter-final"}
+          ]
+        },
+        {
+          "name": "Mixed Middlesex Cup",
+          "division": "Semi-final",
+          "position": 0, "of": 0, "played": 3, "won": 3, "lost": 0,
+          "form": ["W", "W", "W"],
+          "standings": [],
+          "results": [
+            {"date": "5 Jun", "home": "Paddington Sports Club", "away": "Cumberland LTC", "homeScore": 5, "awayScore": 4, "note": "Round 2"},
+            {"date": "8 May", "home": "Paddington Sports Club", "away": "Hampstead LTC", "homeScore": 6, "awayScore": 3, "note": "Round 1"}
+          ],
+          "fixtures": [
+            {"date": "3 Jul", "home": "TBC", "away": "Paddington Sports Club", "time": "TBC", "note": "Semi-final"}
+          ]
+        }
+      ]
+    }
+  ]
+}

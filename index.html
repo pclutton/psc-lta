@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Team Results &amp; Standings — Paddington Sports Club Tennis</title>
+<meta name="description" content="Live Middlesex League and Cup results for Paddington Sports Club tennis teams." />
+<style>
+  :root{
+    /* ---- Brand tokens: tweak to match psclondon.com exactly ---- */
+    --psc-green:#0c6b3f;
+    --psc-green-dark:#08502f;
+    --psc-green-tint:#e7f2ec;
+    --ink:#1c2b24;
+    --muted:#5d6b63;
+    --line:#e3e8e4;
+    --bg:#ffffff;
+    --surface:#f7f9f7;
+    --win:#0c6b3f;
+    --loss:#b23b3b;
+    --draw:#b8860b;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(0,0,0,.04);
+    --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:20}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;color:var(--psc-green);text-decoration:none}
+  .logo .mark{width:34px;height:34px;border-radius:50%;background:var(--psc-green);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+  nav.main{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+  nav.main a{text-decoration:none}
+  nav.main a.active{color:var(--psc-green);font-weight:600}
+  @media(max-width:740px){nav.main{display:none}}
+
+  .hero{background:var(--psc-green);color:#fff;padding:40px 0 34px}
+  .hero h1{margin:0 0 6px;font-size:30px;line-height:1.15}
+  .hero p{margin:0;opacity:.92;font-size:15px;max-width:640px}
+  .hero .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 12px;font-size:13px;align-items:center}
+  .hero .meta a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+  .pill-light{background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px}
+
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
+  .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
+  .tab[aria-selected="true"]{background:var(--psc-green);border-color:var(--psc-green);color:#fff;font-weight:600}
+
+  section.block{margin:0 0 34px}
+  h2.sec{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 0 14px;font-weight:700}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .card{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:#fff;box-shadow:var(--shadow);cursor:pointer;transition:border-color .15s,box-shadow .15s}
+  .card:hover{border-color:var(--psc-green)}
+  .card[aria-selected="true"]{border-color:var(--psc-green);box-shadow:0 0 0 2px var(--psc-green-tint)}
+  .card .team{font-weight:700;font-size:16px;margin:0}
+  .card .div{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+  .posrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .pos{font-size:13px;color:var(--muted)}
+  .pos b{font-size:22px;color:var(--ink)}
+  .badge{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .badge.promo{background:var(--psc-green-tint);color:var(--psc-green-dark)}
+  .badge.mid{background:#eef1ee;color:var(--muted)}
+  .badge.releg{background:#fbe9e9;color:var(--loss)}
+  .stats{display:flex;gap:14px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:11px}
+  .stats b{color:var(--ink)}
+  .form{display:flex;gap:4px;margin-top:11px}
+  .dot{width:18px;height:18px;border-radius:5px;font-size:11px;font-weight:700;color:#fff;display:grid;place-items:center}
+  .dot.W{background:var(--win)} .dot.L{background:var(--loss)} .dot.D{background:var(--draw)}
+
+  .detail{margin-top:8px}
+  .detail-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .detail-head .dt-team{font-size:18px;font-weight:700}
+  .detail-head .dt-div{font-size:13px;color:var(--muted)}
+  .detail-head a{font-size:12.5px;color:var(--psc-green);margin-left:auto}
+
+  .tablewrap{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:24px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  thead th{background:var(--surface);text-align:left;padding:11px 12px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+  tbody td{padding:11px 12px;border-top:1px solid var(--line)}
+  th.num,td.num{text-align:center;width:46px}
+  tr.psc td{background:var(--psc-green-tint);font-weight:600}
+  .rankdot{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:#eef1ee;font-size:12px;font-weight:700;color:var(--muted)}
+  tr.psc .rankdot{background:var(--psc-green);color:#fff}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.twocol{grid-template-columns:1fr}}
+  .matchlist{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .matchlist li{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line);font-size:13.5px}
+  .matchlist li:first-child{border-top:none}
+  .matchlist .empty{color:var(--muted);justify-content:center}
+  .mdate{font-size:11.5px;color:var(--muted);width:62px;flex:none}
+  .mteams{flex:1;min-width:0}
+  .mteams .vs{color:var(--muted);font-size:12px}
+  .mteams b{font-weight:600}
+  .score{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px;flex:none}
+  .score.w{color:var(--win)} .score.l{color:var(--loss)}
+  .res-tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;flex:none}
+  .res-tag.W{background:var(--psc-green-tint);color:var(--psc-green-dark)}
+  .res-tag.L{background:#fbe9e9;color:var(--loss)}
+
+  footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
+  footer .wrap{padding:26px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+  .src-note{font-size:12px;color:var(--muted);margin:6px 0 0}
+  .src-note a{color:var(--psc-green)}
+  .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="https://www.psclondon.com/"><span class="mark">PSC</span> Paddington Sports Club</a>
+    <nav class="main">
+      <a href="https://www.psclondon.com/membership">Membership</a>
+      <a href="https://www.psclondon.com/tennis" class="active">Tennis</a>
+      <a href="https://www.psclondon.com/squash">Squash</a>
+      <a href="https://www.psclondon.com/bowls">Bowls</a>
+      <a href="https://www.psclondon.com/fitness">Fitness</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Team results &amp; standings</h1>
+    <p>Follow how our Middlesex League and Cup teams are performing this season — every team, position, result and fixture in one place, pulled together from the LTA competition system.</p>
+    <div class="meta">
+      <span class="pill-light" id="seasonLabel">Loading…</span>
+      <span class="pill-light">Updated <strong id="updated">—</strong></span>
+      <span>Source: <a id="sourceLink" href="https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24" target="_blank" rel="noopener">LTA Middlesex League ↗</a></span>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <section class="block">
+    <h2 class="sec">Our teams</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="block detail" id="detail" hidden>
+    <div class="detail-head">
+      <span class="dt-team" id="dtTeam"></span>
+      <span class="dt-div" id="dtDiv"></span>
+      <a id="dtLink" href="#" target="_blank" rel="noopener">View on LTA ↗</a>
+    </div>
+
+    <div id="standingsWrap" class="tablewrap">
+      <table>
+        <thead><tr>
+          <th class="num">#</th><th>Team</th>
+          <th class="num">P</th><th class="num">W</th><th class="num">L</th>
+          <th class="num">Sets</th><th class="num">Pts</th>
+        </tr></thead>
+        <tbody id="standings"></tbody>
+      </table>
+    </div>
+
+    <div class="twocol">
+      <div><h2 class="sec">Recent results</h2><ul class="matchlist" id="results"></ul></div>
+      <div><h2 class="sec">Upcoming fixtures</h2><ul class="matchlist" id="fixtures"></ul></div>
+    </div>
+  </section>
+
+  <p class="src-note">Results are read automatically from the
+    <a href="https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24" target="_blank" rel="noopener">LTA Middlesex League site</a>.
+    A scheduled job refreshes this page daily.</p>
+  <div class="banner" id="sampleBanner" hidden>Showing sample data — the live LTA feed has not been connected yet. See the project README to switch it on.</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Paddington Sports Club · Castellain Road, Maida Vale, London W9 1HQ</div>
+    <div>Instagram · TikTok · Twitter · Facebook</div>
+  </div>
+</footer>
+
+<script>
+const statusLabel = {promo:"Top half", mid:"Mid-table", releg:"Bottom"};
+const $ = s => document.querySelector(s);
+let DATA, currentComp, currentTeam;
+
+function statusFor(t){
+  if(!t.of) return "promo";
+  if(t.position <= Math.ceil(t.of/3)) return "promo";
+  if(t.position > t.of - Math.ceil(t.of/4)) return "releg";
+  return "mid";
+}
+function isPsc(name){ return /paddington/i.test(name); }
+
+function renderTabs(){
+  $("#tabs").innerHTML = DATA.competitions.map((c,i)=>
+    `<button class="tab" role="tab" data-i="${i}" aria-selected="${i===0?'true':'false'}">${c.name}</button>`
+  ).join("");
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));
+      tab.setAttribute("aria-selected","true");
+      selectComp(+tab.dataset.i);
+    });
+  });
+}
+
+function renderCards(){
+  const c = DATA.competitions[currentComp];
+  $("#cards").innerHTML = c.teams.map((t,i)=>{
+    const st = statusFor(t);
+    const posBlock = t.of
+      ? `<div class="pos">Position<br><b>${t.position}</b> / ${t.of}</div>`
+      : `<div class="pos" style="font-size:14px"><b style="font-size:16px">${t.division}</b></div>`;
+    return `<div class="card" data-i="${i}" role="button" tabindex="0" aria-selected="${i===0?'true':'false'}">
+      <p class="team">${t.name}</p>
+      <p class="div">${t.of ? t.division : "Cup run"}</p>
+      <div class="posrow">${posBlock}<span class="badge ${st}">${statusLabel[st]}</span></div>
+      <div class="stats"><span>P <b>${t.played}</b></span><span>W <b>${t.won}</b></span><span>L <b>${t.lost}</b></span></div>
+      ${t.form&&t.form.length?`<div class="form">${t.form.map(f=>`<span class="dot ${f}">${f}</span>`).join("")}</div>`:""}
+    </div>`;
+  }).join("");
+  document.querySelectorAll(".card").forEach(card=>{
+    const pick = ()=>selectTeam(+card.dataset.i);
+    card.addEventListener("click",pick);
+    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+  });
+}
+
+function renderDetail(){
+  const t = DATA.competitions[currentComp].teams[currentTeam];
+  $("#detail").hidden = false;
+  $("#dtTeam").textContent = t.name;
+  $("#dtDiv").textContent = t.of ? t.division : "Cup competition";
+  const link = $("#dtLink");
+  if(t.leagueUrl){ link.href = t.leagueUrl; link.hidden = false; } else { link.hidden = true; }
+
+  const sw = $("#standingsWrap");
+  if(t.standings && t.standings.length){
+    sw.style.display = "";
+    $("#standings").innerHTML = t.standings.map(r=>`
+      <tr class="${isPsc(r.name)?'psc':''}">
+        <td class="num"><span class="rankdot">${r.rank}</span></td>
+        <td>${r.name}</td>
+        <td class="num">${r.played}</td><td class="num">${r.won}</td><td class="num">${r.lost}</td>
+        <td class="num">${r.sets||'—'}</td><td class="num">${r.points}</td>
+      </tr>`).join("");
+  } else { sw.style.display = "none"; }
+
+  $("#results").innerHTML = (t.results&&t.results.length) ? t.results.map(m=>{
+    const win = isPsc(m.home) ? m.homeScore>m.awayScore : m.awayScore>m.homeScore;
+    return `<li>
+      <span class="mdate">${m.date}</span>
+      <span class="mteams"><b>${m.home}</b> <span class="vs">v</span> <b>${m.away}</b>${m.note?`<br><span class="vs">${m.note}</span>`:""}</span>
+      <span class="score ${win?'w':'l'}">${m.homeScore}–${m.awayScore}</span>
+      <span class="res-tag ${win?'W':'L'}">${win?'W':'L'}</span>
+    </li>`;
+  }).join("") : `<li class="empty">No results yet</li>`;
+
+  $("#fixtures").innerHTML = (t.fixtures&&t.fixtures.length) ? t.fixtures.map(f=>`
+    <li>
+      <span class="mdate">${f.date}</span>
+      <span class="mteams"><b>${f.home}</b> ${f.away?`<span class="vs">v</span> <b>${f.away}</b>`:""}${f.note?`<br><span class="vs">${f.note}</span>`:""}</span>
+      <span class="score" style="color:var(--muted);font-weight:600">${f.time||""}</span>
+    </li>`).join("") : `<li class="empty">No upcoming fixtures</li>`;
+}
+
+function selectTeam(i){
+  currentTeam = i;
+  document.querySelectorAll(".card").forEach(c=>c.setAttribute("aria-selected", +c.dataset.i===i ? "true":"false"));
+  renderDetail();
+}
+function selectComp(i){ currentComp = i; renderCards(); selectTeam(0); }
+
+function boot(data){
+  DATA = data;
+  $("#seasonLabel").textContent = data.season || "Current season";
+  $("#updated").textContent = data.generatedAt ? new Date(data.generatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "—";
+  if(data.sourceUrl){ $("#sourceLink").href = data.sourceUrl; }
+  $("#sampleBanner").hidden = !data.sample;
+  renderTabs();
+  selectComp(0);
+}
+
+fetch("./data/results.json", {cache:"no-store"})
+  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(boot)
+  .catch(err=>{
+    document.querySelector("main").insertAdjacentHTML("afterbegin",
+      `<div class="banner" style="background:#fbe9e9;border-color:#e3b0b0;color:#8a2b2b">Could not load results data (${err}). Check that <code>data/results.json</code> exists.</div>`);
+  });
+</script>
+</body>
+</html>

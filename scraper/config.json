@@ -1,0 +1,13 @@
+{
+  "clubName": "Paddington Sports Club",
+  "leagueId": "02BEA8E0-F625-4D3F-91F3-458209D3FE47",
+  "clubId": "24",
+  "baseUrl": "https://competitions.lta.org.uk",
+  "season": "Summer 2026",
+  "competitionRules": [
+    { "id": "winter", "name": "Winter Floodlit League", "match": ["floodlit", "winter"] },
+    { "id": "cup", "name": "Cup competitions", "match": ["cup"] },
+    { "id": "summer", "name": "Middlesex Summer League", "match": ["summer", "league"] }
+  ],
+  "defaultCompetition": "summer"
+}

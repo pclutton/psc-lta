@@ -1,0 +1,64 @@
+name: Update results & deploy
+
+# Refreshes data/results.json from the LTA site, then publishes the site to
+# GitHub Pages. Runs nightly, on every push to main, and on manual request.
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC daily
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write   # commit the refreshed results.json
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install scraper deps
+        working-directory: scraper
+        run: npm install
+
+      - name: Scrape LTA results (fail-safe — keeps last good data on error)
+        working-directory: scraper
+        run: npm run scrape || echo "Scrape failed; keeping existing data/results.json"
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "psc-results-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if ! git diff --quiet -- data/results.json; then
+            git add data/results.json
+            git commit -m "chore: refresh LTA results [skip ci]"
+            git push
+          else
+            echo "No data changes."
+          fi
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: scrape
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
