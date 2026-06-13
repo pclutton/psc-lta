@@ -269,6 +269,15 @@ function parseLabel(raw) {
   return { name, division };
 }
 
+// Group teams by gender: men's first, then women's, then anything else. Check
+// "women" before "men" since "women"/"womens" contains "men".
+function genderOrder(name) {
+  const n = (name || "").toLowerCase();
+  if (/wom|girl|ladies/.test(n)) return 1;
+  if (/men|boy|gent/.test(n)) return 0;
+  return 2;
+}
+
 // Rank a division highest→lowest: Premier, Intermediate, then Division 1..N.
 // The geographic prefix (West / North West / …) is cosmetic and ignored here.
 function divisionRank(division) {
@@ -406,11 +415,13 @@ async function main() {
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {
-        // Highest division first; geographic prefix is only a tiebreak.
+        // Men's teams together then women's; within each, highest division first
+        // (geographic prefix is only a tiebreak).
         teams.sort((a, b) =>
+          genderOrder(a.name) - genderOrder(b.name) ||
           divisionRank(a.division || a.name) - divisionRank(b.division || b.name) ||
-          a.name.localeCompare(b.name) ||
-          a.division.localeCompare(b.division));
+          a.division.localeCompare(b.division) ||
+          a.name.localeCompare(b.name));
         competitions.push({
           id: src.leagueId.slice(0, 8).toLowerCase(),
           name: src.leagueName,
