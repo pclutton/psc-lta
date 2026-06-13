@@ -69,6 +69,24 @@ async function acceptCookies(page) {
   return false;
 }
 
+// Optional login. Only runs when LTA_USERNAME + LTA_PASSWORD are set (e.g. via
+// GitHub Secrets). Public results pages do NOT need this — it's a fallback only.
+// CONFIRM: login form selectors against the live page if you ever enable it.
+async function maybeLogin(page) {
+  const user = process.env.LTA_USERNAME, pass = process.env.LTA_PASSWORD;
+  if (!user || !pass) { log("no credentials set — scraping anonymously (expected)"); return; }
+  try {
+    log("LTA_USERNAME set — attempting login");
+    await page.goto(`${cfg.baseUrl}/login`, { waitUntil: "networkidle", timeout: 60000 });
+    await acceptCookies(page);
+    await page.fill('input[type="email"], input[name*="user" i], #username', user);
+    await page.fill('input[type="password"], #password', pass);
+    await page.click('button[type="submit"], button:has-text("Log in"), button:has-text("Sign in")');
+    await page.waitForLoadState("networkidle", { timeout: 30000 });
+    log("login submitted");
+  } catch (e) { log("login attempt failed (continuing anonymously):", e.message); }
+}
+
 // Collect links from the club page to each team's division/draw page.
 async function findTeamLinks(page) {
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
@@ -182,6 +200,7 @@ async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; PSC-results-bot/1.0)" });
   try {
+    await maybeLogin(page);
     const links = await findTeamLinks(page);
     if (!links.length) {
       await dumpDebug(page, "club-no-links");

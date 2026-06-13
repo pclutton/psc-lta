@@ -4,7 +4,7 @@ A simple, branded web page that shows **Paddington Sports Club's** Middlesex Lea
 and Cup tennis results in one place, so members don't have to navigate the LTA
 competition site. Built as a working prototype / proposal for the club.
 
-**Live demo:** https://YOUR-USERNAME.github.io/psc-tennis/
+**Live demo:** https://pclutton.github.io/psc-tennis/
 
 ![A green-and-white results page with team cards and a league standings table]
 
@@ -62,6 +62,25 @@ selectors in `scrape.mjs` (search for the `CONFIRM` comments). Once a local run
 produces a correct `data/results.json`, the nightly Action will do the same.
 
 Until then, the page runs happily on the sample data in `data/results.json`.
+
+### Login: not normally needed
+
+The LTA league/club/standings pages are **public** — the scraper reads them without
+an account, which is how it's configured. Logging in is only for *admin* actions
+(entering scores), not for viewing results.
+
+If a specific page ever turns out to require sign-in, the scraper supports an
+**optional** login via two environment variables — never hard-code them:
+
+```bash
+# local one-off test only:
+LTA_USERNAME="you" LTA_PASSWORD="…" npm run scrape
+```
+
+For the GitHub Action, add them as encrypted **repository secrets**
+(`Settings → Secrets and variables → Actions`) named `LTA_USERNAME` / `LTA_PASSWORD`.
+The workflow passes them through automatically; if they're absent, the scraper just
+runs anonymously. **Do not commit credentials to the repo.**
 
 ## Make it yours / hand it to the club
 
