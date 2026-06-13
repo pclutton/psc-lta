@@ -126,42 +126,49 @@ async function scrapeDraw(page, link) {
     const txt = (el) => (el ? el.textContent.replace(/\s+/g, " ").trim() : "");
     const num = (s) => { const m = String(s).match(/-?\d+/); return m ? +m[0] : null; };
 
-    // --- standings: the table whose header mentions team + played + points ---
+    // The LTA draw page has one table: a league standings table whose columns are
+    //   Team | Pl | W | D | L | Pts | R(ubbers) | S | S | Gm | Gm | History | 1..n
+    // We map by header text and ignore the trailing results-matrix columns.
     let standings = [];
-    let division = txt(document.querySelector("h1, h2, .title, .draw-title")) || "";
     for (const table of document.querySelectorAll("table")) {
-      const head = txt(table.querySelector("thead, tr")).toLowerCase();
-      const looksLikeStandings = /team|club/.test(head) && /(point|pts)/.test(head);
+      const headEls = [...table.querySelectorAll("thead th, tr:first-child th")];
+      const headers = headEls.map((th) => txt(th).toLowerCase());
+      const looksLikeStandings = headers.includes("pl") && (headers.includes("pts") || headers.includes("points"));
       if (!looksLikeStandings) continue;
-      const rows = [...table.querySelectorAll("tbody tr, tr")].filter((r) => r.querySelectorAll("td").length >= 3);
-      standings = rows.map((r, i) => {
+
+      const col = (label) => headers.indexOf(label);
+      const ix = {
+        team: headers.indexOf("team") >= 0 ? headers.indexOf("team") : 0,
+        pl: col("pl"), w: col("w"), d: col("d"), l: col("l"),
+        pts: col("pts") >= 0 ? col("pts") : col("points"),
+        r: col("r"), hist: col("history"),
+      };
+
+      const rows = [...table.querySelectorAll("tbody tr")].filter((r) => r.querySelectorAll("td").length >= 4);
+      let rank = 0;
+      standings = rows.map((r) => {
         const cells = [...r.querySelectorAll("td")].map(txt);
-        const nameCell = cells.find((c) => /[a-z]{3,}/i.test(c)) || cells[1] || "";
-        const nums = cells.map(num).filter((n) => n !== null);
+        const name = cells[ix.team] || "";
+        const form = ix.hist >= 0
+          ? (cells[ix.hist].match(/[WLD]/gi) || []).map((x) => x.toUpperCase())
+          : [];
+        rank += 1;
         return {
-          rank: num(cells[0]) || i + 1,
-          name: nameCell,
-          played: nums[0] ?? null,
-          won: nums[1] ?? null,
-          lost: nums[2] ?? null,
-          sets: cells.find((c) => /\d+\s*[-–]\s*\d+/.test(c)) || "",
-          points: nums[nums.length - 1] ?? null,
+          rank,
+          name,
+          played: num(cells[ix.pl]),
+          won: num(cells[ix.w]),
+          drawn: ix.d >= 0 ? num(cells[ix.d]) : 0,
+          lost: num(cells[ix.l]),
+          rubbers: ix.r >= 0 ? cells[ix.r] : "",
+          points: num(cells[ix.pts]),
+          form,
         };
-      });
+      }).filter((row) => /[a-z]{3,}/i.test(row.name));
       if (standings.length) break;
     }
 
-    // --- matches: rows/blocks with "Team  s - s  Team" ---
-    const matches = [];
-    const scoreRe = /(.+?)\s+(\d+)\s*[-–]\s*(\d+)\s+(.+)/;
-    for (const row of document.querySelectorAll("tr, li, .match, .match-row")) {
-      const t = txt(row);
-      const m = t.match(scoreRe);
-      if (m && /[a-z]{3,}/i.test(m[1]) && /[a-z]{3,}/i.test(m[4]) && t.length < 120) {
-        matches.push({ home: m[1].trim(), homeScore: +m[2], awayScore: +m[3], away: m[4].trim() });
-      }
-    }
-    return { division, standings, matches };
+    return { standings };
   });
 
   data.url = link.href;
@@ -198,7 +205,6 @@ function parseLabel(raw) {
 function buildTeam(draw) {
   const standings = (draw.standings || []).filter((r) => r.name);
   const me = standings.find((r) => isPsc(r.name));
-  const myResults = (draw.matches || []).filter((m) => isPsc(m.home) || isPsc(m.away));
   const { name, division } = parseLabel(draw.teamLabel || draw.division);
   return {
     name,
@@ -206,16 +212,16 @@ function buildTeam(draw) {
     leagueUrl: draw.url,
     position: me ? me.rank : 0,
     of: standings.length,
-    played: me?.played ?? myResults.length,
+    played: me?.played ?? 0,
     won: me?.won ?? 0,
     lost: me?.lost ?? 0,
     points: me?.points ?? 0,
-    form: myResults.slice(-5).map((m) => {
-      const win = isPsc(m.home) ? m.homeScore > m.awayScore : m.awayScore > m.homeScore;
-      return win ? "W" : "L";
-    }),
+    form: (me?.form || []).slice(-5),
     standings,
-    results: myResults.slice(0, 6),
+    // The draw page carries the league table only; per-match results/fixtures with
+    // dates aren't listed here, so these stay empty (a possible later enhancement
+    // via each team's /team/ page).
+    results: [],
     fixtures: [],
   };
 }
@@ -235,10 +241,11 @@ async function main() {
     for (const link of links) {
       try {
         const draw = await scrapeDraw(page, link);
-        if (!draw.standings.length && !draw.matches.length) { log("skip (empty):", link.href); continue; }
-        const rule = classify(draw.division || link.text);
-        buckets.get(rule.id).teams.push(buildTeam(draw));
-        log("ok:", rule.id, "←", draw.division || link.text, `(${draw.standings.length} rows, ${draw.matches.length} matches)`);
+        if (!draw.standings.length) { log("skip (no standings):", link.href); continue; }
+        const team = buildTeam(draw);
+        const rule = classify(team.name + " " + team.division);
+        buckets.get(rule.id).teams.push(team);
+        log("ok:", rule.id, "←", team.name, "|", team.division, `(${draw.standings.length} rows)`);
       } catch (e) { log("draw failed:", link.href, e.message); }
     }
 

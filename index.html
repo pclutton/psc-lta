@@ -164,14 +164,14 @@
       <table>
         <thead><tr>
           <th class="num">#</th><th>Team</th>
-          <th class="num">P</th><th class="num">W</th><th class="num">L</th>
-          <th class="num">Sets</th><th class="num">Pts</th>
+          <th class="num">P</th><th class="num">W</th><th class="num">D</th><th class="num">L</th>
+          <th class="num">Rub</th><th class="num">Pts</th>
         </tr></thead>
         <tbody id="standings"></tbody>
       </table>
     </div>
 
-    <div class="twocol">
+    <div class="twocol" id="matchCols">
       <div><h2 class="sec">Recent results</h2><ul class="matchlist" id="results"></ul></div>
       <div><h2 class="sec">Upcoming fixtures</h2><ul class="matchlist" id="fixtures"></ul></div>
     </div>
@@ -257,8 +257,8 @@ function renderDetail(){
       <tr class="${isPsc(r.name)?'psc':''}">
         <td class="num"><span class="rankdot">${r.rank}</span></td>
         <td>${r.name}</td>
-        <td class="num">${r.played}</td><td class="num">${r.won}</td><td class="num">${r.lost}</td>
-        <td class="num">${r.sets||'—'}</td><td class="num">${r.points}</td>
+        <td class="num">${r.played}</td><td class="num">${r.won}</td><td class="num">${r.drawn??0}</td><td class="num">${r.lost}</td>
+        <td class="num">${r.rubbers||r.sets||'—'}</td><td class="num">${r.points}</td>
       </tr>`).join("");
   } else { sw.style.display = "none"; }
 
@@ -278,6 +278,8 @@ function renderDetail(){
       <span class="mteams"><b>${f.home}</b> ${f.away?`<span class="vs">v</span> <b>${f.away}</b>`:""}${f.note?`<br><span class="vs">${f.note}</span>`:""}</span>
       <span class="score" style="color:var(--muted);font-weight:600">${f.time||""}</span>
     </li>`).join("") : `<li class="empty">${done ? "Season complete — no further fixtures" : "No upcoming fixtures"}</li>`;
+
+  $("#matchCols").hidden = !((t.results && t.results.length) || (t.fixtures && t.fixtures.length));
 }
 
 function selectTeam(i){
