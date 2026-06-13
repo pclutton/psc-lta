@@ -303,6 +303,24 @@ async function main() {
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
 
+    // TEMP investigation: capture a team-roster page and a player page structure.
+    if (DEBUG) {
+      try {
+        await page.goto("https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/player/616", { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page); await page.waitForTimeout(1200); await dumpDebug(page, "player");
+      } catch (e) { log("player dump failed:", e.message); }
+      try {
+        const s = sources.find((x) => /summer league/i.test(x.leagueName)) || sources[0];
+        await page.goto(`${cfg.baseUrl}/league/${s.leagueId}/club/${s.clubId}`, { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page);
+        const teamHref = await page.evaluate(() => {
+          const a = [...document.querySelectorAll("a[href]")].find((a) => /\/team\/\d+/.test(a.href));
+          return a ? a.href : null;
+        });
+        if (teamHref) { await page.goto(teamHref, { waitUntil: "networkidle", timeout: 60000 }); await acceptCookies(page); await page.waitForTimeout(1200); await dumpDebug(page, "team"); }
+      } catch (e) { log("team dump failed:", e.message); }
+    }
+
     const competitions = [];
     for (const src of sources) {
       const clubUrl = `${cfg.baseUrl}/league/${src.leagueId}/club/${src.clubId}`;
