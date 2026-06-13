@@ -118,7 +118,8 @@
   table.players td a{color:var(--psc-navy);font-size:12.5px;text-decoration:none;white-space:nowrap}
   table.players td a:hover{text-decoration:underline}
   table.players .rank{color:var(--muted);font-weight:700}
-  table.players tr.top .rank{color:var(--psc-navy)}
+  table.players tr.top td{background:var(--psc-navy-tint)}
+  .medal{font-size:16px;line-height:1}
   .nores{padding:14px;color:var(--muted);font-size:13px;text-align:center}
   footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
   footer .wrap{padding:26px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
@@ -320,19 +321,33 @@ function selectComp(i){
   selectTeam(0);
 }
 
+// Tidy LTA names (often all-lowercase) to consistent capitalisation. Handles word
+// starts, hyphens and apostrophes, plus "Mc". "Mac" and lowercase particles
+// (van/de) are left simple — getting those universally right isn't reliable.
+function titleCaseName(s){
+  if(!s) return s;
+  return s.toLowerCase()
+    .replace(/(^|[ \-'’])([a-z])/g, (m, sep, ch) => sep + ch.toUpperCase())
+    .replace(/\bMc([a-z])/g, (m, ch) => "Mc" + ch.toUpperCase());
+}
+
 function renderPlayers(){
   const players = (DATA.players || []);
   const block = $("#playersBlock");
   if(!players.length){ block.hidden = true; return; }
   block.hidden = false;
-  $("#players").innerHTML = players.map((p,i)=>`
-    <tr data-name="${p.name.toLowerCase()}" class="${i<3?'top':''}">
-      <td class="num rank">${i+1}</td>
-      <td>${p.name}</td>
+  const medals = ["🥇","🥈","🥉"];
+  $("#players").innerHTML = players.map((p,i)=>{
+    const name = titleCaseName(p.name);
+    const rank = i<3 ? `<span class="medal" title="Rank ${i+1}">${medals[i]}</span>` : (i+1);
+    return `<tr data-name="${name.toLowerCase()}" class="${i<3?'top':''}">
+      <td class="num rank">${rank}</td>
+      <td>${name}</td>
       <td class="num">${p.won}</td><td class="num">${p.drawn}</td><td class="num">${p.lost}</td>
       <td class="num"><b>${p.points}</b></td>
       <td class="num">${p.url?`<a href="${p.url}" target="_blank" rel="noopener">Details ↗</a>`:''}</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
 }
 
 function filterPlayers(q){
