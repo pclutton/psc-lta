@@ -5,19 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Team Results &amp; Standings — Paddington Sports Club Tennis</title>
 <meta name="description" content="Live Middlesex League and Cup results for Paddington Sports Club tennis teams." />
+<link rel="icon" type="image/png" href="assets/psc-logo.png" />
+<meta name="theme-color" content="#222e62" />
 <style>
   :root{
-    /* ---- Brand tokens: tweak to match psclondon.com exactly ---- */
-    --psc-green:#0c6b3f;
-    --psc-green-dark:#08502f;
-    --psc-green-tint:#e7f2ec;
-    --ink:#1c2b24;
-    --muted:#5d6b63;
-    --line:#e3e8e4;
+    /* ---- PSC brand tokens (from psclondon.com / PSC crest) ---- */
+    --psc-navy:#222e62;
+    --psc-navy-dark:#161f45;
+    --psc-navy-tint:#eef0f7;
+    --psc-red:#ed1c24;
+    --psc-gold:#ffcb05;
+    --ink:#1c2333;
+    --muted:#5f6573;
+    --line:#e4e6ec;
     --bg:#ffffff;
-    --surface:#f7f9f7;
-    --win:#0c6b3f;
-    --loss:#b23b3b;
+    --surface:#f7f8fb;
+    --win:#1d7a46;
+    --loss:#c0392b;
     --draw:#b8860b;
     --radius:14px;
     --shadow:0 1px 2px rgba(0,0,0,.04);
@@ -30,14 +34,14 @@
 
   .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:20}
   .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;color:var(--psc-green);text-decoration:none}
-  .logo .mark{width:34px;height:34px;border-radius:50%;background:var(--psc-green);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;color:var(--psc-navy);text-decoration:none}
+  .logo .crest{height:40px;width:auto;display:block}
   nav.main{display:flex;gap:22px;font-size:14px;color:var(--muted)}
   nav.main a{text-decoration:none}
-  nav.main a.active{color:var(--psc-green);font-weight:600}
+  nav.main a.active{color:var(--psc-navy);font-weight:600}
   @media(max-width:740px){nav.main{display:none}}
 
-  .hero{background:var(--psc-green);color:#fff;padding:40px 0 34px}
+  .hero{background:var(--psc-navy);color:#fff;padding:40px 0 34px;border-bottom:3px solid var(--psc-gold)}
   .hero h1{margin:0 0 6px;font-size:30px;line-height:1.15}
   .hero p{margin:0;opacity:.92;font-size:15px;max-width:640px}
   .hero .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 12px;font-size:13px;align-items:center}
@@ -46,22 +50,22 @@
 
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
   .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
-  .tab[aria-selected="true"]{background:var(--psc-green);border-color:var(--psc-green);color:#fff;font-weight:600}
+  .tab[aria-selected="true"]{background:var(--psc-navy);border-color:var(--psc-navy);color:#fff;font-weight:600}
 
   section.block{margin:0 0 34px}
   h2.sec{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 0 14px;font-weight:700}
 
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
   .card{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:#fff;box-shadow:var(--shadow);cursor:pointer;transition:border-color .15s,box-shadow .15s}
-  .card:hover{border-color:var(--psc-green)}
-  .card[aria-selected="true"]{border-color:var(--psc-green);box-shadow:0 0 0 2px var(--psc-green-tint)}
+  .card:hover{border-color:var(--psc-navy)}
+  .card[aria-selected="true"]{border-color:var(--psc-navy);box-shadow:0 0 0 2px var(--psc-navy-tint)}
   .card .team{font-weight:700;font-size:16px;margin:0}
   .card .div{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
   .posrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .pos{font-size:13px;color:var(--muted)}
   .pos b{font-size:22px;color:var(--ink)}
   .badge{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
-  .badge.promo{background:var(--psc-green-tint);color:var(--psc-green-dark)}
+  .badge.promo{background:var(--psc-navy-tint);color:var(--psc-navy-dark)}
   .badge.mid{background:#eef1ee;color:var(--muted)}
   .badge.releg{background:#fbe9e9;color:var(--loss)}
   .stats{display:flex;gap:14px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:11px}
@@ -74,16 +78,16 @@
   .detail-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px}
   .detail-head .dt-team{font-size:18px;font-weight:700}
   .detail-head .dt-div{font-size:13px;color:var(--muted)}
-  .detail-head a{font-size:12.5px;color:var(--psc-green);margin-left:auto}
+  .detail-head a{font-size:12.5px;color:var(--psc-navy);margin-left:auto}
 
   .tablewrap{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:24px}
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   thead th{background:var(--surface);text-align:left;padding:11px 12px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
   tbody td{padding:11px 12px;border-top:1px solid var(--line)}
   th.num,td.num{text-align:center;width:46px}
-  tr.psc td{background:var(--psc-green-tint);font-weight:600}
+  tr.psc td{background:var(--psc-navy-tint);font-weight:600}
   .rankdot{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:#eef1ee;font-size:12px;font-weight:700;color:var(--muted)}
-  tr.psc .rankdot{background:var(--psc-green);color:#fff}
+  tr.psc .rankdot{background:var(--psc-navy);color:#fff}
 
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px}
   @media(max-width:760px){.twocol{grid-template-columns:1fr}}
@@ -98,13 +102,13 @@
   .score{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px;flex:none}
   .score.w{color:var(--win)} .score.l{color:var(--loss)}
   .res-tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;flex:none}
-  .res-tag.W{background:var(--psc-green-tint);color:var(--psc-green-dark)}
+  .res-tag.W{background:var(--psc-navy-tint);color:var(--psc-navy-dark)}
   .res-tag.L{background:#fbe9e9;color:var(--loss)}
 
   footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
   footer .wrap{padding:26px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
   .src-note{font-size:12px;color:var(--muted);margin:6px 0 0}
-  .src-note a{color:var(--psc-green)}
+  .src-note a{color:var(--psc-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
 </style>
 </head>
@@ -112,7 +116,7 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="logo" href="https://www.psclondon.com/"><span class="mark">PSC</span> Paddington Sports Club</a>
+    <a class="logo" href="https://www.psclondon.com/"><img class="crest" src="assets/psc-logo.png" alt="Paddington Sports Club crest" /> Paddington Sports Club</a>
     <nav class="main">
       <a href="https://www.psclondon.com/membership">Membership</a>
       <a href="https://www.psclondon.com/tennis" class="active">Tennis</a>
