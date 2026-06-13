@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-13T22:06:09.360Z",
+  "generatedAt": "2026-06-13T22:15:40.642Z",
   "sample": false,
   "competitions": [
     {
@@ -12,7 +12,7 @@ window.__PSC_RESULTS__ = {
       "teams": [
         {
           "name": "14&U Boys Division 1",
-          "division": "14&U Boys Division 1",
+          "division": "",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/37",
           "position": 1,
           "of": 5,
@@ -104,7 +104,7 @@ window.__PSC_RESULTS__ = {
         },
         {
           "name": "16&U Boys Division 1",
-          "division": "16&U Boys Division 1",
+          "division": "",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/40",
           "position": 3,
           "of": 5,
@@ -200,8 +200,116 @@ window.__PSC_RESULTS__ = {
           "fixtures": []
         },
         {
+          "name": "Open Mens Division 2 onwards",
+          "division": "Division 3 West",
+          "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/8",
+          "position": 1,
+          "of": 6,
+          "played": 3,
+          "won": 3,
+          "lost": 0,
+          "points": 6,
+          "form": [
+            "W",
+            "W",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 3,
+              "won": 3,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "36-0",
+              "points": 6,
+              "form": [
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
+              "name": "David Lloyd Club Acton Park 1",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "26-10",
+              "points": 4,
+              "form": [
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
+              "name": "Harbour Club Chelsea 1",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "14-22",
+              "points": 4,
+              "form": [
+                "L",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "The Parsons Green Club 1",
+              "played": 2,
+              "won": 1,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "8-16",
+              "points": 2,
+              "form": [
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Teddington Lawn Tennis Club 1",
+              "played": 2,
+              "won": 0,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "6-18",
+              "points": 0,
+              "form": [
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "The Hurlingham Club 2",
+              "played": 3,
+              "won": 0,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "6-30",
+              "points": 0,
+              "form": [
+                "L",
+                "L",
+                "L"
+              ]
+            }
+          ],
+          "results": [],
+          "fixtures": []
+        },
+        {
           "name": "Open Womens Division 1",
-          "division": "Open Womens Division 1",
+          "division": "",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/2",
           "position": 5,
           "of": 6,
@@ -304,114 +412,6 @@ window.__PSC_RESULTS__ = {
               "rubbers": "6-18",
               "points": 0,
               "form": [
-                "L",
-                "L"
-              ]
-            }
-          ],
-          "results": [],
-          "fixtures": []
-        },
-        {
-          "name": "Open Mens Division 2 onwards",
-          "division": "Open Mens Division 3 - Division 3 West",
-          "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/8",
-          "position": 1,
-          "of": 6,
-          "played": 3,
-          "won": 3,
-          "lost": 0,
-          "points": 6,
-          "form": [
-            "W",
-            "W",
-            "W"
-          ],
-          "standings": [
-            {
-              "rank": 1,
-              "name": "Paddington Sports Club 1",
-              "played": 3,
-              "won": 3,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "36-0",
-              "points": 6,
-              "form": [
-                "W",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "David Lloyd Club Acton Park 1",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "26-10",
-              "points": 4,
-              "form": [
-                "W",
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Harbour Club Chelsea 1",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "14-22",
-              "points": 4,
-              "form": [
-                "L",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "The Parsons Green Club 1",
-              "played": 2,
-              "won": 1,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "8-16",
-              "points": 2,
-              "form": [
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Teddington Lawn Tennis Club 1",
-              "played": 2,
-              "won": 0,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "6-18",
-              "points": 0,
-              "form": [
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "The Hurlingham Club 2",
-              "played": 3,
-              "won": 0,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "6-30",
-              "points": 0,
-              "form": [
-                "L",
                 "L",
                 "L"
               ]
@@ -547,6 +547,432 @@ window.__PSC_RESULTS__ = {
               "lost": 3,
               "rubbers": "16-56",
               "points": 16,
+              "form": [
+                "L",
+                "L",
+                "L"
+              ]
+            }
+          ],
+          "results": [],
+          "fixtures": []
+        },
+        {
+          "name": "Mens Doubles",
+          "division": "North West Division 3",
+          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/35",
+          "position": 5,
+          "of": 8,
+          "played": 2,
+          "won": 1,
+          "lost": 1,
+          "points": 25,
+          "form": [
+            "L",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Acorn Lawn Tennis Club 1",
+              "played": 3,
+              "won": 3,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "64-8",
+              "points": 64,
+              "form": [
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
+              "name": "Headstone Lawn Tennis Club 2",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "38-34",
+              "points": 38,
+              "form": [
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
+              "name": "Harrow Weald Lawn Tennis Club 1",
+              "played": 3,
+              "won": 1,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "36-36",
+              "points": 36,
+              "form": [
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "Lowlands Club 2",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "31-41",
+              "points": 31,
+              "form": [
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Paddington Sports Club 3",
+              "played": 2,
+              "won": 1,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "25-23",
+              "points": 25,
+              "form": [
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "Uxbridge LTC 2",
+              "played": 2,
+              "won": 1,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "18-30",
+              "points": 18,
+              "form": [
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 7,
+              "name": "Kenton Lawn Tennis Club 2",
+              "played": 2,
+              "won": 0,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "18-30",
+              "points": 18,
+              "form": [
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 8,
+              "name": "David Lloyd Club Northwood 3",
+              "played": 2,
+              "won": 0,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "10-38",
+              "points": 10,
+              "form": [
+                "L",
+                "L"
+              ]
+            }
+          ],
+          "results": [],
+          "fixtures": []
+        },
+        {
+          "name": "Mens Doubles",
+          "division": "West Division 3",
+          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/12",
+          "position": 4,
+          "of": 8,
+          "played": 3,
+          "won": 2,
+          "lost": 1,
+          "points": 42,
+          "form": [
+            "W",
+            "L",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Brentham Lawn Tennis Club 2",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "50-22",
+              "points": 50,
+              "form": [
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 2,
+              "name": "Teddington Lawn Tennis Club 6",
+              "played": 3,
+              "won": 2,
+              "drawn": 1,
+              "lost": 0,
+              "rubbers": "48-24",
+              "points": 48,
+              "form": [
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
+              "name": "Thistleworth LTC 1",
+              "played": 3,
+              "won": 1,
+              "drawn": 1,
+              "lost": 1,
+              "rubbers": "42-30",
+              "points": 42,
+              "form": [
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "Paddington Sports Club 2",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "42-30",
+              "points": 42,
+              "form": [
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Holland Park Lawn Tennis Club 2",
+              "played": 2,
+              "won": 2,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "30-18",
+              "points": 30,
+              "form": [
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "David Lloyd Club Sudbury Hill 1",
+              "played": 3,
+              "won": 0,
+              "drawn": 2,
+              "lost": 1,
+              "rubbers": "26-46",
+              "points": 26,
+              "form": [
+                "L"
+              ]
+            },
+            {
+              "rank": 7,
+              "name": "Wycombe House 1",
+              "played": 3,
+              "won": 0,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "14-58",
+              "points": 14,
+              "form": [
+                "L",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 8,
+              "name": "The Lensbury Club 1",
+              "played": 2,
+              "won": 0,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "12-36",
+              "points": 12,
+              "form": [
+                "L",
+                "L"
+              ]
+            }
+          ],
+          "results": [],
+          "fixtures": []
+        },
+        {
+          "name": "Mens Doubles",
+          "division": "North West Division 5",
+          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/4",
+          "position": 4,
+          "of": 9,
+          "played": 3,
+          "won": 1,
+          "lost": 1,
+          "points": 44,
+          "form": [
+            "W",
+            "L"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Lowlands Club 3",
+              "played": 5,
+              "won": 5,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "94-26",
+              "points": 94,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
+              "name": "Hatch End Lawn Tennis Club 3",
+              "played": 4,
+              "won": 4,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "55-26",
+              "points": 70,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
+              "name": "Harrow Baptist Tennis Club 1",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "52-44",
+              "points": 52,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "Paddington Sports Club 4",
+              "played": 3,
+              "won": 1,
+              "drawn": 1,
+              "lost": 1,
+              "rubbers": "44-28",
+              "points": 44,
+              "form": [
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Greenford Tennis Club 1",
+              "played": 3,
+              "won": 1,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "40-32",
+              "points": 40,
+              "form": [
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "Lowlands Club 4",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "37-59",
+              "points": 37,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 7,
+              "name": "Harrow Lawn Tennis Club 4",
+              "played": 3,
+              "won": 0,
+              "drawn": 2,
+              "lost": 1,
+              "rubbers": "26-46",
+              "points": 26,
+              "form": [
+                "L"
+              ]
+            },
+            {
+              "rank": 8,
+              "name": "Pinner Lawn Tennis Club 5",
+              "played": 4,
+              "won": 0,
+              "drawn": 0,
+              "lost": 4,
+              "rubbers": "23-73",
+              "points": 23,
+              "form": [
+                "L",
+                "L",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 9,
+              "name": "Wembley & Sudbury Lawn Tennis Squash & Social Cl 1",
+              "played": 4,
+              "won": 0,
+              "drawn": 1,
+              "lost": 3,
+              "rubbers": "22-59",
+              "points": 22,
               "form": [
                 "L",
                 "L",
@@ -943,275 +1369,6 @@ window.__PSC_RESULTS__ = {
           "fixtures": []
         },
         {
-          "name": "Mens Doubles",
-          "division": "North West Division 3",
-          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/35",
-          "position": 5,
-          "of": 8,
-          "played": 2,
-          "won": 1,
-          "lost": 1,
-          "points": 25,
-          "form": [
-            "L",
-            "W"
-          ],
-          "standings": [
-            {
-              "rank": 1,
-              "name": "Acorn Lawn Tennis Club 1",
-              "played": 3,
-              "won": 3,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "64-8",
-              "points": 64,
-              "form": [
-                "W",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Headstone Lawn Tennis Club 2",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "38-34",
-              "points": 38,
-              "form": [
-                "W",
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Harrow Weald Lawn Tennis Club 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "36-36",
-              "points": 36,
-              "form": [
-                "W",
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "Lowlands Club 2",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "31-41",
-              "points": 31,
-              "form": [
-                "W",
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Paddington Sports Club 3",
-              "played": 2,
-              "won": 1,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "25-23",
-              "points": 25,
-              "form": [
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "Uxbridge LTC 2",
-              "played": 2,
-              "won": 1,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "18-30",
-              "points": 18,
-              "form": [
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Kenton Lawn Tennis Club 2",
-              "played": 2,
-              "won": 0,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "18-30",
-              "points": 18,
-              "form": [
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 8,
-              "name": "David Lloyd Club Northwood 3",
-              "played": 2,
-              "won": 0,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "10-38",
-              "points": 10,
-              "form": [
-                "L",
-                "L"
-              ]
-            }
-          ],
-          "results": [],
-          "fixtures": []
-        },
-        {
-          "name": "Mens Doubles",
-          "division": "West Division 3",
-          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/12",
-          "position": 4,
-          "of": 8,
-          "played": 3,
-          "won": 2,
-          "lost": 1,
-          "points": 42,
-          "form": [
-            "W",
-            "L",
-            "W"
-          ],
-          "standings": [
-            {
-              "rank": 1,
-              "name": "Brentham Lawn Tennis Club 2",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "50-22",
-              "points": 50,
-              "form": [
-                "W",
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Teddington Lawn Tennis Club 6",
-              "played": 3,
-              "won": 2,
-              "drawn": 1,
-              "lost": 0,
-              "rubbers": "48-24",
-              "points": 48,
-              "form": [
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Thistleworth LTC 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 1,
-              "lost": 1,
-              "rubbers": "42-30",
-              "points": 42,
-              "form": [
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "Paddington Sports Club 2",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "42-30",
-              "points": 42,
-              "form": [
-                "W",
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Holland Park Lawn Tennis Club 2",
-              "played": 2,
-              "won": 2,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "30-18",
-              "points": 30,
-              "form": [
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "David Lloyd Club Sudbury Hill 1",
-              "played": 3,
-              "won": 0,
-              "drawn": 2,
-              "lost": 1,
-              "rubbers": "26-46",
-              "points": 26,
-              "form": [
-                "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Wycombe House 1",
-              "played": 3,
-              "won": 0,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "14-58",
-              "points": 14,
-              "form": [
-                "L",
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 8,
-              "name": "The Lensbury Club 1",
-              "played": 2,
-              "won": 0,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "12-36",
-              "points": 12,
-              "form": [
-                "L",
-                "L"
-              ]
-            }
-          ],
-          "results": [],
-          "fixtures": []
-        },
-        {
           "name": "Womens Doubles",
           "division": "West Division 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/20",
@@ -1336,163 +1493,6 @@ window.__PSC_RESULTS__ = {
               "rubbers": "11-37",
               "points": 11,
               "form": [
-                "L",
-                "L"
-              ]
-            }
-          ],
-          "results": [],
-          "fixtures": []
-        },
-        {
-          "name": "Mens Doubles",
-          "division": "North West Division 5",
-          "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/4",
-          "position": 4,
-          "of": 9,
-          "played": 3,
-          "won": 1,
-          "lost": 1,
-          "points": 44,
-          "form": [
-            "W",
-            "L"
-          ],
-          "standings": [
-            {
-              "rank": 1,
-              "name": "Lowlands Club 3",
-              "played": 5,
-              "won": 5,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "94-26",
-              "points": 94,
-              "form": [
-                "W",
-                "W",
-                "W",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Hatch End Lawn Tennis Club 3",
-              "played": 4,
-              "won": 4,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "55-26",
-              "points": 70,
-              "form": [
-                "W",
-                "W",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Harrow Baptist Tennis Club 1",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "52-44",
-              "points": 52,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "Paddington Sports Club 4",
-              "played": 3,
-              "won": 1,
-              "drawn": 1,
-              "lost": 1,
-              "rubbers": "44-28",
-              "points": 44,
-              "form": [
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Greenford Tennis Club 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "40-32",
-              "points": 40,
-              "form": [
-                "W",
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "Lowlands Club 4",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "37-59",
-              "points": 37,
-              "form": [
-                "L",
-                "W",
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Harrow Lawn Tennis Club 4",
-              "played": 3,
-              "won": 0,
-              "drawn": 2,
-              "lost": 1,
-              "rubbers": "26-46",
-              "points": 26,
-              "form": [
-                "L"
-              ]
-            },
-            {
-              "rank": 8,
-              "name": "Pinner Lawn Tennis Club 5",
-              "played": 4,
-              "won": 0,
-              "drawn": 0,
-              "lost": 4,
-              "rubbers": "23-73",
-              "points": 23,
-              "form": [
-                "L",
-                "L",
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 9,
-              "name": "Wembley & Sudbury Lawn Tennis Squash & Social Cl 1",
-              "played": 4,
-              "won": 0,
-              "drawn": 1,
-              "lost": 3,
-              "rubbers": "22-59",
-              "points": 22,
-              "form": [
-                "L",
                 "L",
                 "L"
               ]
