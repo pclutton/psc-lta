@@ -258,15 +258,15 @@ function parseLabel(raw) {
   const label = (raw || "").replace(/\s+/g, " ").trim();
   const segs = label.split("–").map((s) => s.trim()).filter(Boolean);
   const name = segs[0] || label || "Team";
-  // The division/tier is whatever sits between the name and the "Group N" — keep
-  // it verbatim (e.g. "West Intermediate", "West Division 3"), dropping the
-  // repeated team name and the internal "Group N" which carries no meaning here.
-  let division = segs.slice(1).filter((s) => !/^group\b/i.test(s)).join(" - ");
-  division = division
+  // The division/tier is the last meaningful segment (e.g. "West Intermediate",
+  // "Division 3 West") — keep it verbatim, dropping the internal "Group N". Blank
+  // it when it just repeats the team name, so the card doesn't show it twice.
+  const nonGroup = segs.slice(1).filter((s) => !/^group\b/i.test(s));
+  let division = (nonGroup[nonGroup.length - 1] || "")
     .replace(new RegExp("^(?:" + escapeReg(name) + "\\s*-\\s*)+", "i"), "")
-    .replace(/\s*-\s*group\s*\d+\s*$/i, "")
     .trim();
-  return { name, division: division || name };
+  if (division.toLowerCase() === name.toLowerCase()) division = "";
+  return { name, division };
 }
 
 // Rank a division highest→lowest: Premier, Intermediate, then Division 1..N.
@@ -408,7 +408,7 @@ async function main() {
       if (teams.length) {
         // Highest division first; geographic prefix is only a tiebreak.
         teams.sort((a, b) =>
-          divisionRank(a.division) - divisionRank(b.division) ||
+          divisionRank(a.division || a.name) - divisionRank(b.division || b.name) ||
           a.name.localeCompare(b.name) ||
           a.division.localeCompare(b.division));
         competitions.push({

@@ -259,9 +259,10 @@ function renderCards(){
     const posBlock = t.of
       ? `<div class="pos">Position<br><b>${t.position}</b> / ${t.of}</div>`
       : `<div class="pos" style="font-size:14px"><b style="font-size:16px">${t.division}</b></div>`;
+    const sub = t.of ? t.division : "Cup run";
     return `<div class="card" data-i="${i}" role="button" tabindex="0" aria-selected="${i===0?'true':'false'}">
       <p class="team">${t.name}</p>
-      <p class="div">${t.of ? t.division : "Cup run"}</p>
+      ${sub ? `<p class="div">${sub}</p>` : `<p class="div" style="visibility:hidden">–</p>`}
       <div class="posrow">${posBlock}<span class="badge ${st}">${statusLabel[st]}</span></div>
       <div class="stats"><span>P <b>${t.played}</b></span><span>W <b>${t.won}</b></span><span>L <b>${t.lost}</b></span></div>
       ${t.form&&t.form.length?`<div class="form">${t.form.map(f=>`<span class="dot ${f}">${f}</span>`).join("")}</div>`:""}
