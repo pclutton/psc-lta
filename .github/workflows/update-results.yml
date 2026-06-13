@@ -1,7 +1,8 @@
 name: Update results & deploy
 
-# Refreshes data/results.js from the LTA site, then publishes the site to
-# GitHub Pages. Runs nightly, on every push to main, and on manual request.
+# Two modes, one workflow:
+#   • push to main        → just rebuild & deploy the page (fast, no scraping)
+#   • schedule / manual   → scrape the LTA site, commit fresh data, then deploy
 on:
   schedule:
     - cron: "0 6 * * *"   # 06:00 UTC daily
@@ -10,7 +11,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write   # commit the refreshed results.json
+  contents: write   # commit the refreshed results.js
   pages: write
   id-token: write
 
@@ -19,28 +20,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  scrape:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # --- scrape only on schedule / manual runs, not on ordinary pushes ---
+      - name: Set up Node
+        if: github.event_name != 'push'
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install scraper deps
+        if: github.event_name != 'push'
         working-directory: scraper
         run: npm install
 
       - name: Scrape LTA results (fail-safe — keeps last good data on error)
+        if: github.event_name != 'push'
         working-directory: scraper
         env:
           # Optional. Leave the secrets unset to scrape anonymously (the default).
           LTA_USERNAME: ${{ secrets.LTA_USERNAME }}
           LTA_PASSWORD: ${{ secrets.LTA_PASSWORD }}
-        run: npm run scrape || echo "Scrape failed; keeping existing data/results.json"
+        run: npm run scrape || echo "Scrape failed; keeping existing data/results.js"
 
       - name: Commit refreshed data
+        if: github.event_name != 'push'
         run: |
           git config user.name "psc-results-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -52,13 +59,14 @@ jobs:
             echo "No data changes."
           fi
 
+      # --- always publish the current repo (page + committed data) ---
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
   deploy:
-    needs: scrape
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
