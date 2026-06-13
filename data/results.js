@@ -2,8 +2,8 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "Summer 2026",
   "sourceUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24",
-  "generatedAt": "2026-06-13T07:00:00Z",
-  "sample": true,
+  "generatedAt": "2026-06-13T17:19:10.254Z",
+  "sample": false,
   "competitions": [
     {
       "id": "summer",
@@ -11,172 +11,841 @@ window.__PSC_RESULTS__ = {
       "status": "current",
       "teams": [
         {
-          "name": "Men's 1st",
-          "division": "Division 1",
-          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24",
-          "position": 2, "of": 8, "played": 5, "won": 4, "lost": 1, "points": 21,
-          "form": ["W", "W", "L", "W", "W"],
+          "name": "14U Boys\n – 14U Boys - Div 1              – Group 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/draw/2",
+          "position": 1,
+          "of": 6,
+          "played": 1,
+          "won": 5,
+          "lost": 0,
+          "points": 12,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ],
           "standings": [
-            {"rank": 1, "name": "Cumberland LTC", "played": 5, "won": 5, "lost": 0, "sets": "38–12", "points": 25},
-            {"rank": 2, "name": "Paddington Sports Club", "played": 5, "won": 4, "lost": 1, "sets": "33–17", "points": 21},
-            {"rank": 3, "name": "Hampstead LTC", "played": 5, "won": 3, "lost": 2, "sets": "28–22", "points": 17},
-            {"rank": 4, "name": "Highgate CC", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
-            {"rank": 5, "name": "Will to Win Regent's", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 13},
-            {"rank": 6, "name": "Ealing LTC", "played": 5, "won": 2, "lost": 3, "sets": "21–29", "points": 12},
-            {"rank": 7, "name": "Hadley Wood LTC", "played": 5, "won": 1, "lost": 4, "sets": "16–34", "points": 8},
-            {"rank": 8, "name": "Pims LTC", "played": 5, "won": 0, "lost": 5, "sets": "14–36", "points": 6}
+            {
+              "rank": 1,
+              "name": "The Queens Club Ltd 1",
+              "played": 1,
+              "won": 5,
+              "lost": 5,
+              "sets": "54-6",
+              "points": 75
+            },
+            {
+              "rank": 1,
+              "name": "Westway Indoor Tennis Centre 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "36-24",
+              "points": 57
+            },
+            {
+              "rank": 1,
+              "name": "Lowlands Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "34-26",
+              "points": 57
+            },
+            {
+              "rank": 1,
+              "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "played": 1,
+              "won": 5,
+              "lost": 1,
+              "sets": "16-32",
+              "points": 39
+            },
+            {
+              "rank": 1,
+              "name": "Finchley Manor Tennis Squash and Health Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 1,
+              "sets": "14-22",
+              "points": 40
+            },
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 0,
+              "sets": "2-46",
+              "points": 12
+            }
           ],
           "results": [
-            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Ealing LTC", "homeScore": 5, "awayScore": 1},
-            {"date": "31 May", "home": "Hampstead LTC", "away": "Paddington Sports Club", "homeScore": 2, "awayScore": 4},
-            {"date": "24 May", "home": "Paddington Sports Club", "away": "Cumberland LTC", "homeScore": 2, "awayScore": 4},
-            {"date": "17 May", "home": "Highgate CC", "away": "Paddington Sports Club", "homeScore": 1, "awayScore": 5}
-          ],
-          "fixtures": [
-            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Hadley Wood LTC", "time": "14:00"},
-            {"date": "21 Jun", "home": "Pims LTC", "away": "Paddington Sports Club", "time": "10:00"},
-            {"date": "28 Jun", "home": "Paddington Sports Club", "away": "Will to Win Regent's", "time": "14:00"}
-          ]
-        },
-        {
-          "name": "Men's 2nd",
-          "division": "Division 4",
-          "position": 1, "of": 8, "played": 5, "won": 5, "lost": 0, "points": 25,
-          "form": ["W", "W", "W", "W", "W"],
-          "standings": [
-            {"rank": 1, "name": "Paddington Sports Club", "played": 5, "won": 5, "lost": 0, "sets": "36–14", "points": 25},
-            {"rank": 2, "name": "Brondesbury CC", "played": 5, "won": 4, "lost": 1, "sets": "31–19", "points": 20},
-            {"rank": 3, "name": "Northwood LTC", "played": 5, "won": 3, "lost": 2, "sets": "26–24", "points": 16},
-            {"rank": 4, "name": "Winchmore Hill LTC", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 12},
-            {"rank": 5, "name": "Teddington LTC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8},
-            {"rank": 6, "name": "Pinner LTC", "played": 5, "won": 0, "lost": 5, "sets": "16–34", "points": 6}
-          ],
-          "results": [
-            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Winchmore Hill LTC", "homeScore": 6, "awayScore": 0},
-            {"date": "31 May", "home": "Northwood LTC", "away": "Paddington Sports Club", "homeScore": 2, "awayScore": 4}
-          ],
-          "fixtures": [
-            {"date": "14 Jun", "home": "Teddington LTC", "away": "Paddington Sports Club", "time": "14:00"}
-          ]
-        },
-        {
-          "name": "Ladies' 1st",
-          "division": "Division 1",
-          "position": 3, "of": 8, "played": 5, "won": 3, "lost": 2, "points": 17,
-          "form": ["W", "L", "W", "W", "L"],
-          "standings": [
-            {"rank": 1, "name": "Cumberland LTC", "played": 5, "won": 5, "lost": 0, "sets": "37–13", "points": 24},
-            {"rank": 2, "name": "Chiswick LTC", "played": 5, "won": 4, "lost": 1, "sets": "30–20", "points": 20},
-            {"rank": 3, "name": "Paddington Sports Club", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 17},
-            {"rank": 4, "name": "Hampstead LTC", "played": 5, "won": 2, "lost": 3, "sets": "24–26", "points": 13},
-            {"rank": 5, "name": "Ealing LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 9},
-            {"rank": 6, "name": "Highgate CC", "played": 5, "won": 0, "lost": 5, "sets": "13–37", "points": 5}
-          ],
-          "results": [
-            {"date": "7 Jun", "home": "Paddington Sports Club", "away": "Hampstead LTC", "homeScore": 4, "awayScore": 2},
-            {"date": "31 May", "home": "Chiswick LTC", "away": "Paddington Sports Club", "homeScore": 4, "awayScore": 2}
-          ],
-          "fixtures": [
-            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Ealing LTC", "time": "11:00"}
-          ]
-        },
-        {
-          "name": "Ladies' 2nd",
-          "division": "Division 3",
-          "position": 2, "of": 8, "played": 5, "won": 4, "lost": 1, "points": 21,
-          "form": ["W", "W", "W", "L", "W"],
-          "standings": [
-            {"rank": 1, "name": "Will to Win Regent's", "played": 5, "won": 5, "lost": 0, "sets": "35–15", "points": 24},
-            {"rank": 2, "name": "Paddington Sports Club", "played": 5, "won": 4, "lost": 1, "sets": "32–18", "points": 21},
-            {"rank": 3, "name": "Finchley Manor LTC", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
-            {"rank": 4, "name": "Campden Hill LTC", "played": 5, "won": 2, "lost": 3, "sets": "22–28", "points": 12},
-            {"rank": 5, "name": "Brondesbury CC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8},
-            {"rank": 6, "name": "Bishop's Park LTC", "played": 5, "won": 0, "lost": 5, "sets": "16–34", "points": 6}
-          ],
-          "results": [
-            {"date": "7 Jun", "home": "Campden Hill LTC", "away": "Paddington Sports Club", "homeScore": 1, "awayScore": 5}
-          ],
-          "fixtures": [
-            {"date": "14 Jun", "home": "Paddington Sports Club", "away": "Brondesbury CC", "time": "11:00"}
-          ]
-        }
-      ]
-    },
-    {
-      "id": "winter",
-      "name": "Winter Floodlit League",
-      "status": "completed",
-      "teams": [
-        {
-          "name": "Men's 1st",
-          "division": "Floodlit Division 2",
-          "position": 3, "of": 6, "played": 5, "won": 3, "lost": 2, "points": 16,
-          "form": ["W", "L", "W", "W", "L"],
-          "standings": [
-            {"rank": 1, "name": "Chiswick LTC", "played": 5, "won": 4, "lost": 1, "sets": "31–19", "points": 20},
-            {"rank": 2, "name": "Campden Hill LTC", "played": 5, "won": 4, "lost": 1, "sets": "30–20", "points": 19},
-            {"rank": 3, "name": "Paddington Sports Club", "played": 5, "won": 3, "lost": 2, "sets": "27–23", "points": 16},
-            {"rank": 4, "name": "Brondesbury CC", "played": 5, "won": 2, "lost": 3, "sets": "24–26", "points": 13},
-            {"rank": 5, "name": "Finchley Manor LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 9},
-            {"rank": 6, "name": "Bishop's Park LTC", "played": 5, "won": 1, "lost": 4, "sets": "18–32", "points": 8}
-          ],
-          "results": [
-            {"date": "15 Mar", "home": "Paddington Sports Club", "away": "Brondesbury CC", "homeScore": 4, "awayScore": 2},
-            {"date": "1 Mar", "home": "Campden Hill LTC", "away": "Paddington Sports Club", "homeScore": 4, "awayScore": 2}
+            {
+              "home": "Sat 04/10/2025 Paddington Sports Club 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1"
+            },
+            {
+              "home": "Sat 04/10/2025 Paddington Sports Club 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1"
+            },
+            {
+              "home": "Sun 09/11/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 12,
+              "away": "Lowlands Club 1"
+            },
+            {
+              "home": "Sun 09/11/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 12,
+              "away": "Lowlands Club 1"
+            },
+            {
+              "home": "Sun 30/11/2025 Westway Indoor Tennis Centre 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 30/11/2025 Westway Indoor Tennis Centre 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            }
           ],
           "fixtures": []
         },
         {
-          "name": "Ladies' 2nd",
-          "division": "Floodlit Division 3",
-          "position": 1, "of": 6, "played": 5, "won": 5, "lost": 0, "points": 25,
-          "form": ["W", "W", "W", "W", "W"],
-          "standings": [
-            {"rank": 1, "name": "Paddington Sports Club", "played": 5, "won": 5, "lost": 0, "sets": "34–16", "points": 25},
-            {"rank": 2, "name": "Hampstead LTC", "played": 5, "won": 3, "lost": 2, "sets": "28–22", "points": 17},
-            {"rank": 3, "name": "Ealing LTC", "played": 5, "won": 3, "lost": 2, "sets": "26–24", "points": 16},
-            {"rank": 4, "name": "Highgate CC", "played": 5, "won": 2, "lost": 3, "sets": "23–27", "points": 12},
-            {"rank": 5, "name": "Pinner LTC", "played": 5, "won": 1, "lost": 4, "sets": "19–31", "points": 8},
-            {"rank": 6, "name": "Teddington LTC", "played": 5, "won": 1, "lost": 4, "sets": "20–30", "points": 7}
+          "name": "Paddington Sports Club 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/team/4",
+          "position": 0,
+          "of": 0,
+          "played": 10,
+          "won": 0,
+          "lost": 0,
+          "points": 0,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
           ],
+          "standings": [],
           "results": [
-            {"date": "15 Mar", "home": "Paddington Sports Club", "away": "Highgate CC", "homeScore": 5, "awayScore": 1}
+            {
+              "home": "Round 1 • Sat 04/10/2025 L Paddington Sports Club 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1"
+            },
+            {
+              "home": "Round 1 • Sat 04/10/2025 L Paddington Sports Club 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1"
+            },
+            {
+              "home": "Round 2 • Sun 09/11/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 12,
+              "away": "Lowlands Club 1"
+            },
+            {
+              "home": "Round 2 • Sun 09/11/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 12,
+              "away": "Lowlands Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 30/11/2025 L Westway Indoor Tennis Centre 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 30/11/2025 L Westway Indoor Tennis Centre 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            }
           ],
           "fixtures": []
-        }
-      ]
-    },
-    {
-      "id": "cup",
-      "name": "Cup competitions",
-      "status": "current",
-      "teams": [
-        {
-          "name": "Middlesex Cup — Men",
-          "division": "Quarter-final",
-          "position": 0, "of": 0, "played": 2, "won": 2, "lost": 0,
-          "form": ["W", "W"],
-          "standings": [],
-          "results": [
-            {"date": "22 May", "home": "Northwood LTC", "away": "Paddington Sports Club", "homeScore": 3, "awayScore": 6, "note": "Round 1"}
-          ],
-          "fixtures": [
-            {"date": "19 Jun", "home": "Paddington Sports Club", "away": "Winchmore Hill LTC", "time": "18:30", "note": "Quarter-final"}
-          ]
         },
         {
-          "name": "Mixed Middlesex Cup",
-          "division": "Semi-final",
-          "position": 0, "of": 0, "played": 3, "won": 3, "lost": 0,
-          "form": ["W", "W", "W"],
+          "name": "16U Boys \n – 16U Boys - Div 1              – Group 2",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/draw/29",
+          "position": 1,
+          "of": 5,
+          "played": 1,
+          "won": 4,
+          "lost": 3,
+          "points": 60,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "W",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 3,
+              "sets": "32-16",
+              "points": 60
+            },
+            {
+              "rank": 1,
+              "name": "Westway Indoor Tennis Centre 1",
+              "played": 1,
+              "won": 4,
+              "lost": 3,
+              "sets": "27-18",
+              "points": 59
+            },
+            {
+              "rank": 1,
+              "name": "David Lloyd Club Finchley 1",
+              "played": 1,
+              "won": 4,
+              "lost": 2,
+              "sets": "20-28",
+              "points": 45
+            },
+            {
+              "rank": 1,
+              "name": "Finchley Manor Tennis Squash and Health Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 1,
+              "sets": "16-17",
+              "points": 34
+            },
+            {
+              "rank": 1,
+              "name": "Georgians & Holly Park Tennis Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 0,
+              "sets": "10-26",
+              "points": 43
+            }
+          ],
+          "results": [
+            {
+              "home": "Sat 15/11/2025 Westway Indoor Tennis Centre 1",
+              "homeScore": 6,
+              "awayScore": 6,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sat 15/11/2025 Westway Indoor Tennis Centre 1",
+              "homeScore": 6,
+              "awayScore": 6,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 07/12/2025 Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Georgians & Holly Park Tennis Club 1"
+            },
+            {
+              "home": "Sun 07/12/2025 Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Georgians & Holly Park Tennis Club 1"
+            },
+            {
+              "home": "Sat 17/01/2026 David Lloyd Club Finchley 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sat 17/01/2026 David Lloyd Club Finchley 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Paddington Sports Club 1"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Paddington Sports Club 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/team/135",
+          "position": 0,
+          "of": 0,
+          "played": 8,
+          "won": 0,
+          "lost": 0,
+          "points": 0,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "W",
+            "W"
+          ],
           "standings": [],
           "results": [
-            {"date": "5 Jun", "home": "Paddington Sports Club", "away": "Cumberland LTC", "homeScore": 5, "awayScore": 4, "note": "Round 2"},
-            {"date": "8 May", "home": "Paddington Sports Club", "away": "Hampstead LTC", "homeScore": 6, "awayScore": 3, "note": "Round 1"}
+            {
+              "home": "Round 1 • Sat 15/11/2025 L Westway Indoor Tennis Centre 1",
+              "homeScore": 6,
+              "awayScore": 6,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 1 • Sat 15/11/2025 L Westway Indoor Tennis Centre 1",
+              "homeScore": 6,
+              "awayScore": 6,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 07/12/2025 W Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Georgians & Holly Park Tennis Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 07/12/2025 W Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Georgians & Holly Park Tennis Club 1"
+            },
+            {
+              "home": "Round 4 • Sat 17/01/2026 W David Lloyd Club Finchley 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 4 • Sat 17/01/2026 W David Lloyd Club Finchley 1",
+              "homeScore": 2,
+              "awayScore": 10,
+              "away": "Paddington Sports Club 1"
+            }
           ],
-          "fixtures": [
-            {"date": "3 Jul", "home": "TBC", "away": "Paddington Sports Club", "time": "TBC", "note": "Semi-final"}
-          ]
+          "fixtures": []
+        },
+        {
+          "name": "Open Mens\n – Open Mens Div 1              – Group 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/draw/24",
+          "position": 1,
+          "of": 6,
+          "played": 1,
+          "won": 5,
+          "lost": 2,
+          "points": 48,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "L",
+            "L"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "The Parsons Green Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 5,
+              "sets": "48-12",
+              "points": 59
+            },
+            {
+              "rank": 1,
+              "name": "Barnet Lawn Tennis Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "40-20",
+              "points": 59
+            },
+            {
+              "rank": 1,
+              "name": "Teddington Lawn Tennis Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "30-18",
+              "points": 54
+            },
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 2,
+              "sets": "24-36",
+              "points": 48
+            },
+            {
+              "rank": 1,
+              "name": "The Hurlingham Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 0,
+              "sets": "10-26",
+              "points": 45
+            },
+            {
+              "rank": 1,
+              "name": "Vicars Moor LTC 1",
+              "played": 1,
+              "won": 5,
+              "lost": 0,
+              "sets": "4-44",
+              "points": 24
+            }
+          ],
+          "results": [
+            {
+              "home": "Sun 16/11/2025 Barnet Lawn Tennis Club 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 16/11/2025 Barnet Lawn Tennis Club 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 23/11/2025 Teddington Lawn Tennis Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 23/11/2025 Teddington Lawn Tennis Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 01/03/2026 Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Sun 01/03/2026 Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "The Hurlingham Club 1"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Paddington Sports Club 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/team/112",
+          "position": 0,
+          "of": 0,
+          "played": 10,
+          "won": 0,
+          "lost": 0,
+          "points": 0,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "L",
+            "L"
+          ],
+          "standings": [],
+          "results": [
+            {
+              "home": "Round 1 • Sun 16/11/2025 L Barnet Lawn Tennis Club 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 1 • Sun 16/11/2025 L Barnet Lawn Tennis Club 1",
+              "homeScore": 12,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 23/11/2025 L Teddington Lawn Tennis Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 23/11/2025 L Teddington Lawn Tennis Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 5 • Sun 01/03/2026 W Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Round 5 • Sun 01/03/2026 W Paddington Sports Club 1",
+              "homeScore": 8,
+              "awayScore": 4,
+              "away": "The Hurlingham Club 1"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "14U Girls \n – 14U Girls - Div 1              – Group 2",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/draw/19",
+          "position": 1,
+          "of": 5,
+          "played": 1,
+          "won": 4,
+          "lost": 0,
+          "points": 15,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Headstone Lawn Tennis Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 4,
+              "sets": "24-0",
+              "points": 88
+            },
+            {
+              "rank": 2,
+              "name": "David Lloyd Club Finchley 2",
+              "played": 2,
+              "won": 4,
+              "lost": 3,
+              "sets": "18-6",
+              "points": 73
+            },
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 0,
+              "sets": "0-12",
+              "points": 15
+            },
+            {
+              "rank": 1,
+              "name": "Brentham Lawn Tennis Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 0,
+              "sets": "0-12",
+              "points": 7
+            },
+            {
+              "rank": 1,
+              "name": "Eastcote Lawn Tennis Club 1",
+              "played": 1,
+              "won": 4,
+              "lost": 0,
+              "sets": "0-12",
+              "points": 4
+            }
+          ],
+          "results": [
+            {
+              "home": "Sun 26/10/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "Headstone Lawn Tennis Club 1"
+            },
+            {
+              "home": "Sun 26/10/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "Headstone Lawn Tennis Club 1"
+            },
+            {
+              "home": "Sun 09/11/2025 Not played Eastcote Lawn Tennis Club 1",
+              "homeScore": 0,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 09/11/2025 Not played Eastcote Lawn Tennis Club 1",
+              "homeScore": 0,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 14/12/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "David Lloyd Club Finchley 2"
+            },
+            {
+              "home": "Sun 14/12/2025 Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "David Lloyd Club Finchley 2"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Paddington Sports Club 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/team/87",
+          "position": 0,
+          "of": 0,
+          "played": 8,
+          "won": 0,
+          "lost": 0,
+          "points": 0,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ],
+          "standings": [],
+          "results": [
+            {
+              "home": "Round 1 • Sun 26/10/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "Headstone Lawn Tennis Club 1"
+            },
+            {
+              "home": "Round 1 • Sun 26/10/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "Headstone Lawn Tennis Club 1"
+            },
+            {
+              "home": "Round 2 • Sun 09/11/2025 Not played Eastcote Lawn Tennis Club 1",
+              "homeScore": 0,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 2 • Sun 09/11/2025 Not played Eastcote Lawn Tennis Club 1",
+              "homeScore": 0,
+              "awayScore": 0,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 4 • Sun 14/12/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "David Lloyd Club Finchley 2"
+            },
+            {
+              "home": "Round 4 • Sun 14/12/2025 L Paddington Sports Club 1",
+              "homeScore": 0,
+              "awayScore": 6,
+              "away": "David Lloyd Club Finchley 2"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Open Womens\n – Open Womens Div 1              – Group 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/draw/38",
+          "position": 1,
+          "of": 6,
+          "played": 1,
+          "won": 5,
+          "lost": 5,
+          "points": 66,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "W",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Paddington Sports Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 5,
+              "sets": "44-14",
+              "points": 66
+            },
+            {
+              "rank": 1,
+              "name": "Finsbury Park 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "36-24",
+              "points": 55
+            },
+            {
+              "rank": 1,
+              "name": "The Hurlingham Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 3,
+              "sets": "34-26",
+              "points": 53
+            },
+            {
+              "rank": 1,
+              "name": "Highgate Cricket and Lawn Tennis Club 1",
+              "played": 1,
+              "won": 5,
+              "lost": 2,
+              "sets": "22-38",
+              "points": 44
+            },
+            {
+              "rank": 1,
+              "name": "David Lloyd Club Finchley 1",
+              "played": 1,
+              "won": 5,
+              "lost": 1,
+              "sets": "24-34",
+              "points": 49
+            },
+            {
+              "rank": 1,
+              "name": "Virgin Active Chiswick Riverside 1",
+              "played": 1,
+              "won": 5,
+              "lost": 1,
+              "sets": "18-42",
+              "points": 35
+            }
+          ],
+          "results": [
+            {
+              "home": "Sun 12/10/2025 Paddington Sports Club 1",
+              "homeScore": 10,
+              "awayScore": 2,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Sun 12/10/2025 Paddington Sports Club 1",
+              "homeScore": 10,
+              "awayScore": 2,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Sun 26/10/2025 Finsbury Park 1",
+              "homeScore": 4,
+              "awayScore": 8,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 26/10/2025 Finsbury Park 1",
+              "homeScore": 4,
+              "awayScore": 8,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Sun 23/11/2025 Paddington Sports Club 1",
+              "homeScore": 6,
+              "awayScore": 4,
+              "away": "David Lloyd Club Finchley 1"
+            },
+            {
+              "home": "Sun 23/11/2025 Paddington Sports Club 1",
+              "homeScore": 6,
+              "awayScore": 4,
+              "away": "David Lloyd Club Finchley 1"
+            }
+          ],
+          "fixtures": []
+        },
+        {
+          "name": "Paddington Sports Club 1",
+          "division": "LTA - Tennis for Britain",
+          "leagueUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/team/177",
+          "position": 0,
+          "of": 0,
+          "played": 10,
+          "won": 0,
+          "lost": 0,
+          "points": 0,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "W",
+            "W"
+          ],
+          "standings": [],
+          "results": [
+            {
+              "home": "Round 1 • Sun 12/10/2025 W Paddington Sports Club 1",
+              "homeScore": 10,
+              "awayScore": 2,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Round 1 • Sun 12/10/2025 W Paddington Sports Club 1",
+              "homeScore": 10,
+              "awayScore": 2,
+              "away": "The Hurlingham Club 1"
+            },
+            {
+              "home": "Round 2 • Sun 26/10/2025 W Finsbury Park 1",
+              "homeScore": 4,
+              "awayScore": 8,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 2 • Sun 26/10/2025 W Finsbury Park 1",
+              "homeScore": 4,
+              "awayScore": 8,
+              "away": "Paddington Sports Club 1"
+            },
+            {
+              "home": "Round 3 • Sun 23/11/2025 W Paddington Sports Club 1",
+              "homeScore": 6,
+              "awayScore": 4,
+              "away": "David Lloyd Club Finchley 1"
+            },
+            {
+              "home": "Round 3 • Sun 23/11/2025 W Paddington Sports Club 1",
+              "homeScore": 6,
+              "awayScore": 4,
+              "away": "David Lloyd Club Finchley 1"
+            }
+          ],
+          "fixtures": []
         }
       ]
     }
