@@ -94,7 +94,7 @@ async function findTeamLinks(page, clubUrl) {
   await acceptCookies(page);
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
   await page.waitForTimeout(1500);
-  if (DEBUG && drawDumpCount < 1) await dumpDebug(page, "club");
+  if (DEBUG) await dumpDebug(page, "club");
 
   const links = await page.$$eval("a[href]", (as) =>
     as.map((a) => ({ href: a.href, text: a.textContent.trim() }))
@@ -312,7 +312,11 @@ async function main() {
       for (const link of drawLinks) {
         try {
           const draw = await scrapeDraw(page, link);
-          if (!draw.standings.length) { log("skip (no standings):", link.href); continue; }
+          if (!draw.standings.length) {
+            log("skip (no standings):", link.href);
+            if (DEBUG) await dumpDebug(page, "draw-empty");
+            continue;
+          }
           const team = buildTeam(draw);
           teams.push(team);
           log(`  ok: ${src.leagueName} ← ${team.name} | ${team.division} (${draw.standings.length} rows)`);
