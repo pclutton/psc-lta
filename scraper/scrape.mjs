@@ -102,7 +102,10 @@ async function findTeamLinks(page) {
   );
   const seen = new Set();
   const teamLinks = links.filter((l) => {
-    const m = /\/(draw|team|event)\//i.test(l.href);
+    // Only the /draw/ links — these are the division/group standings pages, which
+    // already contain PSC's row. The parallel /team/ links are duplicates with no
+    // standings table, so we skip them.
+    const m = /\/draw\//i.test(l.href);
     if (!m || seen.has(l.href)) return false;
     seen.add(l.href);
     return true;
@@ -112,10 +115,12 @@ async function findTeamLinks(page) {
 }
 
 // Parse one division/draw page into { division, standings[], matches[] }.
+let drawDumpCount = 0;
 async function scrapeDraw(page, link) {
   await page.goto(link.href, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
   await page.waitForTimeout(1200);
+  if (DEBUG && drawDumpCount < 2) { drawDumpCount++; await dumpDebug(page, "draw"); }
 
   const data = await page.evaluate(() => {
     const txt = (el) => (el ? el.textContent.replace(/\s+/g, " ").trim() : "");
@@ -173,13 +178,31 @@ function classify(name) {
   return def || cfg.competitionRules[cfg.competitionRules.length - 1];
 }
 
+// Turn a club-page link label like
+//   "14U Boys – 14U Boys - Div 1 – Group 1"
+// into { name: "14U Boys", division: "Division 1 · Group 1" }.
+function parseLabel(raw) {
+  const label = (raw || "").replace(/\s+/g, " ").trim();
+  const segs = label.split("–").map((s) => s.trim()).filter(Boolean);
+  const name = segs[0] || label || "Team";
+  const divPart = segs.find((s) => /div/i.test(s)) || "";
+  const grpPart = segs.find((s) => /group/i.test(s)) || "";
+  let division = [
+    divPart.replace(/.*?(div\b)/i, "$1").replace(/div\b/i, "Division"),
+    grpPart,
+  ].filter(Boolean).join(" · ").replace(/\s+/g, " ").trim();
+  if (!division) division = segs.slice(1).join(" · ");
+  return { name, division };
+}
+
 function buildTeam(draw) {
   const standings = (draw.standings || []).filter((r) => r.name);
   const me = standings.find((r) => isPsc(r.name));
   const myResults = (draw.matches || []).filter((m) => isPsc(m.home) || isPsc(m.away));
+  const { name, division } = parseLabel(draw.teamLabel || draw.division);
   return {
-    name: draw.teamLabel || draw.division || "Team",
-    division: draw.division || "",
+    name,
+    division,
     leagueUrl: draw.url,
     position: me ? me.rank : 0,
     of: standings.length,
