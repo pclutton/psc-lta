@@ -9,5 +9,9 @@
     { "id": "cup", "name": "Cup competitions", "match": ["cup"], "status": "current" },
     { "id": "league", "name": "Middlesex League", "match": ["league", "div", "group"], "status": "current" }
   ],
-  "defaultCompetition": "league"
+  "defaultCompetition": "league",
+  "discovery": {
+    "groupUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
+    "year": "2026"
+  }
 }

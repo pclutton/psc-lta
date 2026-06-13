@@ -149,9 +149,7 @@ async function scrapeDraw(page, link) {
       standings = rows.map((r) => {
         const cells = [...r.querySelectorAll("td")].map(txt);
         const name = cells[ix.team] || "";
-        const form = ix.hist >= 0
-          ? (cells[ix.hist].match(/[WLD]/gi) || []).map((x) => x.toUpperCase())
-          : [];
+        const form = ((ix.hist >= 0 && cells[ix.hist]) || "").match(/[WLD]/gi)?.map((x) => x.toUpperCase()) || [];
         rank += 1;
         return {
           rank,
@@ -231,6 +229,17 @@ async function main() {
   const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; PSC-results-bot/1.0)" });
   try {
     await maybeLogin(page);
+
+    // One-off: capture the county group page so we can map how all of the club's
+    // leagues are listed (for multi-league discovery). DEBUG only.
+    if (DEBUG && cfg.discovery?.groupUrl) {
+      const url = cfg.discovery.groupUrl + (cfg.discovery.year ? `?LeagueFilterYear=${cfg.discovery.year}` : "");
+      await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
+      await acceptCookies(page);
+      await page.waitForTimeout(1500);
+      await dumpDebug(page, "group");
+    }
+
     const links = await findTeamLinks(page);
     if (!links.length) {
       await dumpDebug(page, "club-no-links");
