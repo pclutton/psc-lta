@@ -226,12 +226,17 @@ async function discoverSources(page) {
         if (input) {
           await input.click();
           await input.type(clubQuery, { delay: 40 });
-          await page.waitForTimeout(2500);
+          // Suggestions are <li data-asg-href="/league/…/club/{id}" data-asg-title="…">
+          await page.waitForSelector("[data-asg-href]", { timeout: 6000 }).catch(() => {});
+          await page.waitForTimeout(400);
           if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
           clubId = await page.evaluate(() => {
-            const links = [...document.querySelectorAll("a[href]")].filter((a) => /\/club\/\d+/.test(a.href));
-            const pick = links.find((a) => /paddington/i.test(a.textContent)) || links[0];
-            return pick ? (pick.href.match(/\/club\/(\d+)/) || [])[1] : null;
+            const items = [...document.querySelectorAll("[data-asg-href]")];
+            const isClub = (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "");
+            const pick = items.find((el) => isClub(el) && /paddington/i.test(el.getAttribute("data-asg-title") || ""))
+              || items.find(isClub);
+            const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
+            return m ? m[1] : null;
           });
         }
         if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
