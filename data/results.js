@@ -1,4 +1,4 @@
-{
+window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "Summer 2026",
   "sourceUrl": "https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24",
@@ -181,4 +181,4 @@
       ]
     }
   ]
-}
+};

@@ -190,6 +190,7 @@
   </div>
 </footer>
 
+<script src="data/results.js"></script>
 <script>
 const statusLabel = {promo:"Top half", mid:"Mid-table", releg:"Bottom"};
 const $ = s => document.querySelector(s);
@@ -302,13 +303,12 @@ function boot(data){
   selectComp(firstCurrent >= 0 ? firstCurrent : 0);
 }
 
-fetch("./data/results.json", {cache:"no-store"})
-  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
-  .then(boot)
-  .catch(err=>{
-    document.querySelector("main").insertAdjacentHTML("afterbegin",
-      `<div class="banner" style="background:#fbe9e9;border-color:#e3b0b0;color:#8a2b2b">Could not load results data (${err}). Check that <code>data/results.json</code> exists.</div>`);
-  });
+if (window.__PSC_RESULTS__) {
+  boot(window.__PSC_RESULTS__);
+} else {
+  document.querySelector("main").insertAdjacentHTML("afterbegin",
+    `<div class="banner" style="background:#fbe9e9;border-color:#e3b0b0;color:#8a2b2b">Could not load <code>data/results.js</code>. Make sure it sits next to this page.</div>`);
+}
 </script>
 </body>
 </html>

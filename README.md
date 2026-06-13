@@ -21,19 +21,21 @@ that matches the club's look, and refreshes itself automatically.
 ## How it works
 
 ```
-LTA site ──(nightly scraper)──▶ data/results.json ──▶ index.html (the page)
-            GitHub Actions          committed to repo      GitHub Pages
+LTA site ──(nightly scraper)──▶ data/results.js ──▶ index.html (the page)
+            GitHub Actions          committed to repo     GitHub Pages
 ```
 
 - **`index.html`** — the whole page. No build step, no framework. It reads
-  `data/results.json` and renders tabs (Summer League / Winter Floodlit / Cups),
+  `data/results.js` and renders tabs (Summer League / Winter Floodlit / Cups),
   a card per team, and a standings + results + fixtures panel for the selected team.
-- **`data/results.json`** — the data. This is the *only* file that changes between
-  updates. It currently holds **sample data** (clearly labelled on the page) so the
-  layout is visible before the live feed is switched on.
+  Because the data is a small `<script>` rather than a `fetch()`, the page also
+  opens by double-clicking the file — no server needed.
+- **`data/results.js`** — the data, as `window.__PSC_RESULTS__ = { … }`. This is the
+  *only* file that changes between updates. It currently holds **sample data**
+  (clearly labelled on the page) so the layout is visible before the live feed is on.
 - **`scraper/`** — a Node + Playwright script that drives a headless browser,
   accepts the LTA cookie wall, reads the rendered results, and writes
-  `data/results.json`. It **fails safe**: if a run finds no teams it leaves the
+  `data/results.js`. It **fails safe**: if a run finds no teams it leaves the
   existing data untouched rather than blanking the page.
 - **`.github/workflows/update-results.yml`** — runs the scraper nightly (and on
   demand), commits any changes, and redeploys the page to GitHub Pages.
@@ -41,9 +43,10 @@ LTA site ──(nightly scraper)──▶ data/results.json ──▶ index.html
 ## Two ways to keep it updated
 
 1. **Automated (default).** The GitHub Action runs every night. Nothing to do.
-2. **Manual fallback.** Anyone can edit `data/results.json` directly on GitHub
-   (pencil icon → commit). The page updates within a minute or two. Handy if the
-   club ever wants to correct a score or the scraper needs a break.
+2. **Manual fallback.** Anyone can edit `data/results.js` directly on GitHub
+   (pencil icon → commit) — it's just `window.__PSC_RESULTS__ = { … }` wrapping the
+   data. The page updates within a minute or two. Handy if the club ever wants to
+   correct a score or the scraper needs a break.
 
 ## Connecting the live LTA feed (one-time)
 
@@ -59,7 +62,7 @@ DEBUG=1 npm run scrape # writes scraper/debug/*.html and ../data/results.json
 
 Open the files in `scraper/debug/` to confirm the standings-table and match-row
 selectors in `scrape.mjs` (search for the `CONFIRM` comments). Once a local run
-produces a correct `data/results.json`, the nightly Action will do the same.
+produces a correct `data/results.js`, the nightly Action will do the same.
 
 Until then, the page runs happily on the sample data in `data/results.json`.
 

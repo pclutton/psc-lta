@@ -1,6 +1,6 @@
 name: Update results & deploy
 
-# Refreshes data/results.json from the LTA site, then publishes the site to
+# Refreshes data/results.js from the LTA site, then publishes the site to
 # GitHub Pages. Runs nightly, on every push to main, and on manual request.
 on:
   schedule:
@@ -44,8 +44,8 @@ jobs:
         run: |
           git config user.name "psc-results-bot"
           git config user.email "actions@users.noreply.github.com"
-          if ! git diff --quiet -- data/results.json; then
-            git add data/results.json
+          if ! git diff --quiet -- data/results.js; then
+            git add data/results.js
             git commit -m "chore: refresh LTA results [skip ci]"
             git push
           else

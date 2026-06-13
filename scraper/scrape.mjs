@@ -2,10 +2,11 @@
 // -----------------------------------------------------------------------------
 // Drives a headless Chromium browser (via Playwright) to read the club's results
 // from the LTA / TournamentSoftware competition site, which has no public API and
-// gates content behind a cookie-consent wall. Output: ../data/results.json.
+// gates content behind a cookie-consent wall. Output: ../data/results.js (a JS
+// global, so the page also opens straight from disk via file://).
 //
 // Design goals:
-//   * Fail safe  - if a run produces no teams, the existing results.json is kept.
+//   * Fail safe  - if a run produces no teams, the existing results.js is kept.
 //   * Debuggable - on failure (or with DEBUG=1) the rendered HTML is saved to
 //                  scraper/debug/ so the selectors below can be confirmed/tuned.
 //
@@ -23,7 +24,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(__dirname, "../data/results.json");
+const OUT = resolve(__dirname, "../data/results.js");
 const DEBUG_DIR = resolve(__dirname, "debug");
 const DEBUG = process.env.DEBUG === "1";
 
@@ -234,7 +235,8 @@ async function main() {
       sample: false,
       competitions,
     };
-    await writeFile(OUT, JSON.stringify(out, null, 2) + "\n", "utf8");
+    // Written as a JS global (not bare JSON) so the page also works from file://
+    await writeFile(OUT, "window.__PSC_RESULTS__ = " + JSON.stringify(out, null, 2) + ";\n", "utf8");
     log(`wrote ${OUT} — ${totalTeams} teams across ${competitions.length} competitions`);
   } finally {
     await browser.close();
