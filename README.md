@@ -26,19 +26,29 @@ LTA site ──(nightly scraper)──▶ data/results.js ──▶ index.html (
 ```
 
 - **`index.html`** — the whole page. No build step, no framework. It reads
-  `data/results.js` and renders tabs (Summer League / Winter Floodlit / Cups),
-  a card per team, and a standings + results + fixtures panel for the selected team.
-  Because the data is a small `<script>` rather than a `fetch()`, the page also
-  opens by double-clicking the file — no server needed.
+  `data/results.js` and renders one tab per competition, a card per team, and a
+  standings panel (Paddington highlighted) for the selected team. Because the data
+  is a small `<script>` rather than a `fetch()`, the page also opens by
+  double-clicking the file — no server needed.
 - **`data/results.js`** — the data, as `window.__PSC_RESULTS__ = { … }`. This is the
-  *only* file that changes between updates. It currently holds **sample data**
-  (clearly labelled on the page) so the layout is visible before the live feed is on.
-- **`scraper/`** — a Node + Playwright script that drives a headless browser,
-  accepts the LTA cookie wall, reads the rendered results, and writes
-  `data/results.js`. It **fails safe**: if a run finds no teams it leaves the
-  existing data untouched rather than blanking the page.
+  *only* file that changes between updates, written by the scraper.
+- **`scraper/`** — a Node + Playwright script that drives a headless browser and
+  solves the "LTA is hard to navigate" problem automatically: it reads the county
+  group directory for the year, finds every league **Paddington Sports Club** is
+  entered in (via each league's search box), then scrapes every division's standings.
+  It **fails safe**: if a run finds no teams it leaves the existing data untouched
+  rather than blanking the page.
+- **`scraper/config.json`** — the club name, the county `discovery` group URL + year,
+  and the search term. No league GUIDs to maintain — they're discovered each run.
 - **`.github/workflows/update-results.yml`** — runs the scraper nightly (and on
   demand), commits any changes, and redeploys the page to GitHub Pages.
+
+### Which competitions appear
+
+Whatever the club is currently entered in that has a league table. As of the 2026
+season that's the **Middlesex Youth & National League** and the **Middlesex Summer
+League** (Men's & Women's Doubles across divisions). The **Middlesex Summer Cup** is
+a knockout with no table, so it's not shown yet (a possible future addition).
 
 ## Two ways to keep it updated
 
@@ -48,23 +58,20 @@ LTA site ──(nightly scraper)──▶ data/results.js ──▶ index.html (
    data. The page updates within a minute or two. Handy if the club ever wants to
    correct a score or the scraper needs a break.
 
-## Connecting the live LTA feed (one-time)
+## The live LTA feed
 
-The scraper is written generically, but the LTA site is a single-page app whose
-markup isn't a public API, so the extraction selectors need a quick one-time
-confirmation against the live page:
+The feed is **live** — the GitHub Action scrapes the real LTA competition site and
+the page shows actual standings. To run the scraper locally (e.g. to debug):
 
 ```bash
 cd scraper
 npm install            # installs Playwright + a headless Chromium
-DEBUG=1 npm run scrape # writes scraper/debug/*.html and ../data/results.json
+npm run scrape         # writes ../data/results.js
+DEBUG=1 npm run scrape # also dumps page HTML to scraper/debug/ for inspection
 ```
 
-Open the files in `scraper/debug/` to confirm the standings-table and match-row
-selectors in `scrape.mjs` (search for the `CONFIRM` comments). Once a local run
-produces a correct `data/results.js`, the nightly Action will do the same.
-
-Until then, the page runs happily on the sample data in `data/results.json`.
+If the LTA ever changes its page markup, re-run with `DEBUG=1` and inspect
+`scraper/debug/*.html` to adjust the selectors in `scrape.mjs`.
 
 ### Login: not normally needed
 

@@ -29,7 +29,6 @@ const DEBUG_DIR = resolve(__dirname, "debug");
 const DEBUG = process.env.DEBUG === "1";
 
 const cfg = JSON.parse(await readFile(resolve(__dirname, "config.json"), "utf8"));
-const clubUrl = `${cfg.baseUrl}/league/${cfg.leagueId}/club/${cfg.clubId}`;
 
 const log = (...a) => console.log("[scrape]", ...a);
 const isPsc = (name) => name && name.toLowerCase().includes("paddington");
@@ -247,8 +246,8 @@ async function discoverSources(page) {
       } catch (e) { log("  league probe failed:", lg.id, e.message); }
     }
   }
-  if (!out.length && cfg.leagueId && cfg.clubId) {
-    out.push({ leagueId: cfg.leagueId, leagueName: cfg.season, clubId: cfg.clubId });
+  if (!out.length && cfg.fallbackLeagueId && cfg.fallbackClubId) {
+    out.push({ leagueId: cfg.fallbackLeagueId, leagueName: cfg.season, clubId: cfg.fallbackClubId });
   }
   return out;
 }
@@ -344,7 +343,7 @@ async function main() {
     const out = {
       clubName: cfg.clubName,
       season: cfg.discovery?.year || cfg.season,
-      sourceUrl: cfg.discovery?.groupUrl || clubUrl,
+      sourceUrl: cfg.discovery?.groupUrl || cfg.baseUrl,
       generatedAt: new Date().toISOString(),
       sample: false,
       competitions,

@@ -1,18 +1,12 @@
 {
   "clubName": "Paddington Sports Club",
-  "leagueId": "02BEA8E0-F625-4D3F-91F3-458209D3FE47",
-  "clubId": "24",
   "baseUrl": "https://competitions.lta.org.uk",
   "season": "2026",
-  "competitionRules": [
-    { "id": "winter", "name": "Winter Floodlit League", "match": ["floodlit", "winter"], "status": "completed" },
-    { "id": "cup", "name": "Cup competitions", "match": ["cup"], "status": "current" },
-    { "id": "league", "name": "Middlesex League", "match": ["league", "div", "group"], "status": "current" }
-  ],
-  "defaultCompetition": "league",
   "discovery": {
     "groupUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
     "year": "2026",
     "clubSearch": "Paddington Sports Club"
-  }
+  },
+  "fallbackLeagueId": "02BEA8E0-F625-4D3F-91F3-458209D3FE47",
+  "fallbackClubId": "24"
 }
