@@ -88,15 +88,14 @@ async function maybeLogin(page) {
   } catch (e) { log("login attempt failed (continuing anonymously):", e.message); }
 }
 
-// Collect links from the club page to each team's division/draw page.
-async function findTeamLinks(page) {
+// Collect links from a club page to each team's division/draw page.
+async function findTeamLinks(page, clubUrl) {
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
   await page.waitForTimeout(1500);
-  if (DEBUG) await dumpDebug(page, "club");
+  if (DEBUG && drawDumpCount < 1) await dumpDebug(page, "club");
 
-  // CONFIRM: club page lists each team with a link into its draw/standings.
   const links = await page.$$eval("a[href]", (as) =>
     as.map((a) => ({ href: a.href, text: a.textContent.trim() }))
   );
@@ -148,19 +147,24 @@ async function scrapeDraw(page, link) {
       let rank = 0;
       standings = rows.map((r) => {
         const cells = [...r.querySelectorAll("td")].map(txt);
-        const name = cells[ix.team] || "";
-        const form = ((ix.hist >= 0 && cells[ix.hist]) || "").match(/[WLD]/gi)?.map((x) => x.toUpperCase()) || [];
+        // Body rows may omit a leading column the header has (e.g. a blank rank
+        // cell), so align body cells to header indices by the team-name column.
+        const bodyTeamIdx = cells.findIndex((c) => /[a-z]{3,}/i.test(c));
+        const off = (bodyTeamIdx >= 0 ? bodyTeamIdx : ix.team) - ix.team;
+        const at = (hi) => (hi >= 0 ? cells[hi + off] : undefined);
+        const name = at(ix.team) || cells[bodyTeamIdx] || "";
+        const histCell = at(ix.hist) || cells.find((c) => /^[\sWLD]+$/.test(c) && /[WLD]/.test(c)) || "";
         rank += 1;
         return {
           rank,
           name,
-          played: num(cells[ix.pl]),
-          won: num(cells[ix.w]),
-          drawn: ix.d >= 0 ? num(cells[ix.d]) : 0,
-          lost: num(cells[ix.l]),
-          rubbers: ix.r >= 0 ? cells[ix.r] : "",
-          points: num(cells[ix.pts]),
-          form,
+          played: num(at(ix.pl)),
+          won: num(at(ix.w)),
+          drawn: ix.d >= 0 ? num(at(ix.d)) : 0,
+          lost: num(at(ix.l)),
+          rubbers: ix.r >= 0 ? (at(ix.r) || "") : "",
+          points: num(at(ix.pts)),
+          form: (histCell.match(/[WLD]/gi) || []).map((x) => x.toUpperCase()),
         };
       }).filter((row) => /[a-z]{3,}/i.test(row.name));
       if (standings.length) break;
@@ -174,13 +178,59 @@ async function scrapeDraw(page, link) {
   return data;
 }
 
-function classify(name) {
-  const hay = (name || "").toLowerCase();
-  for (const rule of cfg.competitionRules) {
-    if (rule.match.some((k) => hay.includes(k))) return rule;
+// A league is "current" for the configured discovery year; an older year = done.
+function leagueStatus(name) {
+  const n = (name || "").toLowerCase();
+  const year = cfg.discovery?.year;
+  const m = n.match(/\b(20\d\d)\b/);
+  if (year && m && +m[1] < +year) return "completed";
+  return "current";
+}
+
+// Discover every league the club appears in. Reads the county group page for the
+// year, then probes each league for a link to the club, returning the league id +
+// the club's id within that league. Falls back to the single configured league.
+let leagueDumpCount = 0;
+async function discoverSources(page) {
+  const out = [];
+  if (cfg.discovery?.groupUrl) {
+    const url = cfg.discovery.groupUrl + (cfg.discovery.year ? `?LeagueFilterYear=${cfg.discovery.year}` : "");
+    await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
+    await acceptCookies(page);
+    await page.waitForTimeout(1500);
+    if (DEBUG) await dumpDebug(page, "group");
+
+    const leagues = await page.$$eval("a[href*='/league/']", (as) => {
+      const seen = {}, res = [];
+      for (const a of as) {
+        const m = a.href.match(/\/league\/([0-9A-Fa-f-]{36})(?:[/?#]|$)/);
+        const name = a.textContent.replace(/\s+/g, " ").trim();
+        if (m && name && name.length > 4 && !seen[m[1]]) { seen[m[1]] = 1; res.push({ id: m[1], name }); }
+      }
+      return res;
+    });
+    log(`discovery: ${leagues.length} leagues listed for ${cfg.discovery.year}`);
+
+    for (const lg of leagues) {
+      try {
+        await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page);
+        await page.waitForTimeout(1000);
+        if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league"); }
+        const clubId = await page.evaluate(() => {
+          const a = [...document.querySelectorAll("a[href]")]
+            .find((a) => /paddington/i.test(a.textContent) && /\/club\/\d+/.test(a.href));
+          return a ? (a.href.match(/\/club\/(\d+)/) || [])[1] : null;
+        });
+        if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
+        else log(`  · ${lg.name} → club not found`);
+      } catch (e) { log("  league probe failed:", lg.id, e.message); }
+    }
   }
-  const def = cfg.competitionRules.find((r) => r.id === cfg.defaultCompetition);
-  return def || cfg.competitionRules[cfg.competitionRules.length - 1];
+  if (!out.length && cfg.leagueId && cfg.clubId) {
+    out.push({ leagueId: cfg.leagueId, leagueName: cfg.season, clubId: cfg.clubId });
+  }
+  return out;
 }
 
 // Turn a club-page link label like
@@ -230,37 +280,38 @@ async function main() {
   try {
     await maybeLogin(page);
 
-    // One-off: capture the county group page so we can map how all of the club's
-    // leagues are listed (for multi-league discovery). DEBUG only.
-    if (DEBUG && cfg.discovery?.groupUrl) {
-      const url = cfg.discovery.groupUrl + (cfg.discovery.year ? `?LeagueFilterYear=${cfg.discovery.year}` : "");
-      await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
-      await acceptCookies(page);
-      await page.waitForTimeout(1500);
-      await dumpDebug(page, "group");
+    const sources = await discoverSources(page);
+    if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
+    log(`scraping ${sources.length} competition(s)`);
+
+    const competitions = [];
+    for (const src of sources) {
+      const clubUrl = `${cfg.baseUrl}/league/${src.leagueId}/club/${src.clubId}`;
+      let drawLinks = [];
+      try { drawLinks = await findTeamLinks(page, clubUrl); }
+      catch (e) { log("club page failed:", clubUrl, e.message); continue; }
+
+      const teams = [];
+      for (const link of drawLinks) {
+        try {
+          const draw = await scrapeDraw(page, link);
+          if (!draw.standings.length) { log("skip (no standings):", link.href); continue; }
+          const team = buildTeam(draw);
+          teams.push(team);
+          log(`  ok: ${src.leagueName} ← ${team.name} | ${team.division} (${draw.standings.length} rows)`);
+        } catch (e) { log("draw failed:", link.href, e.message); }
+      }
+      if (teams.length) {
+        competitions.push({
+          id: src.leagueId.slice(0, 8).toLowerCase(),
+          name: src.leagueName,
+          status: leagueStatus(src.leagueName),
+          teams,
+        });
+      }
     }
 
-    const links = await findTeamLinks(page);
-    if (!links.length) {
-      await dumpDebug(page, "club-no-links");
-      throw new Error("No team links found on the club page — selectors need confirming (see scraper/debug/).");
-    }
-
-    const buckets = new Map(cfg.competitionRules.map((r) => [r.id, { id: r.id, name: r.name, status: r.status || "current", teams: [] }]));
-    for (const link of links) {
-      try {
-        const draw = await scrapeDraw(page, link);
-        if (!draw.standings.length) { log("skip (no standings):", link.href); continue; }
-        const team = buildTeam(draw);
-        const rule = classify(team.name + " " + team.division);
-        buckets.get(rule.id).teams.push(team);
-        log("ok:", rule.id, "←", team.name, "|", team.division, `(${draw.standings.length} rows)`);
-      } catch (e) { log("draw failed:", link.href, e.message); }
-    }
-
-    const competitions = [...buckets.values()].filter((c) => c.teams.length);
     const totalTeams = competitions.reduce((n, c) => n + c.teams.length, 0);
-
     if (totalTeams === 0) {
       await dumpDebug(page, "no-teams");
       throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
@@ -268,8 +319,8 @@ async function main() {
 
     const out = {
       clubName: cfg.clubName,
-      season: cfg.season,
-      sourceUrl: clubUrl,
+      season: cfg.discovery?.year || cfg.season,
+      sourceUrl: cfg.discovery?.groupUrl || clubUrl,
       generatedAt: new Date().toISOString(),
       sample: false,
       competitions,
