@@ -4,7 +4,7 @@ A simple, branded web page that shows **Paddington Sports Club's** Middlesex Lea
 and Cup tennis results in one place, so members don't have to navigate the LTA
 competition site. Built as a working prototype / proposal for the club.
 
-**Live demo:** https://pclutton.github.io/psc-tennis/
+**Live demo:** https://pclutton.github.io/psc-lta/
 
 ![A green-and-white results page with team cards and a league standings table]
 
