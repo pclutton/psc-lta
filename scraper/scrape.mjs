@@ -211,19 +211,31 @@ async function discoverSources(page) {
     });
     log(`discovery: ${leagues.length} leagues listed for ${cfg.discovery.year}`);
 
+    const clubQuery = cfg.discovery.clubSearch || cfg.clubName;
     for (const lg of leagues) {
       try {
         await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
         await acceptCookies(page);
-        await page.waitForTimeout(1000);
-        if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league"); }
-        const clubId = await page.evaluate(() => {
-          const a = [...document.querySelectorAll("a[href]")]
-            .find((a) => /paddington/i.test(a.textContent) && /\/club\/\d+/.test(a.href));
-          return a ? (a.href.match(/\/club\/(\d+)/) || [])[1] : null;
-        });
+        await page.waitForTimeout(800);
+
+        // The league landing page has no club list — just an autosuggest search box
+        // (#Query → /LeagueHome/DoSearch). Type the club name and read the result's
+        // /club/{id} link.
+        let clubId = null;
+        const input = await page.$('#Query, input[name="Query"]');
+        if (input) {
+          await input.click();
+          await input.type(clubQuery, { delay: 40 });
+          await page.waitForTimeout(2500);
+          if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
+          clubId = await page.evaluate(() => {
+            const links = [...document.querySelectorAll("a[href]")].filter((a) => /\/club\/\d+/.test(a.href));
+            const pick = links.find((a) => /paddington/i.test(a.textContent)) || links[0];
+            return pick ? (pick.href.match(/\/club\/(\d+)/) || [])[1] : null;
+          });
+        }
         if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
-        else log(`  · ${lg.name} → club not found`);
+        else log(`  · ${lg.name} → club not found in search`);
       } catch (e) { log("  league probe failed:", lg.id, e.message); }
     }
   }

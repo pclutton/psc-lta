@@ -12,6 +12,7 @@
   "defaultCompetition": "league",
   "discovery": {
     "groupUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-    "year": "2026"
+    "year": "2026",
+    "clubSearch": "Paddington"
   }
 }
