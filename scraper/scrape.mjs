@@ -174,73 +174,100 @@ async function scrapeDraw(page, link) {
   return data;
 }
 
-// A league is "current" for the configured discovery year; an older year = done.
+// Decide if a league is still running from its name's season + year vs today.
+// Rough active windows: summer ~Apr–Sep of its year; winter ~Oct of its year to
+// Apr of the next. Anything clearly past is "completed" (shown with a Finished tag).
 function leagueStatus(name) {
   const n = (name || "").toLowerCase();
-  const year = cfg.discovery?.year;
-  const m = n.match(/\b(20\d\d)\b/);
-  if (year && m && +m[1] < +year) return "completed";
+  const now = new Date();
+  const y = now.getFullYear();
+  const month = now.getMonth() + 1; // 1–12
+  const yr = +((n.match(/\b(20\d\d)\b/) || [])[1] || y);
+  if (/winter|floodlit/.test(n)) {
+    // Winter YR runs into YR+1; done once we're past spring of the following year.
+    return (y < yr + 1 || (y === yr + 1 && month <= 4)) ? "current" : "completed";
+  }
+  // Summer / cup / youth: done after its own year, or late in its own year.
+  if (yr < y) return "completed";
+  if (yr === y && month >= 11) return "completed";
   return "current";
 }
 
-// Discover every league the club appears in. Reads the county group page for the
-// year, then probes each league for a link to the club, returning the league id +
-// the club's id within that league. Falls back to the single configured league.
+// Which year filters to crawl on the county group page. With year "auto" (or
+// unset) this advances itself: always the current calendar year, plus the
+// previous year's WINTER leagues during Jan–Apr (winter seasons span the new
+// year). Set a fixed year in config to override (handy for testing).
+function discoveryTargets() {
+  const set = cfg.discovery?.year;
+  if (set && set !== "auto") return [{ year: String(set), winterOnly: false }];
+  const now = new Date();
+  const y = now.getFullYear();
+  const targets = [{ year: String(y), winterOnly: false }];
+  if (now.getMonth() <= 3) targets.push({ year: String(y - 1), winterOnly: true });
+  return targets;
+}
+
+// Find the club within one league via its autosuggest search box
+// (#Query → /LeagueHome/DoSearch). Returns the club id or null.
 let leagueDumpCount = 0;
+async function probeClub(page, lg, clubQuery) {
+  await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
+  await acceptCookies(page);
+  await page.waitForTimeout(800);
+  const input = await page.$('#Query, input[name="Query"]');
+  if (!input) return null;
+  await input.click();
+  await input.type(clubQuery, { delay: 40 });
+  // Suggestions are <li data-asg-href="/league/…/club/{id}" data-asg-title="…">
+  await page.waitForSelector("[data-asg-href]", { timeout: 6000 }).catch(() => {});
+  await page.waitForTimeout(400);
+  if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
+  // Match the FULL club name — "Paddington" alone also hits "Paddington Recreation Ground".
+  return page.evaluate((clubName) => {
+    const want = clubName.toLowerCase();
+    const pick = [...document.querySelectorAll("[data-asg-href]")].find(
+      (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "") &&
+        (el.getAttribute("data-asg-title") || "").toLowerCase().includes(want)
+    );
+    const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
+    return m ? m[1] : null;
+  }, clubQuery);
+}
+
+// Discover every league the club is in across the rolling year window, then find
+// the club's id within each. Falls back to a single configured league.
 async function discoverSources(page) {
   const out = [];
+  const seenLeague = new Set();
+  const clubQuery = cfg.discovery?.clubSearch || cfg.clubName;
   if (cfg.discovery?.groupUrl) {
-    const url = cfg.discovery.groupUrl + (cfg.discovery.year ? `?LeagueFilterYear=${cfg.discovery.year}` : "");
-    await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
-    await acceptCookies(page);
-    await page.waitForTimeout(1500);
-    if (DEBUG) await dumpDebug(page, "group");
+    for (const tgt of discoveryTargets()) {
+      await page.goto(`${cfg.discovery.groupUrl}?LeagueFilterYear=${tgt.year}`, { waitUntil: "networkidle", timeout: 60000 });
+      await acceptCookies(page);
+      await page.waitForTimeout(1500);
+      if (DEBUG) await dumpDebug(page, "group");
 
-    const leagues = await page.$$eval("a[href*='/league/']", (as) => {
-      const seen = {}, res = [];
-      for (const a of as) {
-        const m = a.href.match(/\/league\/([0-9A-Fa-f-]{36})(?:[/?#]|$)/);
-        const name = a.textContent.replace(/\s+/g, " ").trim();
-        if (m && name && name.length > 4 && !seen[m[1]]) { seen[m[1]] = 1; res.push({ id: m[1], name }); }
-      }
-      return res;
-    });
-    log(`discovery: ${leagues.length} leagues listed for ${cfg.discovery.year}`);
-
-    const clubQuery = cfg.discovery.clubSearch || cfg.clubName;
-    for (const lg of leagues) {
-      try {
-        await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page);
-        await page.waitForTimeout(800);
-
-        // The league landing page has no club list — just an autosuggest search box
-        // (#Query → /LeagueHome/DoSearch). Type the club name and read the result's
-        // /club/{id} link.
-        let clubId = null;
-        const input = await page.$('#Query, input[name="Query"]');
-        if (input) {
-          await input.click();
-          await input.type(clubQuery, { delay: 40 });
-          // Suggestions are <li data-asg-href="/league/…/club/{id}" data-asg-title="…">
-          await page.waitForSelector("[data-asg-href]", { timeout: 6000 }).catch(() => {});
-          await page.waitForTimeout(400);
-          if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
-          // Match the FULL club name — "Paddington" alone also hits unrelated clubs
-          // like "Paddington Recreation Ground".
-          clubId = await page.evaluate((clubName) => {
-            const want = clubName.toLowerCase();
-            const pick = [...document.querySelectorAll("[data-asg-href]")].find(
-              (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "") &&
-                (el.getAttribute("data-asg-title") || "").toLowerCase().includes(want)
-            );
-            const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
-            return m ? m[1] : null;
-          }, cfg.clubName);
+      let leagues = await page.$$eval("a[href*='/league/']", (as) => {
+        const seen = {}, res = [];
+        for (const a of as) {
+          const m = a.href.match(/\/league\/([0-9A-Fa-f-]{36})(?:[/?#]|$)/);
+          const name = a.textContent.replace(/\s+/g, " ").trim();
+          if (m && name && name.length > 4 && !seen[m[1]]) { seen[m[1]] = 1; res.push({ id: m[1], name }); }
         }
-        if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
-        else log(`  · ${lg.name} → club not found in search`);
-      } catch (e) { log("  league probe failed:", lg.id, e.message); }
+        return res;
+      });
+      if (tgt.winterOnly) leagues = leagues.filter((l) => /winter|floodlit/i.test(l.name));
+      log(`discovery: ${leagues.length} leagues for ${tgt.year}${tgt.winterOnly ? " (winter only)" : ""}`);
+
+      for (const lg of leagues) {
+        if (seenLeague.has(lg.id)) continue;
+        seenLeague.add(lg.id);
+        try {
+          const clubId = await probeClub(page, lg, clubQuery);
+          if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
+          else log(`  · ${lg.name} → club not found in search`);
+        } catch (e) { log("  league probe failed:", lg.id, e.message); }
+      }
     }
   }
   if (!out.length && cfg.fallbackLeagueId && cfg.fallbackClubId) {
@@ -443,7 +470,7 @@ async function main() {
 
     const out = {
       clubName: cfg.clubName,
-      season: cfg.discovery?.year || cfg.season,
+      season: (cfg.discovery?.year && cfg.discovery.year !== "auto") ? cfg.discovery.year : String(new Date().getFullYear()),
       sourceUrl: cfg.discovery?.groupUrl || cfg.baseUrl,
       generatedAt: new Date().toISOString(),
       sample: false,
