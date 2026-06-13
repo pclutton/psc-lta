@@ -252,18 +252,32 @@ async function discoverSources(page) {
 // Turn a club-page link label like
 //   "14U Boys – 14U Boys - Div 1 – Group 1"
 // into { name: "14U Boys", division: "Division 1 · Group 1" }.
+const escapeReg = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 function parseLabel(raw) {
   const label = (raw || "").replace(/\s+/g, " ").trim();
   const segs = label.split("–").map((s) => s.trim()).filter(Boolean);
   const name = segs[0] || label || "Team";
-  const divPart = segs.find((s) => /div/i.test(s)) || "";
-  const grpPart = segs.find((s) => /group/i.test(s)) || "";
-  let division = [
-    divPart.replace(/.*?(div\b)/i, "$1").replace(/div\b/i, "Division"),
-    grpPart,
-  ].filter(Boolean).join(" · ").replace(/\s+/g, " ").trim();
-  if (!division) division = segs.slice(1).join(" · ");
-  return { name, division };
+  // The division/tier is whatever sits between the name and the "Group N" — keep
+  // it verbatim (e.g. "West Intermediate", "West Division 3"), dropping the
+  // repeated team name and the internal "Group N" which carries no meaning here.
+  let division = segs.slice(1).filter((s) => !/^group\b/i.test(s)).join(" - ");
+  division = division
+    .replace(new RegExp("^(?:" + escapeReg(name) + "\\s*-\\s*)+", "i"), "")
+    .replace(/\s*-\s*group\s*\d+\s*$/i, "")
+    .trim();
+  return { name, division: division || name };
+}
+
+// Rank a division highest→lowest: Premier, Intermediate, then Division 1..N.
+// The geographic prefix (West / North West / …) is cosmetic and ignored here.
+function divisionRank(division) {
+  const d = (division || "").toLowerCase();
+  if (/premier/.test(d)) return 0;
+  if (/intermediate/.test(d)) return 1;
+  const m = d.match(/division\s*(\d+)/) || d.match(/\bdiv\.?\s*(\d+)/);
+  if (m) return 1 + parseInt(m[1], 10);
+  return 999;
 }
 
 function buildTeam(draw) {
@@ -388,10 +402,15 @@ async function main() {
           }
           const team = buildTeam(draw);
           teams.push(team);
-          log(`  ok: ${src.leagueName} ← ${team.name} | ${team.division} (${draw.standings.length} rows)`);
+          log(`  ok: ${team.name} | div="${team.division}" raw=${JSON.stringify(link.text)}`);
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {
+        // Highest division first; geographic prefix is only a tiebreak.
+        teams.sort((a, b) =>
+          divisionRank(a.division) - divisionRank(b.division) ||
+          a.name.localeCompare(b.name) ||
+          a.division.localeCompare(b.division));
         competitions.push({
           id: src.leagueId.slice(0, 8).toLowerCase(),
           name: src.leagueName,
