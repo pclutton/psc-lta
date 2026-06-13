@@ -230,14 +230,17 @@ async function discoverSources(page) {
           await page.waitForSelector("[data-asg-href]", { timeout: 6000 }).catch(() => {});
           await page.waitForTimeout(400);
           if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
-          clubId = await page.evaluate(() => {
-            const items = [...document.querySelectorAll("[data-asg-href]")];
-            const isClub = (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "");
-            const pick = items.find((el) => isClub(el) && /paddington/i.test(el.getAttribute("data-asg-title") || ""))
-              || items.find(isClub);
+          // Match the FULL club name — "Paddington" alone also hits unrelated clubs
+          // like "Paddington Recreation Ground".
+          clubId = await page.evaluate((clubName) => {
+            const want = clubName.toLowerCase();
+            const pick = [...document.querySelectorAll("[data-asg-href]")].find(
+              (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "") &&
+                (el.getAttribute("data-asg-title") || "").toLowerCase().includes(want)
+            );
             const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
             return m ? m[1] : null;
-          });
+          }, cfg.clubName);
         }
         if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
         else log(`  · ${lg.name} → club not found in search`);
