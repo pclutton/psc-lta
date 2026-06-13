@@ -87,7 +87,8 @@ async function maybeLogin(page) {
   } catch (e) { log("login attempt failed (continuing anonymously):", e.message); }
 }
 
-// Collect links from a club page to each team's division/draw page.
+// Collect from a club page the /draw/ links (division standings) and the /team/
+// links (team rosters, used for the players leaderboard).
 async function findTeamLinks(page, clubUrl) {
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
@@ -98,18 +99,14 @@ async function findTeamLinks(page, clubUrl) {
   const links = await page.$$eval("a[href]", (as) =>
     as.map((a) => ({ href: a.href, text: a.textContent.trim() }))
   );
-  const seen = new Set();
-  const teamLinks = links.filter((l) => {
-    // Only the /draw/ links — these are the division/group standings pages, which
-    // already contain PSC's row. The parallel /team/ links are duplicates with no
-    // standings table, so we skip them.
-    const m = /\/draw\//i.test(l.href);
-    if (!m || seen.has(l.href)) return false;
-    seen.add(l.href);
-    return true;
-  });
-  log(`found ${teamLinks.length} candidate team/draw links`);
-  return teamLinks;
+  const pick = (re) => {
+    const seen = new Set();
+    return links.filter((l) => re.test(l.href) && !seen.has(l.href) && seen.add(l.href));
+  };
+  const draws = pick(/\/draw\//i);
+  const teams = pick(/\/team\/\d+/i);
+  log(`found ${draws.length} draws, ${teams.length} team rosters`);
+  return { draws, teams };
 }
 
 // Parse one division/draw page into { division, standings[], matches[] }.
@@ -293,6 +290,75 @@ function buildTeam(draw) {
   };
 }
 
+// Read a player's name + season Win-Draw-Loss from their league player page.
+// The page shows: "Win-Draw-Loss"  "8-1-4 (13)".
+async function scrapePlayer(page, url) {
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
+  await page.waitForTimeout(300);
+  return page.evaluate(() => {
+    const name = (document.title.split(" - ")[0] || "").replace(/\s+/g, " ").trim();
+    const body = document.body.textContent.replace(/\s+/g, " ");
+    const m = body.match(/win-?draw-?loss[^0-9]{0,12}(\d+)\s*-\s*(\d+)\s*-\s*(\d+)/i);
+    return { name, won: m ? +m[1] : 0, drawn: m ? +m[2] : 0, lost: m ? +m[3] : 0, found: !!m };
+  });
+}
+
+// Build the club-wide players leaderboard: gather rosters from team pages, read
+// each player's W-D-L, merge by name, score 3·W + 1·D.
+async function buildPlayers(page, sources) {
+  const roster = new Map(); // leagueId|playerId -> { name, url }
+  for (const src of sources) {
+    for (const team of src.teamLinks || []) {
+      try {
+        await page.goto(team.href, { waitUntil: "domcontentloaded", timeout: 45000 });
+        await page.waitForTimeout(300);
+        const players = await page.$$eval('a[href*="/player/"]', (as) =>
+          as.map((a) => ({ href: a.href, name: a.textContent.replace(/\s+/g, " ").trim() }))
+            .filter((p) => /\/player\/\d+/.test(p.href) && p.name.length > 1)
+        );
+        for (const pl of players) {
+          const id = (pl.href.match(/\/player\/(\d+)/) || [])[1];
+          const key = src.leagueId + "|" + id;
+          if (!roster.has(key)) roster.set(key, { name: pl.name, url: pl.href });
+        }
+      } catch (e) { log("roster failed:", team.href, e.message); }
+    }
+  }
+  log(`found ${roster.size} unique player entries; reading records…`);
+
+  const raw = [];
+  for (const { name, url } of roster.values()) {
+    try {
+      const rec = await scrapePlayer(page, url);
+      raw.push({ name: rec.name || name, url, won: rec.won, drawn: rec.drawn, lost: rec.lost });
+    } catch (e) { log("player failed:", url, e.message); }
+  }
+
+  // Merge by name (a player can appear in several teams/leagues); link to the page
+  // where they played the most.
+  const byName = new Map();
+  for (const p of raw) {
+    const k = p.name.toLowerCase();
+    const cur = byName.get(k) || { name: p.name, won: 0, drawn: 0, lost: 0, url: p.url, _best: -1 };
+    cur.won += p.won; cur.drawn += p.drawn; cur.lost += p.lost;
+    const played = p.won + p.drawn + p.lost;
+    if (played > cur._best) { cur._best = played; cur.url = p.url; }
+    byName.set(k, cur);
+  }
+
+  const players = [...byName.values()]
+    .map((p) => ({
+      name: p.name, url: p.url,
+      won: p.won, drawn: p.drawn, lost: p.lost,
+      played: p.won + p.drawn + p.lost,
+      points: p.won * 3 + p.drawn,
+    }))
+    .filter((p) => p.played > 0)
+    .sort((a, b) => b.points - a.points || b.won - a.won || b.played - a.played);
+  log(`leaderboard: ${players.length} players`);
+  return players;
+}
+
 async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; PSC-results-bot/1.0)" });
@@ -303,33 +369,16 @@ async function main() {
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
 
-    // TEMP investigation: capture a team-roster page and a player page structure.
-    if (DEBUG) {
-      try {
-        await page.goto("https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/player/616", { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page); await page.waitForTimeout(1200); await dumpDebug(page, "player");
-      } catch (e) { log("player dump failed:", e.message); }
-      try {
-        const s = sources.find((x) => /summer league/i.test(x.leagueName)) || sources[0];
-        await page.goto(`${cfg.baseUrl}/league/${s.leagueId}/club/${s.clubId}`, { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page);
-        const teamHref = await page.evaluate(() => {
-          const a = [...document.querySelectorAll("a[href]")].find((a) => /\/team\/\d+/.test(a.href));
-          return a ? a.href : null;
-        });
-        if (teamHref) { await page.goto(teamHref, { waitUntil: "networkidle", timeout: 60000 }); await acceptCookies(page); await page.waitForTimeout(1200); await dumpDebug(page, "team"); }
-      } catch (e) { log("team dump failed:", e.message); }
-    }
-
     const competitions = [];
     for (const src of sources) {
       const clubUrl = `${cfg.baseUrl}/league/${src.leagueId}/club/${src.clubId}`;
-      let drawLinks = [];
-      try { drawLinks = await findTeamLinks(page, clubUrl); }
+      let clubLinks = { draws: [], teams: [] };
+      try { clubLinks = await findTeamLinks(page, clubUrl); }
       catch (e) { log("club page failed:", clubUrl, e.message); continue; }
+      src.teamLinks = clubLinks.teams;
 
       const teams = [];
-      for (const link of drawLinks) {
+      for (const link of clubLinks.draws) {
         try {
           const draw = await scrapeDraw(page, link);
           if (!draw.standings.length) {
@@ -358,6 +407,10 @@ async function main() {
       throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
     }
 
+    let players = [];
+    try { players = await buildPlayers(page, sources); }
+    catch (e) { log("players build failed:", e.message); }
+
     const out = {
       clubName: cfg.clubName,
       season: cfg.discovery?.year || cfg.season,
@@ -365,6 +418,7 @@ async function main() {
       generatedAt: new Date().toISOString(),
       sample: false,
       competitions,
+      players,
     };
     // Written as a JS global (not bare JSON) so the page also works from file://
     await writeFile(OUT, "window.__PSC_RESULTS__ = " + JSON.stringify(out, null, 2) + ";\n", "utf8");

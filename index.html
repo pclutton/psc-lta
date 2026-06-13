@@ -110,6 +110,16 @@
   .res-tag.W{background:var(--psc-navy-tint);color:var(--psc-navy-dark)}
   .res-tag.L{background:#fbe9e9;color:var(--loss)}
 
+  .sec .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px}
+  #playerSearch{width:100%;max-width:340px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;margin-bottom:12px}
+  #playerSearch:focus{outline:none;border-color:var(--psc-navy);box-shadow:0 0 0 3px var(--psc-navy-tint)}
+  .players-scroll{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:var(--radius)}
+  table.players thead th{position:sticky;top:0;background:var(--surface);z-index:1}
+  table.players td a{color:var(--psc-navy);font-size:12.5px;text-decoration:none;white-space:nowrap}
+  table.players td a:hover{text-decoration:underline}
+  table.players .rank{color:var(--muted);font-weight:700}
+  table.players tr.top .rank{color:var(--psc-navy)}
+  .nores{padding:14px;color:var(--muted);font-size:13px;text-align:center}
   footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
   footer .wrap{padding:26px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
   .src-note{font-size:12px;color:var(--muted);margin:6px 0 0}
@@ -174,6 +184,22 @@
     <div class="twocol" id="matchCols">
       <div><h2 class="sec">Recent results</h2><ul class="matchlist" id="results"></ul></div>
       <div><h2 class="sec">Upcoming fixtures</h2><ul class="matchlist" id="fixtures"></ul></div>
+    </div>
+  </section>
+
+  <section class="block" id="playersBlock" hidden>
+    <h2 class="sec">Player leaderboard <span class="hint">— points = 3 per win + 1 per draw, across all teams</span></h2>
+    <input id="playerSearch" type="search" placeholder="Find your name…" aria-label="Search players by name" />
+    <div class="players-scroll">
+      <table class="players">
+        <thead><tr>
+          <th class="num">#</th><th>Player</th>
+          <th class="num">W</th><th class="num">D</th><th class="num">L</th>
+          <th class="num">Pts</th><th></th>
+        </tr></thead>
+        <tbody id="players"></tbody>
+      </table>
+      <div class="nores" id="playersNoMatch" hidden>No players match that name.</div>
     </div>
   </section>
 
@@ -294,6 +320,32 @@ function selectComp(i){
   selectTeam(0);
 }
 
+function renderPlayers(){
+  const players = (DATA.players || []);
+  const block = $("#playersBlock");
+  if(!players.length){ block.hidden = true; return; }
+  block.hidden = false;
+  $("#players").innerHTML = players.map((p,i)=>`
+    <tr data-name="${p.name.toLowerCase()}" class="${i<3?'top':''}">
+      <td class="num rank">${i+1}</td>
+      <td>${p.name}</td>
+      <td class="num">${p.won}</td><td class="num">${p.drawn}</td><td class="num">${p.lost}</td>
+      <td class="num"><b>${p.points}</b></td>
+      <td class="num">${p.url?`<a href="${p.url}" target="_blank" rel="noopener">Details ↗</a>`:''}</td>
+    </tr>`).join("");
+}
+
+function filterPlayers(q){
+  q = (q||"").toLowerCase().trim();
+  let shown = 0;
+  document.querySelectorAll("#players tr").forEach(tr=>{
+    const hit = !q || tr.dataset.name.includes(q);
+    tr.style.display = hit ? "" : "none";
+    if(hit) shown++;
+  });
+  $("#playersNoMatch").hidden = shown > 0;
+}
+
 function boot(data){
   DATA = data;
   $("#seasonLabel").textContent = data.season || "Current season";
@@ -303,6 +355,9 @@ function boot(data){
   renderTabs();
   const firstCurrent = data.competitions.findIndex(c=>c.status !== "completed");
   selectComp(firstCurrent >= 0 ? firstCurrent : 0);
+  renderPlayers();
+  const search = $("#playerSearch");
+  if(search) search.addEventListener("input", e=>filterPlayers(e.target.value));
 }
 
 if (window.__PSC_RESULTS__) {
