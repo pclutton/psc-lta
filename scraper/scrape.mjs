@@ -429,6 +429,23 @@ async function main() {
   try {
     await maybeLogin(page);
 
+    // TEMP: investigate a 2025 league where PSC has two teams in one division.
+    if (DEBUG) {
+      const lg = "DD2A1F93-1DDA-4D8F-A3A6-E616F4B1E000";
+      try {
+        const cid = await probeClub(page, { id: lg }, cfg.discovery?.clubSearch || cfg.clubName);
+        log("MULTI: 2025 league club id =", cid);
+        if (cid) {
+          await page.goto(`${cfg.baseUrl}/league/${lg}/club/${cid}`, { waitUntil: "networkidle", timeout: 60000 });
+          await acceptCookies(page); await page.waitForTimeout(1500); await dumpDebug(page, "mclub");
+        }
+        await page.goto(`${cfg.baseUrl}/league/${lg}/draw/2`, { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page); await page.waitForTimeout(1200);
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
+        await page.waitForTimeout(600); await dumpDebug(page, "mdraw");
+      } catch (e) { log("multi dump failed:", e.message); }
+    }
+
     const sources = await discoverSources(page);
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
