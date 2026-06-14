@@ -183,7 +183,14 @@ async function scrapeDraw(page, link) {
       if (home && away) matches.push({ home, away, hs, as, date });
     }
 
-    return { standings, matches };
+    const diag = {
+      mtm: document.querySelectorAll(".match--team-match").length,
+      anyMatch: document.querySelectorAll('[class*="match"]').length,
+      score: document.querySelectorAll(".score").length,
+      tm: document.querySelectorAll(".team-match").length,
+      bodyLen: document.body.innerHTML.length,
+    };
+    return { standings, matches, diag };
   });
 
   data.url = link.href;
@@ -454,7 +461,7 @@ async function main() {
           }
           const team = buildTeam(draw);
           teams.push(team);
-          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches)`);
+          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches) diag=${JSON.stringify(draw.diag)} url=${link.href}`);
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {
