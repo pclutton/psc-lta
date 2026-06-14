@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-14T07:58:06.924Z",
+  "generatedAt": "2026-06-14T08:08:26.168Z",
   "sample": false,
   "competitions": [
     {
@@ -172,7 +172,39 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "jack li woon",
+              "won": 4,
+              "lost": 0
+            },
+            {
+              "name": "Lucas Daminescu",
+              "won": 4,
+              "lost": 0
+            },
+            {
+              "name": "Theo Aydinoglu",
+              "won": 4,
+              "lost": 0
+            },
+            {
+              "name": "Harry Fottrell-Kingstone",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Alex Angelopoulos",
+              "won": 3,
+              "lost": 1
+            },
+            {
+              "name": "George Fotakakis",
+              "won": 3,
+              "lost": 1
+            }
+          ]
         },
         {
           "name": "16&U Boys Division 1",
@@ -341,7 +373,59 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Jack Fresnais",
+              "won": 3,
+              "lost": 5
+            },
+            {
+              "name": "Alberto Ambrosetti",
+              "won": 2,
+              "lost": 0
+            },
+            {
+              "name": "George Fotakakis",
+              "won": 2,
+              "lost": 0
+            },
+            {
+              "name": "Lucas Daminescu",
+              "won": 2,
+              "lost": 2
+            },
+            {
+              "name": "Seb Montgomery",
+              "won": 2,
+              "lost": 4
+            },
+            {
+              "name": "Lucas Baker",
+              "won": 1,
+              "lost": 1
+            },
+            {
+              "name": "Alex Angelopoulos",
+              "won": 0,
+              "lost": 2
+            },
+            {
+              "name": "Alexander Lenior-Emanuel",
+              "won": 0,
+              "lost": 2
+            },
+            {
+              "name": "Max Daminescu",
+              "won": 0,
+              "lost": 2
+            },
+            {
+              "name": "Zico Melwani",
+              "won": 0,
+              "lost": 2
+            }
+          ]
         },
         {
           "name": "Open Mens Division 2 onwards",
@@ -556,7 +640,39 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Alexander Stannard",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Victor Wiles",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Oliver Plaskett",
+              "won": 4,
+              "lost": 0
+            },
+            {
+              "name": "Vasileios Ventouris",
+              "won": 4,
+              "lost": 0
+            },
+            {
+              "name": "Charlie Jenshoj",
+              "won": 2,
+              "lost": 0
+            },
+            {
+              "name": "Rahul Padam Mehta",
+              "won": 2,
+              "lost": 0
+            }
+          ]
         },
         {
           "name": "Open Womens Division 1",
@@ -776,7 +892,49 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Irene Ouyang",
+              "won": 6,
+              "lost": 2
+            },
+            {
+              "name": "Raphaela Waschnig",
+              "won": 2,
+              "lost": 2
+            },
+            {
+              "name": "Annika Chai",
+              "won": 2,
+              "lost": 4
+            },
+            {
+              "name": "Anna Collins",
+              "won": 1,
+              "lost": 1
+            },
+            {
+              "name": "Anna Vershebeniuk",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Stacie Alex",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Kathryn Brill",
+              "won": 0,
+              "lost": 1
+            },
+            {
+              "name": "Marta Chojnowska",
+              "won": 0,
+              "lost": 1
+            }
+          ]
         }
       ]
     },
@@ -1111,7 +1269,69 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Yannick Tandy",
+              "won": 4,
+              "lost": 4
+            },
+            {
+              "name": "Isaac Havu",
+              "won": 4,
+              "lost": 5
+            },
+            {
+              "name": "Arun Ranganathan",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Vasileios Ventouris",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "Charlie Jenshoj",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "David Kane",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Paul Kassar",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Trystan Forrest",
+              "won": 1,
+              "lost": 3
+            },
+            {
+              "name": "Ben Wareing",
+              "won": 1,
+              "lost": 5
+            },
+            {
+              "name": "Farruh Shermatov",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Guillaume Jammes",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Murat Varol",
+              "won": 0,
+              "lost": 3
+            }
+          ]
         },
         {
           "name": "Mens Doubles",
@@ -1444,7 +1664,54 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Stephen Hobson",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Michael Yeomans",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "Patrick Ryan",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "Tom Sharples",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "James Notaras",
+              "won": 2,
+              "lost": 3
+            },
+            {
+              "name": "Jack Bishop",
+              "won": 2,
+              "lost": 4
+            },
+            {
+              "name": "Sushant Mehta",
+              "won": 1,
+              "lost": 1
+            },
+            {
+              "name": "Adam Chidell",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Farruh Shermatov",
+              "won": 1,
+              "lost": 2
+            }
+          ]
         },
         {
           "name": "Mens Doubles",
@@ -1776,7 +2043,54 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Yannick Tandy",
+              "won": 5,
+              "lost": 1
+            },
+            {
+              "name": "Benjamin Carreau",
+              "won": 4,
+              "lost": 5
+            },
+            {
+              "name": "Sushant Mehta",
+              "won": 4,
+              "lost": 5
+            },
+            {
+              "name": "Isaac Havu",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Niall Paterson",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Vincenzo Di nicola",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Jens Vanbrabant",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "Francesco Buffi",
+              "won": 2,
+              "lost": 4
+            },
+            {
+              "name": "Trystan Forrest",
+              "won": 2,
+              "lost": 4
+            }
+          ]
         },
         {
           "name": "Mens Doubles",
@@ -2187,7 +2501,64 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Alessandro Gavazza",
+              "won": 4,
+              "lost": 5
+            },
+            {
+              "name": "Aakash Vanchi Nath",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Francesco Camarda",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Michael Yeomans",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Alan Wilson",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Christian Howells",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Florus Plantenga",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "steven clutton",
+              "won": 3,
+              "lost": 6
+            },
+            {
+              "name": "Alexander Smith",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Henry Court",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Konstantinos Pagonis",
+              "won": 0,
+              "lost": 3
+            }
+          ]
         },
         {
           "name": "Womens Doubles",
@@ -2519,7 +2890,79 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Irene Ouyang",
+              "won": 5,
+              "lost": 4
+            },
+            {
+              "name": "Anna Vershebeniuk",
+              "won": 3,
+              "lost": 0
+            },
+            {
+              "name": "Kathryn Brill",
+              "won": 2,
+              "lost": 4
+            },
+            {
+              "name": "Alix Aubry",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Constance Pelet",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Emily MacKay",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Izabella Repakis",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Stacie Alex",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Marta Chojnowska",
+              "won": 1,
+              "lost": 5
+            },
+            {
+              "name": "Julie Zysman",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Lucy Graham",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Sam Kennedy",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Samantha Morris",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Zara Danesh",
+              "won": 0,
+              "lost": 3
+            }
+          ]
         },
         {
           "name": "Womens Doubles",
@@ -2852,7 +3295,44 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Kara Hebert",
+              "won": 4,
+              "lost": 2
+            },
+            {
+              "name": "Nadia Essa",
+              "won": 4,
+              "lost": 2
+            },
+            {
+              "name": "Marina Campbell",
+              "won": 3,
+              "lost": 2
+            },
+            {
+              "name": "Ann Scott",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Charlotte Henderson",
+              "won": 3,
+              "lost": 3
+            },
+            {
+              "name": "Olivia Marsden",
+              "won": 2,
+              "lost": 1
+            },
+            {
+              "name": "Sylvia Herzog",
+              "won": 1,
+              "lost": 1
+            }
+          ]
         },
         {
           "name": "Womens Doubles",
@@ -3117,7 +3597,49 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Shireen Arthur",
+              "won": 4,
+              "lost": 2
+            },
+            {
+              "name": "Supriya Dadlani",
+              "won": 4,
+              "lost": 2
+            },
+            {
+              "name": "Louisa Smythe",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Mary Strub",
+              "won": 1,
+              "lost": 2
+            },
+            {
+              "name": "Flora King",
+              "won": 1,
+              "lost": 5
+            },
+            {
+              "name": "Vilma Anusaite",
+              "won": 1,
+              "lost": 5
+            },
+            {
+              "name": "Mary Carson",
+              "won": 0,
+              "lost": 3
+            },
+            {
+              "name": "Olivia Goldberg",
+              "won": 0,
+              "lost": 3
+            }
+          ]
         },
         {
           "name": "Womens Doubles",
@@ -3448,7 +3970,39 @@ window.__PSC_RESULTS__ = {
             }
           ],
           "results": [],
-          "fixtures": []
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Emily MacKay",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Julie Zysman",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Sam Kennedy",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Zara Danesh",
+              "won": 6,
+              "lost": 0
+            },
+            {
+              "name": "Lucy Graham",
+              "won": 4,
+              "lost": 2
+            },
+            {
+              "name": "Stacey Towfighi",
+              "won": 4,
+              "lost": 2
+            }
+          ]
         }
       ]
     }
