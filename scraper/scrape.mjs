@@ -175,22 +175,17 @@ async function scrapeDraw(page, link) {
     // "<team1> 14 - 10 <team2>". Used to build the head-to-head results matrix.
     const matches = [];
     for (const m of document.querySelectorAll(".match--team-match")) {
-      const home = txt(m.querySelector(".team-match__name.is-team-1 .nav-link__value") || m.querySelector(".team-match__name.is-team-1"));
-      const away = txt(m.querySelector(".team-match__name.is-team-2 .nav-link__value") || m.querySelector(".team-match__name.is-team-2"));
+      // The team name is text inside .team-match__name (the .nav-link__value span
+      // is empty), so read the name container directly.
+      const home = txt(m.querySelector(".team-match__name.is-team-1"));
+      const away = txt(m.querySelector(".team-match__name.is-team-2"));
       const hs = num(txt(m.querySelector(".score .is-team-1")));
       const as = num(txt(m.querySelector(".score .is-team-2")));
       const date = txt(m.querySelector(".match__header-title"));
       if (home && away) matches.push({ home, away, hs, as, date });
     }
 
-    const diag = {
-      mtm: document.querySelectorAll(".match--team-match").length,
-      anyMatch: document.querySelectorAll('[class*="match"]').length,
-      score: document.querySelectorAll(".score").length,
-      tm: document.querySelectorAll(".team-match").length,
-      bodyLen: document.body.innerHTML.length,
-    };
-    return { standings, matches, diag };
+    return { standings, matches };
   });
 
   data.url = link.href;
@@ -461,7 +456,7 @@ async function main() {
           }
           const team = buildTeam(draw);
           teams.push(team);
-          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches) diag=${JSON.stringify(draw.diag)} url=${link.href}`);
+          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches)`);
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {
