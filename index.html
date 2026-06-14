@@ -147,19 +147,20 @@
   table.matrix th.corner{background:var(--surface)}
   table.matrix .rowhead{text-align:left;font-weight:500;font-size:12px;background:#fff;max-width:230px;overflow:hidden;text-overflow:ellipsis}
   table.matrix .rowhead .rankdot{margin-right:6px}
-  table.matrix td.mcell{font-weight:600;font-variant-numeric:tabular-nums}
-  table.matrix td.win{background:#e3f3e8;color:#1d7a46}
-  table.matrix td.loss{background:#fbe9e9;color:var(--loss)}
-  table.matrix td.draw{background:#fdf3df;color:#9a6b00}
+  table.matrix td.mcell{padding:4px}
+  table.matrix .chip{display:inline-block;min-width:30px;padding:2px 6px;border-radius:6px;font-weight:600;font-size:11px;color:#fff;font-variant-numeric:tabular-nums}
+  table.matrix .chip.win{background:var(--win)}
+  table.matrix .chip.loss{background:var(--loss)}
+  table.matrix .chip.draw{background:var(--draw)}
   table.matrix td.np{background:#f3f4f6}
   table.matrix td.diag{background:#e6e8ee}
   table.matrix .rowhead.psc{background:var(--psc-navy-tint);box-shadow:inset 3px 0 0 var(--psc-navy)}
   table.matrix thead th.pcol,table.matrix tbody .pcol-tag{background:var(--psc-navy);color:#fff}
   .matrix-legend{font-size:11.5px;color:var(--muted);margin:10px 14px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .matrix-legend .lg{padding:2px 8px;border-radius:5px;font-weight:600}
-  .matrix-legend .lg.win{background:#e3f3e8;color:#1d7a46}
-  .matrix-legend .lg.loss{background:#fbe9e9;color:var(--loss)}
-  .matrix-legend .lg.draw{background:#fdf3df;color:#9a6b00}
+  .matrix-legend .lg{padding:2px 9px;border-radius:6px;font-weight:600;color:#fff}
+  .matrix-legend .lg.win{background:var(--win)}
+  .matrix-legend .lg.loss{background:var(--loss)}
+  .matrix-legend .lg.draw{background:var(--draw)}
   .matrix-legend .lg.np{background:#f3f4f6;color:var(--muted)}
 
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -435,7 +436,7 @@ function renderMatrix(t){
       const c = cell[i][j];
       if(!c) return `<td class="mcell np" title="not played"></td>`;
       const cls = c.f>c.a ? "win" : c.f<c.a ? "loss" : "draw";
-      return `<td class="mcell ${cls}" title="${nm} ${c.f}–${c.a} ${teams[j]}">${c.f}–${c.a}</td>`;
+      return `<td class="mcell" title="${nm} ${c.f}–${c.a} ${teams[j]}"><span class="chip ${cls}">${c.f}–${c.a}</span></td>`;
     }).join("");
     return `<tr><th class="rowhead ${isPsc(nm)?'psc':''}"><span class="rankdot">${i+1}</span>${nm}</th>${cells}</tr>`;
   }).join("");
