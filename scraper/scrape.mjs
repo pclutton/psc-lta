@@ -368,7 +368,8 @@ async function scrapeTeamPlayers(page, url) {
   const players = await page.evaluate(() => {
     const out = [], seen = {};
     for (const m of document.querySelectorAll(".media")) {
-      if (!m.querySelector('a[href*="/player/"]')) continue;
+      const link = m.querySelector('a[href*="/player/"]');
+      if (!link) continue;
       const nameEl = m.querySelector(".nav-link__value");
       const name = ((nameEl && nameEl.textContent) || "").replace(/\s+/g, " ").trim();
       if (!name || seen[name]) continue;
@@ -381,7 +382,7 @@ async function scrapeTeamPlayers(page, url) {
         }
       }
       seen[name] = 1;
-      out.push({ name, won, lost });
+      out.push({ name, won, lost, url: link.href });
     }
     return out;
   });
@@ -389,71 +390,36 @@ async function scrapeTeamPlayers(page, url) {
   return players;
 }
 
-// Read a player's name + season Win-Draw-Loss from their league player page.
-// The page shows: "Win-Draw-Loss"  "8-1-4 (13)".
-async function scrapePlayer(page, url) {
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
-  await page.waitForTimeout(300);
-  return page.evaluate(() => {
-    const name = (document.title.split(" - ")[0] || "").replace(/\s+/g, " ").trim();
-    const body = document.body.textContent.replace(/\s+/g, " ");
-    const m = body.match(/win-?draw-?loss[^0-9]{0,12}(\d+)\s*-\s*(\d+)\s*-\s*(\d+)/i);
-    return { name, won: m ? +m[1] : 0, drawn: m ? +m[2] : 0, lost: m ? +m[3] : 0, found: !!m };
-  });
-}
-
-// Build the club-wide players leaderboard: gather rosters from team pages, read
-// each player's W-D-L, merge by name, score 3·W + 1·D.
-async function buildPlayers(page, sources) {
-  const roster = new Map(); // leagueId|playerId -> { name, url }
-  for (const src of sources) {
-    for (const team of src.teamLinks || []) {
-      try {
-        await page.goto(team.href, { waitUntil: "domcontentloaded", timeout: 45000 });
-        await page.waitForTimeout(300);
-        const players = await page.$$eval('a[href*="/player/"]', (as) =>
-          as.map((a) => ({ href: a.href, name: a.textContent.replace(/\s+/g, " ").trim() }))
-            .filter((p) => /\/player\/\d+/.test(p.href) && p.name.length > 1)
-        );
-        for (const pl of players) {
-          const id = (pl.href.match(/\/player\/(\d+)/) || [])[1];
-          const key = src.leagueId + "|" + id;
-          if (!roster.has(key)) roster.set(key, { name: pl.name, url: pl.href });
-        }
-      } catch (e) { log("roster failed:", team.href, e.message); }
+// Club-wide players leaderboard, aggregated from the per-team squads we already
+// scraped (reliable W-L for every roster player). Merge by name, score 3·W, link
+// to the player page from the team where they played the most.
+function buildLeaderboard(competitions) {
+  const byName = new Map();
+  for (const c of competitions) {
+    for (const t of c.teams) {
+      for (const p of (t.players || [])) {
+        const k = p.name.toLowerCase();
+        const cur = byName.get(k) || { name: p.name, won: 0, lost: 0, url: p.url || "", _best: -1 };
+        cur.won += p.won; cur.lost += p.lost;
+        const played = p.won + p.lost;
+        if (played > cur._best) { cur._best = played; if (p.url) cur.url = p.url; }
+        byName.set(k, cur);
+      }
     }
   }
-  log(`found ${roster.size} unique player entries; reading records…`);
-
-  const raw = [];
-  for (const { name, url } of roster.values()) {
-    try {
-      const rec = await scrapePlayer(page, url);
-      raw.push({ name: rec.name || name, url, won: rec.won, drawn: rec.drawn, lost: rec.lost });
-    } catch (e) { log("player failed:", url, e.message); }
-  }
-
-  // Merge by name (a player can appear in several teams/leagues); link to the page
-  // where they played the most.
-  const byName = new Map();
-  for (const p of raw) {
-    const k = p.name.toLowerCase();
-    const cur = byName.get(k) || { name: p.name, won: 0, drawn: 0, lost: 0, url: p.url, _best: -1 };
-    cur.won += p.won; cur.drawn += p.drawn; cur.lost += p.lost;
-    const played = p.won + p.drawn + p.lost;
-    if (played > cur._best) { cur._best = played; cur.url = p.url; }
-    byName.set(k, cur);
-  }
-
   const players = [...byName.values()]
     .map((p) => ({
       name: p.name, url: p.url,
-      won: p.won, drawn: p.drawn, lost: p.lost,
-      played: p.won + p.drawn + p.lost,
-      points: p.won * 3 + p.drawn,
+      won: p.won, drawn: 0, lost: p.lost,
+      played: p.won + p.lost,
+      points: p.won * 3,
     }))
     .filter((p) => p.played > 0)
-    .sort((a, b) => b.points - a.points || b.won - a.won || b.played - a.played);
+    .sort((a, b) =>
+      b.points - a.points ||
+      (b.won / (b.played || 1)) - (a.won / (a.played || 1)) ||
+      a.lost - b.lost ||
+      a.name.localeCompare(b.name));
   log(`leaderboard: ${players.length} players`);
   return players;
 }
@@ -521,9 +487,7 @@ async function main() {
       throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
     }
 
-    let players = [];
-    try { players = await buildPlayers(page, sources); }
-    catch (e) { log("players build failed:", e.message); }
+    const players = buildLeaderboard(competitions);
 
     const out = {
       clubName: cfg.clubName,
