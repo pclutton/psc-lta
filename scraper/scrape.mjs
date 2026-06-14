@@ -166,7 +166,19 @@ async function scrapeDraw(page, link) {
       if (standings.length) break;
     }
 
-    return { standings };
+    // Matches list — each fixture block carries both team names + the score, e.g.
+    // "<team1> 14 - 10 <team2>". Used to build the head-to-head results matrix.
+    const matches = [];
+    for (const m of document.querySelectorAll(".match--team-match")) {
+      const home = txt(m.querySelector(".team-match__name.is-team-1 .nav-link__value") || m.querySelector(".team-match__name.is-team-1"));
+      const away = txt(m.querySelector(".team-match__name.is-team-2 .nav-link__value") || m.querySelector(".team-match__name.is-team-2"));
+      const hs = num(txt(m.querySelector(".score .is-team-1")));
+      const as = num(txt(m.querySelector(".score .is-team-2")));
+      const date = txt(m.querySelector(".match__header-title"));
+      if (home && away) matches.push({ home, away, hs, as, date });
+    }
+
+    return { standings, matches };
   });
 
   data.url = link.href;
@@ -332,9 +344,8 @@ function buildTeam(draw) {
     points: me?.points ?? 0,
     form: (me?.form || []).slice(-5),
     standings,
-    // The draw page carries the league table only; per-match results/fixtures with
-    // dates aren't listed here, so these stay empty (a possible later enhancement
-    // via each team's /team/ page).
+    // Head-to-head fixtures for this division, used to build the results matrix.
+    matches: (draw.matches || []).filter((m) => m.home && m.away),
     results: [],
     fixtures: [],
   };
@@ -415,14 +426,6 @@ async function main() {
   try {
     await maybeLogin(page);
 
-    // TEMP: capture a draw page to map the cross-table (results matrix) DOM.
-    if (DEBUG) {
-      try {
-        await page.goto("https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/8", { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page); await page.waitForTimeout(1200); await dumpDebug(page, "matrix");
-      } catch (e) { log("matrix dump failed:", e.message); }
-    }
-
     const sources = await discoverSources(page);
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
@@ -446,7 +449,7 @@ async function main() {
           }
           const team = buildTeam(draw);
           teams.push(team);
-          log(`  ok: ${team.name} | div="${team.division}" raw=${JSON.stringify(link.text)}`);
+          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches)`);
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {

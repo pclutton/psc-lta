@@ -44,16 +44,7 @@ jobs:
           # Optional. Leave the secrets unset to scrape anonymously (the default).
           LTA_USERNAME: ${{ secrets.LTA_USERNAME }}
           LTA_PASSWORD: ${{ secrets.LTA_PASSWORD }}
-          DEBUG: "1"   # TEMP: capture draw cross-table for the results matrix
         run: npm run scrape || echo "Scrape failed; keeping existing data/results.js"
-
-      - name: Upload scraper debug HTML (temporary)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: scraper-debug
-          path: scraper/debug/
-          if-no-files-found: ignore
 
       - name: Commit refreshed data
         if: github.event_name != 'push'
