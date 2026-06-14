@@ -87,8 +87,10 @@ async function maybeLogin(page) {
   } catch (e) { log("login attempt failed (continuing anonymously):", e.message); }
 }
 
-// Collect from a club page the /draw/ links (division standings) and the /team/
-// links (team rosters, used for the players leaderboard).
+// Collect from a club page one (draw, team) pair per PSC team, in document order.
+// The club page lists each team's division (/draw/) link immediately followed by
+// its roster (/team/) link, repeating the draw when the club has two teams in the
+// same division — so we pair each team with the most recent preceding draw.
 async function findTeamLinks(page, clubUrl) {
   await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
@@ -97,16 +99,20 @@ async function findTeamLinks(page, clubUrl) {
   if (DEBUG) await dumpDebug(page, "club");
 
   const links = await page.$$eval("a[href]", (as) =>
-    as.map((a) => ({ href: a.href, text: a.textContent.trim() }))
+    as.map((a) => ({ href: a.href, text: a.textContent.replace(/\s+/g, " ").trim() }))
   );
-  const pick = (re) => {
-    const seen = new Set();
-    return links.filter((l) => re.test(l.href) && !seen.has(l.href) && seen.add(l.href));
-  };
-  const draws = pick(/\/draw\//i);
-  const teams = pick(/\/team\/\d+/i);
-  log(`found ${draws.length} draws, ${teams.length} team rosters`);
-  return { draws, teams };
+  const pairs = [];
+  const seen = new Set();
+  let curDraw = null;
+  for (const l of links) {
+    if (/\/draw\//i.test(l.href)) curDraw = l;
+    else if (/\/team\/\d+/i.test(l.href) && curDraw) {
+      const key = curDraw.href + "|" + l.href;
+      if (!seen.has(key)) { seen.add(key); pairs.push({ draw: curDraw, team: l }); }
+    }
+  }
+  log(`found ${pairs.length} team entries`);
+  return pairs;
 }
 
 // Parse one division/draw page into { division, standings[], matches[] }.
@@ -335,13 +341,23 @@ function divisionRank(division) {
   return 999;
 }
 
-function buildTeam(draw) {
+// Build one team card. teamName is this team's exact name (e.g. "Paddington
+// Sports Club 2") so we pick the right row when the club has several teams in one
+// division; pscCount lets us tag the card (1)/(2) to tell them apart.
+function buildTeam(draw, teamName, label, pscCount) {
   const standings = (draw.standings || []).filter((r) => r.name);
-  const me = standings.find((r) => isPsc(r.name));
-  const { name, division } = parseLabel(draw.teamLabel || draw.division);
+  const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, " ").trim();
+  const me = standings.find((r) => norm(r.name) === norm(teamName)) || standings.find((r) => isPsc(r.name));
+  const { name, division } = parseLabel(label || draw.teamLabel || draw.division);
+  let cardName = name;
+  if (pscCount > 1) {
+    const num = (String(teamName).match(/(\d+)\s*$/) || [])[1];
+    if (num) cardName = `${name} (${num})`;
+  }
   return {
-    name,
+    name: cardName,
     division,
+    pscName: me ? me.name : teamName,
     leagueUrl: draw.url,
     position: me ? me.rank : 0,
     of: standings.length,
@@ -429,23 +445,6 @@ async function main() {
   try {
     await maybeLogin(page);
 
-    // TEMP: investigate a 2025 league where PSC has two teams in one division.
-    if (DEBUG) {
-      const lg = "DD2A1F93-1DDA-4D8F-A3A6-E616F4B1E000";
-      try {
-        const cid = await probeClub(page, { id: lg }, cfg.discovery?.clubSearch || cfg.clubName);
-        log("MULTI: 2025 league club id =", cid);
-        if (cid) {
-          await page.goto(`${cfg.baseUrl}/league/${lg}/club/${cid}`, { waitUntil: "networkidle", timeout: 60000 });
-          await acceptCookies(page); await page.waitForTimeout(1500); await dumpDebug(page, "mclub");
-        }
-        await page.goto(`${cfg.baseUrl}/league/${lg}/draw/2`, { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page); await page.waitForTimeout(1200);
-        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
-        await page.waitForTimeout(600); await dumpDebug(page, "mdraw");
-      } catch (e) { log("multi dump failed:", e.message); }
-    }
-
     const sources = await discoverSources(page);
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
@@ -453,32 +452,24 @@ async function main() {
     const competitions = [];
     for (const src of sources) {
       const clubUrl = `${cfg.baseUrl}/league/${src.leagueId}/club/${src.clubId}`;
-      let clubLinks = { draws: [], teams: [] };
-      try { clubLinks = await findTeamLinks(page, clubUrl); }
+      let pairs = [];
+      try { pairs = await findTeamLinks(page, clubUrl); }
       catch (e) { log("club page failed:", clubUrl, e.message); continue; }
-      src.teamLinks = clubLinks.teams;
 
       const teams = [];
-      for (let idx = 0; idx < clubLinks.draws.length; idx++) {
-        const link = clubLinks.draws[idx];
+      const drawCache = new Map(); // a division shared by several PSC teams is scraped once
+      for (const pair of pairs) {
         try {
-          const draw = await scrapeDraw(page, link);
-          if (!draw.standings.length) {
-            log("skip (no standings):", link.href);
-            if (DEBUG) await dumpDebug(page, "draw-empty");
-            continue;
-          }
-          const team = buildTeam(draw);
-          // The club page lists each draw with its team-roster page consecutively,
-          // so draws[idx] and teams[idx] are the same PSC team.
-          const teamLink = clubLinks.teams[idx];
-          if (teamLink) {
-            try { team.players = await scrapeTeamPlayers(page, teamLink.href); }
-            catch (e) { log("team players failed:", teamLink.href, e.message); team.players = []; }
-          } else team.players = [];
+          let draw = drawCache.get(pair.draw.href);
+          if (!draw) { draw = await scrapeDraw(page, pair.draw); drawCache.set(pair.draw.href, draw); }
+          if (!draw.standings.length) { log("skip (no standings):", pair.draw.href); continue; }
+          const pscCount = draw.standings.filter((r) => isPsc(r.name)).length;
+          const team = buildTeam(draw, pair.team.text, pair.draw.text, pscCount);
+          try { team.players = await scrapeTeamPlayers(page, pair.team.href); }
+          catch (e) { log("team players failed:", pair.team.href, e.message); team.players = []; }
           teams.push(team);
           log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches, ${team.players.length} players)`);
-        } catch (e) { log("draw failed:", link.href, e.message); }
+        } catch (e) { log("draw failed:", pair.draw.href, e.message); }
       }
       if (teams.length) {
         // Men's teams together then women's; within each, highest division first

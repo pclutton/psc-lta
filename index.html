@@ -441,7 +441,7 @@ function renderMatrix(t){
     cell[i][j] = {f:m.hs, a:m.as};
     cell[j][i] = {f:m.as, a:m.hs};
   });
-  const pscIdx = teams.findIndex(isPsc);
+  const pscIdx = t.pscName ? teams.findIndex(n=>normName(n)===normName(t.pscName)) : teams.findIndex(isPsc);
   $("#matrixHead").innerHTML = `<tr><th class="corner"></th>${teams.map((_,j)=>`<th class="num ${j===pscIdx?'pcol':''}"><span class="rankdot">${j+1}</span></th>`).join("")}</tr>`;
   $("#matrix").innerHTML = teams.map((nm,i)=>{
     const cells = teams.map((_,j)=>{
