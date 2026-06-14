@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-14T16:54:38.180Z",
+  "generatedAt": "2026-06-14T17:03:09.723Z",
   "sample": false,
   "competitions": [
     {
@@ -13,6 +13,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "14&U Boys Division 1",
           "division": "",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/37",
           "position": 1,
           "of": 5,
@@ -215,6 +216,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "16&U Boys Division 1",
           "division": "",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/40",
           "position": 3,
           "of": 5,
@@ -446,6 +448,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Open Mens Division 2 onwards",
           "division": "Division 3 West",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/8",
           "position": 1,
           "of": 6,
@@ -701,6 +704,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Open Womens Division 1",
           "division": "",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/2",
           "position": 5,
           "of": 6,
@@ -978,6 +982,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Mens Doubles",
           "division": "West Intermediate",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/8",
           "position": 7,
           "of": 8,
@@ -1380,6 +1385,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Mens Doubles",
           "division": "North West Division 3",
+          "pscName": "Paddington Sports Club 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/35",
           "position": 5,
           "of": 8,
@@ -1769,6 +1775,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Mens Doubles",
           "division": "West Division 3",
+          "pscName": "Paddington Sports Club 2",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/12",
           "position": 4,
           "of": 8,
@@ -2157,6 +2164,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Mens Doubles",
           "division": "North West Division 5",
+          "pscName": "Paddington Sports Club 4",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/4",
           "position": 4,
           "of": 9,
@@ -2636,6 +2644,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Womens Doubles",
           "division": "West Intermediate",
+          "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/22",
           "position": 6,
           "of": 8,
@@ -3054,6 +3063,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Womens Doubles",
           "division": "North West Division 1",
+          "pscName": "Paddington Sports Club 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/33",
           "position": 5,
           "of": 8,
@@ -3431,6 +3441,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Womens Doubles",
           "division": "North West Division 2",
+          "pscName": "Paddington Sports Club 4",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/34",
           "position": 7,
           "of": 7,
@@ -3746,6 +3757,7 @@ window.__PSC_RESULTS__ = {
         {
           "name": "Womens Doubles",
           "division": "West Division 3",
+          "pscName": "Paddington Sports Club 2",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/20",
           "position": 1,
           "of": 8,
