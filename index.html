@@ -155,7 +155,7 @@
   table.matrix td.np{background:#f3f4f6}
   table.matrix td.diag{background:#e6e8ee}
   table.matrix .rowhead.psc{background:var(--psc-navy-tint);box-shadow:inset 3px 0 0 var(--psc-navy)}
-  table.matrix thead th.pcol,table.matrix tbody .pcol-tag{background:var(--psc-navy);color:#fff}
+  table.matrix thead th.pcol .rankdot{background:var(--psc-navy);color:#fff}
   .matrix-legend{font-size:11.5px;color:var(--muted);margin:10px 14px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .matrix-legend .lg{padding:2px 9px;border-radius:6px;font-weight:600}
   .matrix-legend .lg.win{background:#e3f3e8;color:#1d7a46}
@@ -429,7 +429,7 @@ function renderMatrix(t){
     cell[j][i] = {f:m.as, a:m.hs};
   });
   const pscIdx = teams.findIndex(isPsc);
-  $("#matrixHead").innerHTML = `<tr><th class="corner"></th>${teams.map((_,j)=>`<th class="num ${j===pscIdx?'pcol':''}">${j+1}</th>`).join("")}</tr>`;
+  $("#matrixHead").innerHTML = `<tr><th class="corner"></th>${teams.map((_,j)=>`<th class="num ${j===pscIdx?'pcol':''}"><span class="rankdot">${j+1}</span></th>`).join("")}</tr>`;
   $("#matrix").innerHTML = teams.map((nm,i)=>{
     const cells = teams.map((_,j)=>{
       if(i===j) return `<td class="diag"></td>`;
