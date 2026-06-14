@@ -358,6 +358,37 @@ function buildTeam(draw) {
   };
 }
 
+// Scrape a PSC team page for its squad and each player's per-team Win-Loss
+// record (shown as "Win-Loss  4-4 (8)"). Sorted most wins first.
+async function scrapeTeamPlayers(page, url) {
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
+  await page.waitForTimeout(400);
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
+  await page.waitForTimeout(400);
+  const players = await page.evaluate(() => {
+    const out = [], seen = {};
+    for (const m of document.querySelectorAll(".media")) {
+      if (!m.querySelector('a[href*="/player/"]')) continue;
+      const nameEl = m.querySelector(".nav-link__value");
+      const name = ((nameEl && nameEl.textContent) || "").replace(/\s+/g, " ").trim();
+      if (!name || seen[name]) continue;
+      let won = 0, lost = 0;
+      for (const c of m.querySelectorAll(".clearfix")) {
+        const lab = (c.querySelector(".pull-left") || {}).textContent || "";
+        if (/win-?loss/i.test(lab)) {
+          const v = ((c.querySelector(".pull-right") || {}).textContent || "").match(/(\d+)\s*-\s*(\d+)/);
+          if (v) { won = +v[1]; lost = +v[2]; }
+        }
+      }
+      seen[name] = 1;
+      out.push({ name, won, lost });
+    }
+    return out;
+  });
+  players.sort((a, b) => b.won - a.won || a.lost - b.lost || a.name.localeCompare(b.name));
+  return players;
+}
+
 // Read a player's name + season Win-Draw-Loss from their league player page.
 // The page shows: "Win-Draw-Loss"  "8-1-4 (13)".
 async function scrapePlayer(page, url) {
@@ -433,18 +464,6 @@ async function main() {
   try {
     await maybeLogin(page);
 
-    // TEMP: capture a team page to map the per-player records section.
-    if (DEBUG) {
-      try {
-        await page.goto("https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/team/64", { waitUntil: "networkidle", timeout: 60000 });
-        await acceptCookies(page);
-        await page.waitForTimeout(1200);
-        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
-        await page.waitForTimeout(800);
-        await dumpDebug(page, "teampage");
-      } catch (e) { log("teampage dump failed:", e.message); }
-    }
-
     const sources = await discoverSources(page);
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
@@ -458,7 +477,8 @@ async function main() {
       src.teamLinks = clubLinks.teams;
 
       const teams = [];
-      for (const link of clubLinks.draws) {
+      for (let idx = 0; idx < clubLinks.draws.length; idx++) {
+        const link = clubLinks.draws[idx];
         try {
           const draw = await scrapeDraw(page, link);
           if (!draw.standings.length) {
@@ -467,8 +487,15 @@ async function main() {
             continue;
           }
           const team = buildTeam(draw);
+          // The club page lists each draw with its team-roster page consecutively,
+          // so draws[idx] and teams[idx] are the same PSC team.
+          const teamLink = clubLinks.teams[idx];
+          if (teamLink) {
+            try { team.players = await scrapeTeamPlayers(page, teamLink.href); }
+            catch (e) { log("team players failed:", teamLink.href, e.message); team.players = []; }
+          } else team.players = [];
           teams.push(team);
-          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches)`);
+          log(`  ok: ${team.name} | ${team.division} (${team.standings.length} teams, ${team.matches.length} matches, ${team.players.length} players)`);
         } catch (e) { log("draw failed:", link.href, e.message); }
       }
       if (teams.length) {
