@@ -485,6 +485,16 @@ async function main() {
           status: leagueStatus(src.leagueName),
           teams,
         });
+      } else if (pairs.length) {
+        // PSC is entered but there's no league table (a knockout cup) — link out.
+        log(`  link-only: ${src.leagueName}`);
+        competitions.push({
+          id: src.leagueId.slice(0, 8).toLowerCase(),
+          name: src.leagueName,
+          status: leagueStatus(src.leagueName),
+          teams: [],
+          link: clubUrl,
+        });
       }
     }
 

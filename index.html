@@ -112,6 +112,8 @@
   .teams-table td{vertical-align:middle}
 
   .detail{margin-top:8px}
+  .lta-btn{display:inline-block;background:var(--psc-navy);color:#fff;text-decoration:none;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:10px}
+  .lta-btn:hover{background:var(--psc-navy-dark)}
   .detail-card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);overflow:hidden}
   .detail-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
   .detail-head .dt-team{font-size:18px;font-weight:700}
@@ -300,6 +302,13 @@
   </section>
   </div>
 
+  <section class="block" id="linkPanel" hidden>
+    <div class="detail-card" style="padding:20px 18px">
+      <p style="margin:0 0 14px;font-size:14px"><b id="linkPanelTitle"></b> is a knockout competition, so there's no league table to show here.</p>
+      <a id="linkPanelBtn" class="lta-btn" href="#" target="_blank" rel="noopener">View the draw &amp; PSC's fixtures on LTA ↗</a>
+    </div>
+  </section>
+
   <section class="block" id="playersBlock" hidden>
     <h2 class="sec">Player leaderboard <span class="hint">— ranked by wins, across all teams</span></h2>
     <input id="playerSearch" type="search" placeholder="Find your name…" aria-label="Search players by name" />
@@ -345,7 +354,8 @@ function isPsc(name){ return /paddington/i.test(name); }
 function renderTabs(){
   let html = DATA.competitions.map((c,i)=>{
     const fin = c.status === "completed";
-    return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${fin?' <span class="tfin">Finished</span>':''}</button>`;
+    const arrow = c.link ? ' ↗' : '';
+    return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${arrow}${fin?' <span class="tfin">Finished</span>':''}</button>`;
   }).join("");
   if((DATA.players||[]).length){
     html += `<button class="tab tab--players" role="tab" data-view="players" aria-selected="false">🏆 Players</button>`;
@@ -490,13 +500,23 @@ function selectTeam(i){
 function selectComp(i){
   currentComp = i;
   setTab(t => t.dataset.view === "comp" && +t.dataset.i === i);
-  $("#compView").hidden = false;
   $("#playersBlock").hidden = true;
+  const c = DATA.competitions[i];
+  if(c.link){
+    $("#compView").hidden = true;
+    $("#linkPanel").hidden = false;
+    $("#linkPanelTitle").textContent = c.name;
+    $("#linkPanelBtn").href = c.link;
+    return;
+  }
+  $("#linkPanel").hidden = true;
+  $("#compView").hidden = false;
   renderCards();
   selectTeam(0);
 }
 
 function selectPlayersView(){
+  $("#linkPanel").hidden = true;
   setTab(t => t.dataset.view === "players");
   $("#compView").hidden = true;
   $("#playersBlock").hidden = false;
