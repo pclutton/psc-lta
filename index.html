@@ -544,8 +544,11 @@ function boot(data){
   if(data.sourceUrl){ $("#sourceLink").href = data.sourceUrl; }
   $("#sampleBanner").hidden = !data.sample;
   renderTabs();
-  const firstCurrent = data.competitions.findIndex(c=>c.status !== "completed");
-  selectComp(firstCurrent >= 0 ? firstCurrent : 0);
+  // Default to the competition with the most teams (preferring a current season).
+  const comps = data.competitions;
+  const pool = comps.some(c=>c.status!=="completed") ? comps.filter(c=>c.status!=="completed") : comps;
+  const biggest = pool.reduce((a,b)=> b.teams.length > a.teams.length ? b : a);
+  selectComp(comps.indexOf(biggest));
   renderPlayers();
   const search = $("#playerSearch");
   if(search) search.addEventListener("input", e=>filterPlayers(e.target.value));
