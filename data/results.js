@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-14T17:03:09.723Z",
+  "generatedAt": "2026-06-14T17:21:57.438Z",
   "sample": false,
   "competitions": [
     {
@@ -4125,6 +4125,13 @@ window.__PSC_RESULTS__ = {
           ]
         }
       ]
+    },
+    {
+      "id": "c9f24f13",
+      "name": "Middlesex Summer Cup 2026",
+      "status": "current",
+      "teams": [],
+      "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/37"
     }
   ],
   "players": [
