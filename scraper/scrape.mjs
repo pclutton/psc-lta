@@ -433,6 +433,18 @@ async function main() {
   try {
     await maybeLogin(page);
 
+    // TEMP: capture a team page to map the per-player records section.
+    if (DEBUG) {
+      try {
+        await page.goto("https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/team/64", { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page);
+        await page.waitForTimeout(1200);
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
+        await page.waitForTimeout(800);
+        await dumpDebug(page, "teampage");
+      } catch (e) { log("teampage dump failed:", e.message); }
+    }
+
     const sources = await discoverSources(page);
     if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
     log(`scraping ${sources.length} competition(s)`);
