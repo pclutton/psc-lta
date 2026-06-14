@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-14T09:45:32.417Z",
+  "generatedAt": "2026-06-14T16:54:38.180Z",
   "sample": false,
   "competitions": [
     {
@@ -476,6 +476,22 @@ window.__PSC_RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Harbour Club Chelsea 1",
+              "played": 4,
+              "won": 3,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "20-28",
+              "points": 6,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "David Lloyd Club Acton Park 1",
               "played": 3,
               "won": 2,
@@ -490,31 +506,17 @@ window.__PSC_RESULTS__ = {
               ]
             },
             {
-              "rank": 3,
-              "name": "Harbour Club Chelsea 1",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "14-22",
-              "points": 4,
-              "form": [
-                "L",
-                "W",
-                "W"
-              ]
-            },
-            {
               "rank": 4,
               "name": "The Parsons Green Club 1",
-              "played": 2,
+              "played": 3,
               "won": 1,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "8-16",
+              "lost": 2,
+              "rubbers": "14-22",
               "points": 2,
               "form": [
                 "W",
+                "L",
                 "L"
               ]
             },
@@ -608,8 +610,8 @@ window.__PSC_RESULTS__ = {
             {
               "home": "The Parsons Green Club 1",
               "away": "Harbour Club Chelsea 1",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 6,
               "date": "Sun 14/06/2026"
             },
             {
