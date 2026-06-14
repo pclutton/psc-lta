@@ -410,13 +410,12 @@ function buildLeaderboard(competitions) {
   const players = [...byName.values()]
     .map((p) => ({
       name: p.name, url: p.url,
-      won: p.won, drawn: 0, lost: p.lost,
+      won: p.won, lost: p.lost,
       played: p.won + p.lost,
-      points: p.won * 3,
     }))
     .filter((p) => p.played > 0)
     .sort((a, b) =>
-      b.points - a.points ||
+      b.won - a.won ||
       (b.won / (b.played || 1)) - (a.won / (a.played || 1)) ||
       a.lost - b.lost ||
       a.name.localeCompare(b.name));

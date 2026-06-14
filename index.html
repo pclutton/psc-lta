@@ -299,14 +299,13 @@
   </div>
 
   <section class="block" id="playersBlock" hidden>
-    <h2 class="sec">Player leaderboard <span class="hint">— points = 3 per win, across all teams</span></h2>
+    <h2 class="sec">Player leaderboard <span class="hint">— ranked by wins, across all teams</span></h2>
     <input id="playerSearch" type="search" placeholder="Find your name…" aria-label="Search players by name" />
     <div class="players-scroll">
       <table class="players">
         <thead><tr>
           <th class="num">#</th><th>Player</th>
           <th class="num">W</th><th class="num">L</th>
-          <th class="num">Pts</th>
         </tr></thead>
         <tbody id="players"></tbody>
       </table>
@@ -519,8 +518,7 @@ function renderPlayers(){
     return `<tr data-name="${name.toLowerCase()}" class="${i<3?'top':''}">
       <td class="num rank">${rank}</td>
       <td class="pname">${nameCell}</td>
-      <td class="num">${p.won}</td><td class="num">${p.lost}</td>
-      <td class="num"><b>${p.points}</b></td>
+      <td class="num"><b>${p.won}</b></td><td class="num">${p.lost}</td>
     </tr>`;
   }).join("");
 }
