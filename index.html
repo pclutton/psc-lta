@@ -195,8 +195,8 @@
   #playerSearch:focus{outline:none;border-color:var(--psc-navy);box-shadow:0 0 0 3px var(--psc-navy-tint)}
   .players-scroll{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:var(--radius)}
   table.players thead th{position:sticky;top:0;background:var(--surface);z-index:1}
-  table.players td a{color:var(--psc-navy);font-size:12.5px;text-decoration:none;white-space:nowrap}
-  table.players td a:hover{text-decoration:underline}
+  table.players td.pname a{color:var(--psc-navy);text-decoration:none;font-weight:500}
+  table.players td.pname a:hover{text-decoration:underline}
   table.players .rank{color:var(--muted);font-weight:700}
   table.players tr.top td{background:var(--psc-navy-tint)}
   .medal{font-size:16px;line-height:1}
@@ -307,7 +307,7 @@
         <thead><tr>
           <th class="num">#</th><th>Player</th>
           <th class="num">W</th><th class="num">D</th><th class="num">L</th>
-          <th class="num">Pts</th><th></th>
+          <th class="num">Pts</th>
         </tr></thead>
         <tbody id="players"></tbody>
       </table>
@@ -516,12 +516,12 @@ function renderPlayers(){
   $("#players").innerHTML = players.map((p,i)=>{
     const name = titleCaseName(p.name);
     const rank = i<3 ? `<span class="medal" title="Rank ${i+1}">${medals[i]}</span>` : (i+1);
+    const nameCell = p.url ? `<a href="${p.url}" target="_blank" rel="noopener">${name}</a>` : name;
     return `<tr data-name="${name.toLowerCase()}" class="${i<3?'top':''}">
       <td class="num rank">${rank}</td>
-      <td>${name}</td>
+      <td class="pname">${nameCell}</td>
       <td class="num">${p.won}</td><td class="num">${p.drawn}</td><td class="num">${p.lost}</td>
       <td class="num"><b>${p.points}</b></td>
-      <td class="num">${p.url?`<a href="${p.url}" target="_blank" rel="noopener">Details ↗</a>`:''}</td>
     </tr>`;
   }).join("");
 }
