@@ -169,6 +169,8 @@
   ul.teamplayers li:first-child{border-top:none}
   ul.teamplayers .tp-rank{width:20px;color:var(--muted);font-size:12px;font-weight:700;text-align:center;flex:none}
   ul.teamplayers .tp-name{flex:1;min-width:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  ul.teamplayers .tp-name a{color:var(--psc-navy);text-decoration:none}
+  ul.teamplayers .tp-name a:hover{text-decoration:underline}
   ul.teamplayers .tp-rec{flex:none;font-size:12.5px;font-variant-numeric:tabular-nums}
   ul.teamplayers .tp-rec .w{color:var(--win);font-weight:600}
   ul.teamplayers .tp-rec .l{color:var(--loss);font-weight:600}
@@ -456,12 +458,15 @@ function renderMatrix(t){
 }
 
 function renderTeamPlayers(t){
-  $("#teamPlayers").innerHTML = (t.players||[]).map((p,i)=>`
-    <li>
+  $("#teamPlayers").innerHTML = (t.players||[]).map((p,i)=>{
+    const nm = titleCaseName(p.name);
+    const nameCell = p.url ? `<a href="${p.url}" target="_blank" rel="noopener">${nm}</a>` : nm;
+    return `<li>
       <span class="tp-rank">${i+1}</span>
-      <span class="tp-name">${titleCaseName(p.name)}</span>
+      <span class="tp-name">${nameCell}</span>
       <span class="tp-rec"><span class="w">W ${p.won}</span><span class="sep">·</span><span class="l">L ${p.lost}</span></span>
-    </li>`).join("");
+    </li>`;
+  }).join("");
 }
 
 function applyDetailView(){
