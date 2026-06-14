@@ -115,6 +115,11 @@ async function scrapeDraw(page, link) {
   await page.goto(link.href, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
   await page.waitForTimeout(1200);
+  // The match list renders lower down and lazily — scroll to it and wait so the
+  // results matrix can be read.
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
+  await page.waitForSelector(".match--team-match", { timeout: 6000 }).catch(() => {});
+  await page.waitForTimeout(500);
   if (DEBUG && drawDumpCount < 2) { drawDumpCount++; await dumpDebug(page, "draw"); }
 
   const data = await page.evaluate(() => {
