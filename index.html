@@ -12,6 +12,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="PSC Teams" />
+<script>
+  // Pick the phone layout once, by device/use-case (not live window width), so the
+  // desktop version is never affected by resizing. Runs before render (no flash).
+  try {
+    var mq = window.matchMedia;
+    if (mq("(max-width:600px)").matches ||
+        (mq("(pointer:coarse)").matches && mq("(max-width:820px)").matches)) {
+      document.documentElement.classList.add("is-phone");
+    }
+  } catch (e) {}
+</script>
 <style>
   :root{
     /* ---- PSC brand tokens (from psclondon.com / PSC crest) ---- */
@@ -45,7 +56,6 @@
   nav.main{display:flex;gap:22px;font-size:14px;color:var(--muted)}
   nav.main a{text-decoration:none}
   nav.main a.active{color:var(--psc-navy);font-weight:600}
-  @media(max-width:740px){nav.main{display:none}}
 
   .hero{background:var(--psc-navy);color:#fff;padding:40px 0 34px;border-bottom:3px solid var(--psc-gold)}
   .hero h1{margin:0 0 6px;font-size:30px;line-height:1.15}
@@ -60,7 +70,6 @@
   .tab[aria-selected="true"]{background:var(--psc-navy);border-color:var(--psc-navy);color:#fff;font-weight:600}
   .tab--players{margin-left:auto;border-color:var(--psc-gold)}
   .tab--players[aria-selected="false"]{color:var(--psc-navy-dark)}
-  @media(max-width:560px){.tab--players{margin-left:0}}
   .tfin{font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:#eef0f7;color:var(--muted);padding:1px 6px;border-radius:999px;margin-left:6px;vertical-align:1px}
   .tab[aria-selected="true"] .tfin{background:rgba(255,255,255,.22);color:#fff}
   .dt-status{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
@@ -91,7 +100,6 @@
 
   /* PC master-detail: compact team table left, standings right */
   .compview{display:grid;grid-template-columns:minmax(360px,440px) minmax(0,1fr);gap:24px;align-items:start}
-  @media(max-width:860px){ .compview{grid-template-columns:1fr} }
   .teams-table .team-row{cursor:pointer}
   .teams-table .team-row:hover td{background:rgba(34,46,98,.04)}
   .teams-table .team-row.sel td{background:var(--psc-navy-tint);font-weight:600}
@@ -200,48 +208,46 @@
   .src-note a{color:var(--psc-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
 
-  /* ============ Phones (≤600px) ============ */
-  @media(max-width:600px){
-    /* Header: short title + compact bars */
-    .topbar .wrap{height:52px}
-    .logo{font-size:14px;gap:8px}
-    .logo .crest{height:30px}
-    .hero{padding:14px 0 12px}
-    .hero h1{font-size:20px;margin:0}
-    .hero-full{display:none}
-    .hero-short{display:inline}
-    .hero .meta{display:none}
-    .tabs{margin:18px 0 16px}
-
-    /* Slightly tighter tables everywhere */
-    thead th{padding:7px 6px}
-    tbody td{padding:8px 6px}
-
-    /* "Our teams" list: content-sized (no name→P gap), tight numerics, keep all cols */
-    .teams-table{width:auto}
-    .teams-table thead th,.teams-table tbody td{padding:8px 5px}
-    .teams-table td.num,.teams-table th.num{padding-left:4px;padding-right:4px}
-    .teams-table .tname{font-size:13px}
-    .teams-table .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
-
-    /* Standings: keep all columns (swipe) but pin the # + Team columns */
-    #standingsWrap table th:nth-child(1),#standingsWrap table td:nth-child(1){position:sticky;left:0;z-index:2;width:34px}
-    #standingsWrap table th:nth-child(2),#standingsWrap table td:nth-child(2){position:sticky;left:34px;z-index:2}
-    #standingsWrap table td:nth-child(1),#standingsWrap table td:nth-child(2){background:#fff}
-    #standingsWrap table thead th:nth-child(1),#standingsWrap table thead th:nth-child(2){background:var(--surface)}
-    #standingsWrap table tbody tr:nth-child(even) td:nth-child(1),#standingsWrap table tbody tr:nth-child(even) td:nth-child(2){background:#f8f9fb}
-    #standingsWrap table tbody tr.psc td:nth-child(1),#standingsWrap table tbody tr.psc td:nth-child(2){background:var(--psc-navy-tint)}
-    #standings .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
-
-    /* Matches grid: numbers-only rows, smaller cells, pinned number column */
-    table.matrix .rowname{display:none}
-    table.matrix th,table.matrix td{padding:3px}
-    table.matrix td.mcell{padding:2px}
-    table.matrix .chip{min-width:0;font-size:10px;padding:1px 4px;border-radius:5px}
-    table.matrix .rowhead,table.matrix th.corner{position:sticky;left:0;z-index:2}
-    table.matrix .rowhead .rankdot{margin-right:0}
-    .matrix-legend{font-size:11px;margin:8px 10px 12px}
-  }
+  /* ===== Phone layout — a parallel version applied only to phones (the
+     .is-phone class is set once on load by device; desktop is never affected). ===== */
+  .is-phone .compview{grid-template-columns:1fr}
+  .is-phone nav.main{display:none}
+  .is-phone .tab--players{margin-left:0}
+  .is-phone .tabs{margin:18px 0 16px}
+  /* Header: short title + compact bars */
+  .is-phone .topbar .wrap{height:52px}
+  .is-phone .logo{font-size:14px;gap:8px}
+  .is-phone .logo .crest{height:30px}
+  .is-phone .hero{padding:14px 0 12px}
+  .is-phone .hero h1{font-size:20px;margin:0}
+  .is-phone .hero-full{display:none}
+  .is-phone .hero-short{display:inline}
+  .is-phone .hero .meta{display:none}
+  /* Slightly tighter tables */
+  .is-phone thead th{padding:7px 6px}
+  .is-phone tbody td{padding:8px 6px}
+  /* "Our teams" list: content-sized (no name→P gap), tight numerics, keep all cols */
+  .is-phone .teams-table{width:auto}
+  .is-phone .teams-table thead th,.is-phone .teams-table tbody td{padding:8px 5px}
+  .is-phone .teams-table td.num,.is-phone .teams-table th.num{padding-left:4px;padding-right:4px}
+  .is-phone .teams-table .tname{font-size:13px}
+  .is-phone .teams-table .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
+  /* Standings: keep all columns (swipe) but pin the # + Team columns */
+  .is-phone #standingsWrap table th:nth-child(1),.is-phone #standingsWrap table td:nth-child(1){position:sticky;left:0;z-index:2;width:34px}
+  .is-phone #standingsWrap table th:nth-child(2),.is-phone #standingsWrap table td:nth-child(2){position:sticky;left:34px;z-index:2}
+  .is-phone #standingsWrap table td:nth-child(1),.is-phone #standingsWrap table td:nth-child(2){background:#fff}
+  .is-phone #standingsWrap table thead th:nth-child(1),.is-phone #standingsWrap table thead th:nth-child(2){background:var(--surface)}
+  .is-phone #standingsWrap table tbody tr:nth-child(even) td:nth-child(1),.is-phone #standingsWrap table tbody tr:nth-child(even) td:nth-child(2){background:#f8f9fb}
+  .is-phone #standingsWrap table tbody tr.psc td:nth-child(1),.is-phone #standingsWrap table tbody tr.psc td:nth-child(2){background:var(--psc-navy-tint)}
+  .is-phone #standings .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
+  /* Matches grid: numbers-only rows, smaller cells, pinned number column */
+  .is-phone table.matrix .rowname{display:none}
+  .is-phone table.matrix th,.is-phone table.matrix td{padding:3px}
+  .is-phone table.matrix td.mcell{padding:2px}
+  .is-phone table.matrix .chip{min-width:0;font-size:10px;padding:1px 4px;border-radius:5px}
+  .is-phone table.matrix .rowhead,.is-phone table.matrix th.corner{position:sticky;left:0;z-index:2}
+  .is-phone table.matrix .rowhead .rankdot{margin-right:0}
+  .is-phone .matrix-legend{font-size:11px;margin:8px 10px 12px}
 </style>
 </head>
 <body>
@@ -356,9 +362,6 @@
     </div>
   </section>
 
-  <p class="src-note">Results are read automatically from the
-    <a href="https://competitions.lta.org.uk/league/02BEA8E0-F625-4D3F-91F3-458209D3FE47/club/24" target="_blank" rel="noopener">LTA Middlesex League site</a>.
-    A scheduled job refreshes this page daily.</p>
   <div class="banner" id="sampleBanner" hidden>Showing sample data — the live LTA feed has not been connected yet. See the project README to switch it on.</div>
 </main>
 
