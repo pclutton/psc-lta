@@ -7,6 +7,11 @@
 <meta name="description" content="Live Middlesex League and Cup results for Paddington Sports Club tennis teams." />
 <link rel="icon" type="image/png" href="assets/psc-logo.png" />
 <meta name="theme-color" content="#222e62" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="assets/icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="PSC Teams" />
 <style>
   :root{
     /* ---- PSC brand tokens (from psclondon.com / PSC crest) ---- */
@@ -48,6 +53,7 @@
   .hero .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 12px;font-size:13px;align-items:center}
   .hero .meta a{color:#fff;text-decoration:underline;text-underline-offset:2px}
   .pill-light{background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px}
+  .hero-short{display:none}
 
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
   .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
@@ -82,23 +88,6 @@
   .form{display:flex;gap:4px;margin-top:11px}
   .dot{width:18px;height:18px;border-radius:5px;font-size:11px;font-weight:700;color:#fff;display:grid;place-items:center}
   .dot.W{background:var(--win)} .dot.L{background:var(--loss)} .dot.D{background:var(--draw)}
-
-  /* Compact team cards on phones (PC layout above is unchanged) */
-  @media(max-width:600px){
-    .cards{grid-template-columns:1fr;gap:8px}
-    .card{padding:11px 13px}
-    .card .team{font-size:14px}
-    .card .div{font-size:11px;margin:1px 0 8px}
-    .posrow{margin-bottom:8px}
-    .pos-label{display:none}
-    .pos br{display:none}
-    .pos{font-size:12px;color:var(--ink)}
-    .pos b{font-size:15px;margin-right:2px}
-    .badge{font-size:10.5px;padding:2px 8px}
-    .stats{padding-top:8px;gap:12px;font-size:11.5px}
-    .form{margin-top:8px;gap:3px}
-    .dot{width:14px;height:14px;font-size:9px;border-radius:4px}
-  }
 
   /* PC master-detail: compact team table left, standings right */
   .compview{display:grid;grid-template-columns:minmax(360px,440px) minmax(0,1fr);gap:24px;align-items:start}
@@ -210,6 +199,49 @@
   .src-note{font-size:12px;color:var(--muted);margin:6px 0 0}
   .src-note a{color:var(--psc-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
+
+  /* ============ Phones (≤600px) ============ */
+  @media(max-width:600px){
+    /* Header: short title + compact bars */
+    .topbar .wrap{height:52px}
+    .logo{font-size:14px;gap:8px}
+    .logo .crest{height:30px}
+    .hero{padding:14px 0 12px}
+    .hero h1{font-size:20px;margin:0}
+    .hero-full{display:none}
+    .hero-short{display:inline}
+    .hero .meta{display:none}
+    .tabs{margin:18px 0 16px}
+
+    /* Slightly tighter tables everywhere */
+    thead th{padding:7px 6px}
+    tbody td{padding:8px 6px}
+
+    /* "Our teams" list: content-sized (no name→P gap), tight numerics, keep all cols */
+    .teams-table{width:auto}
+    .teams-table thead th,.teams-table tbody td{padding:8px 5px}
+    .teams-table td.num,.teams-table th.num{padding-left:4px;padding-right:4px}
+    .teams-table .tname{font-size:13px}
+    .teams-table .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
+
+    /* Standings: keep all columns (swipe) but pin the # + Team columns */
+    #standingsWrap table th:nth-child(1),#standingsWrap table td:nth-child(1){position:sticky;left:0;z-index:2;width:34px}
+    #standingsWrap table th:nth-child(2),#standingsWrap table td:nth-child(2){position:sticky;left:34px;z-index:2}
+    #standingsWrap table td:nth-child(1),#standingsWrap table td:nth-child(2){background:#fff}
+    #standingsWrap table thead th:nth-child(1),#standingsWrap table thead th:nth-child(2){background:var(--surface)}
+    #standingsWrap table tbody tr:nth-child(even) td:nth-child(1),#standingsWrap table tbody tr:nth-child(even) td:nth-child(2){background:#f8f9fb}
+    #standingsWrap table tbody tr.psc td:nth-child(1),#standingsWrap table tbody tr.psc td:nth-child(2){background:var(--psc-navy-tint)}
+    #standings .sform .d{width:13px;height:13px;font-size:8px;border-radius:4px}
+
+    /* Matches grid: numbers-only rows, smaller cells, pinned number column */
+    table.matrix .rowname{display:none}
+    table.matrix th,table.matrix td{padding:3px}
+    table.matrix td.mcell{padding:2px}
+    table.matrix .chip{min-width:0;font-size:10px;padding:1px 4px;border-radius:5px}
+    table.matrix .rowhead,table.matrix th.corner{position:sticky;left:0;z-index:2}
+    table.matrix .rowhead .rankdot{margin-right:0}
+    .matrix-legend{font-size:11px;margin:8px 10px 12px}
+  }
 </style>
 </head>
 <body>
@@ -229,7 +261,7 @@
 
 <div class="hero">
   <div class="wrap">
-    <h1>PSC tennis teams - LTA leagues results &amp; standings</h1>
+    <h1><span class="hero-full">PSC tennis teams - LTA leagues results &amp; standings</span><span class="hero-short">PSC – Teams</span></h1>
     <div class="meta">
       <span class="pill-light" id="seasonLabel">Loading…</span>
       <span class="pill-light">Updated <strong id="updated">—</strong></span>
@@ -287,7 +319,7 @@
         </table>
         <p class="matrix-legend">
           <span class="lg win">Win</span><span class="lg loss">Loss</span><span class="lg draw">Draw</span><span class="lg np">Not played</span>
-          · read each row left-to-right: that team's score is first.
+          · numbers = Standings position · each row reads left-to-right (that team's score first).
         </p>
       </div>
       <div id="teamPlayersWrap" hidden>
@@ -463,7 +495,7 @@ function renderMatrix(t){
       const cls = c.f>c.a ? "win" : c.f<c.a ? "loss" : "draw";
       return `<td class="mcell" title="${nm} ${c.f}–${c.a} ${teams[j]}"><span class="chip ${cls}">${c.f}–${c.a}</span></td>`;
     }).join("");
-    return `<tr><th class="rowhead ${isPsc(nm)?'psc':''}"><span class="rankdot">${i+1}</span>${nm}</th>${cells}</tr>`;
+    return `<tr><th class="rowhead ${isPsc(nm)?'psc':''}"><span class="rankdot">${i+1}</span><span class="rowname">${nm}</span></th>${cells}</tr>`;
   }).join("");
 }
 
