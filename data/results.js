@@ -2,7 +2,7 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-19T10:47:04.924Z",
+  "generatedAt": "2026-06-20T16:58:12.162Z",
   "sample": false,
   "competitions": [
     {
@@ -724,6 +724,22 @@ window.__PSC_RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "The Queens Club 2",
+              "played": 4,
+              "won": 4,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "30-18",
+              "points": 8,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Coolhurst LTC 1",
               "played": 5,
               "won": 4,
@@ -734,21 +750,6 @@ window.__PSC_RESULTS__ = {
               "form": [
                 "L",
                 "W",
-                "W",
-                "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "The Queens Club 2",
-              "played": 3,
-              "won": 3,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "24-12",
-              "points": 6,
-              "form": [
                 "W",
                 "W",
                 "W"
@@ -805,13 +806,14 @@ window.__PSC_RESULTS__ = {
             {
               "rank": 6,
               "name": "David Lloyd Club Northwood 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "6-18",
+              "lost": 3,
+              "rubbers": "12-24",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -905,8 +907,8 @@ window.__PSC_RESULTS__ = {
             {
               "home": "David Lloyd Club Northwood 1",
               "away": "The Queens Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 6,
               "date": "Sun 14/06/2026"
             },
             {
@@ -2710,7 +2712,7 @@ window.__PSC_RESULTS__ = {
           "division": "West Intermediate",
           "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/22",
-          "position": 5,
+          "position": 6,
           "of": 8,
           "played": 4,
           "won": 2,
@@ -2756,13 +2758,13 @@ window.__PSC_RESULTS__ = {
             },
             {
               "rank": 3,
-              "name": "Teddington Lawn Tennis Club 2",
-              "played": 3,
+              "name": "Virgin Active Chiswick Riverside 1",
+              "played": 4,
               "won": 2,
-              "drawn": 0,
+              "drawn": 1,
               "lost": 1,
-              "rubbers": "48-24",
-              "points": 48,
+              "rubbers": "54-42",
+              "points": 54,
               "form": [
                 "L",
                 "W",
@@ -2771,6 +2773,22 @@ window.__PSC_RESULTS__ = {
             },
             {
               "rank": 4,
+              "name": "Teddington Lawn Tennis Club 2",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "54-42",
+              "points": 54,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
               "name": "David Lloyd Club Acton Park 1",
               "played": 4,
               "won": 2,
@@ -2786,7 +2804,7 @@ window.__PSC_RESULTS__ = {
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "Paddington Sports Club 1",
               "played": 4,
               "won": 2,
@@ -2802,7 +2820,7 @@ window.__PSC_RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
+              "rank": 7,
               "name": "The Hurlingham Club 1",
               "played": 3,
               "won": 2,
@@ -2814,20 +2832,6 @@ window.__PSC_RESULTS__ = {
                 "W",
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Virgin Active Chiswick Riverside 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 1,
-              "lost": 1,
-              "rubbers": "36-36",
-              "points": 36,
-              "form": [
-                "L",
-                "W"
               ]
             },
             {
@@ -2955,8 +2959,8 @@ window.__PSC_RESULTS__ = {
             {
               "home": "Virgin Active Chiswick Riverside 1",
               "away": "Teddington Lawn Tennis Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 18,
+              "as": 6,
               "date": "Fri 19/06/2026"
             },
             {
@@ -3538,6 +3542,12 @@ window.__PSC_RESULTS__ = {
               "won": 1,
               "lost": 1,
               "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1396"
+            },
+            {
+              "name": "Victoria Rees",
+              "won": 1,
+              "lost": 2,
+              "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5363"
             },
             {
               "name": "bari shaffran",
@@ -4814,6 +4824,13 @@ window.__PSC_RESULTS__ = {
     {
       "name": "Victor Voulgaropoulos",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5216",
+      "won": 1,
+      "lost": 2,
+      "played": 3
+    },
+    {
+      "name": "Victoria Rees",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5363",
       "won": 1,
       "lost": 2,
       "played": 3
