@@ -273,7 +273,7 @@ async function probeClub(page, lg, clubQuery) {
 }
 
 // Discover every league the club is in across the rolling year window, then find
-// the club's id within each. Falls back to a single configured league.
+// the club's id within each. Returns [] if nothing is found (no stale fallback).
 async function discoverSources(page) {
   const out = [];
   const seenLeague = new Set();
