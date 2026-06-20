@@ -33,6 +33,19 @@ const cfg = JSON.parse(await readFile(resolve(__dirname, "config.json"), "utf8")
 const log = (...a) => console.log("[scrape]", ...a);
 const isPsc = (name) => name && name.toLowerCase().includes("paddington");
 
+// Retry a navigation/scrape step a few times. The LTA SPA intermittently times
+// out or renders late; a single transient failure on a data page used to silently
+// drop (or thin out) a team. Backs off between attempts; rethrows the last error.
+async function withRetry(label, fn, attempts = 3) {
+  let lastErr;
+  for (let i = 1; i <= attempts; i++) {
+    try { return await fn(); }
+    catch (e) { lastErr = e; log(`  ${label} attempt ${i}/${attempts} failed: ${e.message}`); }
+    if (i < attempts) await new Promise((r) => setTimeout(r, 900 * i));
+  }
+  throw lastErr;
+}
+
 async function dumpDebug(page, tag) {
   try {
     await mkdir(DEBUG_DIR, { recursive: true });
@@ -92,35 +105,48 @@ async function maybeLogin(page) {
 // its roster (/team/) link, repeating the draw when the club has two teams in the
 // same division — so we pair each team with the most recent preceding draw.
 async function findTeamLinks(page, clubUrl) {
-  await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
-  await acceptCookies(page);
-  await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
-  await page.waitForTimeout(1500);
-  if (DEBUG) await dumpDebug(page, "club");
+  return withRetry(`club page ${clubUrl}`, async () => {
+    await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
+    await acceptCookies(page);
+    await page.goto(clubUrl, { waitUntil: "networkidle", timeout: 60000 });
+    // Wait for the team/division links to actually render rather than a blind sleep.
+    await page.waitForSelector('a[href*="/team/"], a[href*="/draw/"]', { timeout: 12000 }).catch(() => {});
+    await page.waitForTimeout(600);
+    if (DEBUG) await dumpDebug(page, "club");
 
-  const links = await page.$$eval("a[href]", (as) =>
-    as.map((a) => ({ href: a.href, text: a.textContent.replace(/\s+/g, " ").trim() }))
-  );
-  const pairs = [];
-  const seen = new Set();
-  let curDraw = null;
-  for (const l of links) {
-    if (/\/draw\//i.test(l.href)) curDraw = l;
-    else if (/\/team\/\d+/i.test(l.href) && curDraw) {
-      const key = curDraw.href + "|" + l.href;
-      if (!seen.has(key)) { seen.add(key); pairs.push({ draw: curDraw, team: l }); }
+    const links = await page.$$eval("a[href]", (as) =>
+      as.map((a) => ({ href: a.href, text: a.textContent.replace(/\s+/g, " ").trim() }))
+    );
+    const pairs = [];
+    const seen = new Set();
+    let curDraw = null;
+    for (const l of links) {
+      if (/\/draw\//i.test(l.href)) curDraw = l;
+      else if (/\/team\/\d+/i.test(l.href) && curDraw) {
+        const key = curDraw.href + "|" + l.href;
+        if (!seen.has(key)) { seen.add(key); pairs.push({ draw: curDraw, team: l }); }
+      }
     }
-  }
-  log(`found ${pairs.length} team entries`);
-  return pairs;
+    // Empty here means the page didn't render (PSC is always entered in a discovered
+    // league) — throw so withRetry tries again instead of reporting a phantom 0 teams.
+    if (!pairs.length) throw new Error("no team/draw links found (page likely not rendered)");
+    log(`found ${pairs.length} team entries`);
+    return pairs;
+  });
 }
 
 // Parse one division/draw page into { division, standings[], matches[] }.
 let drawDumpCount = 0;
 async function scrapeDraw(page, link) {
+  return withRetry(`draw ${link.href}`, () => scrapeDrawOnce(page, link));
+}
+async function scrapeDrawOnce(page, link) {
   await page.goto(link.href, { waitUntil: "networkidle", timeout: 60000 });
   await acceptCookies(page);
-  await page.waitForTimeout(1200);
+  // Wait for the standings table to render (a league draw has one; a knockout cup
+  // legitimately has none, so this is a soft wait — empty standings is acceptable).
+  await page.waitForSelector("table", { timeout: 8000 }).catch(() => {});
+  await page.waitForTimeout(600);
   // The match list renders lower down and lazily — scroll to it and wait so the
   // results matrix can be read.
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
@@ -390,7 +416,11 @@ function buildTeam(draw, teamName, label, pscCount) {
 // Scrape a PSC team page for its squad and each player's per-team Win-Loss
 // record (shown as "Win-Loss  4-4 (8)"). Sorted most wins first.
 async function scrapeTeamPlayers(page, url) {
+  return withRetry(`team players ${url}`, () => scrapeTeamPlayersOnce(page, url));
+}
+async function scrapeTeamPlayersOnce(page, url) {
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
+  await page.waitForSelector(".media", { timeout: 8000 }).catch(() => {});
   await page.waitForTimeout(400);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
   await page.waitForTimeout(400);
@@ -520,24 +550,43 @@ async function main() {
       }
     }
 
-    // Robustness: never let a competition silently vanish. If this run failed to
-    // produce a league it had before (a transient per-league failure), retain that
-    // league's last-known data instead of dropping it from the page.
+    // --- Reconcile this run against the last good data so a transient hiccup can
+    // never replace good data with worse data. "Richness" = how much real content a
+    // competition carries (standings rows + fixtures), so a league that loaded thin
+    // (lazy-load race) or collapsed to a bare link is caught as well as one missing.
+    const richness = (c) =>
+      (c.teams || []).reduce((n, t) => n + (t.standings?.length || 0) + (t.matches?.length || 0), 0);
     const prev = await loadPrevious();
-    if (prev && Array.isArray(prev.competitions)) {
-      const haveIds = new Set(competitions.map((c) => c.id));
-      for (const pc of prev.competitions) {
-        if (pc && pc.id && !haveIds.has(pc.id)) {
-          log(`  retained from previous run (missing this time): ${pc.name}`);
-          competitions.push(pc);
-        }
+    const prevById = new Map((prev?.competitions || []).filter((c) => c && c.id).map((c) => [c.id, c]));
+
+    // (a) Per-competition regression: if a league we DID scrape came back much
+    //     thinner than last time, keep the previous (good) version of that league.
+    for (let i = 0; i < competitions.length; i++) {
+      const cur = competitions[i], old = prevById.get(cur.id);
+      if (!old) continue;
+      const rOld = richness(old);
+      if (rOld > 0 && richness(cur) < rOld * 0.6) {
+        log(`  regression in "${cur.name}" (richness ${richness(cur)} < ${rOld}) — keeping previous`);
+        competitions[i] = old;
       }
+    }
+    // (b) Retain any competition that vanished entirely from this run.
+    const haveIds = new Set(competitions.map((c) => c.id));
+    for (const pc of prevById.values()) {
+      if (!haveIds.has(pc.id)) { log(`  retained (missing this run): ${pc.name}`); competitions.push(pc); }
     }
 
     const totalTeams = competitions.reduce((n, c) => n + c.teams.length, 0);
     if (totalTeams === 0) {
       await dumpDebug(page, "no-teams");
       throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
+    }
+    // (c) Backstop: even after reconciliation, refuse to publish a sweeping drop in
+    //     total teams versus the last good data — keep the existing file instead.
+    const prevTeams = [...prevById.values()].reduce((n, c) => n + (c.teams?.length || 0), 0);
+    if (prevTeams > 0 && totalTeams < prevTeams * 0.5) {
+      await dumpDebug(page, "team-drop");
+      throw new Error(`Team count collapsed (${totalTeams} vs ${prevTeams} previously) — keeping existing results.js untouched.`);
     }
 
     const players = buildLeaderboard(competitions);
