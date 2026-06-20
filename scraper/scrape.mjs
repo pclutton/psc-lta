@@ -27,6 +27,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(__dirname, "../data/results.js");
 const DEBUG_DIR = resolve(__dirname, "debug");
 const DEBUG = process.env.DEBUG === "1";
+const TODAY = new Date().toISOString().slice(0, 10); // YYYY-MM-DD, for lastSeen stamps
+const RETAIN_DAYS = 14; // how long a missing competition is kept before it's allowed to retire
 
 const cfg = JSON.parse(await readFile(resolve(__dirname, "config.json"), "utf8"));
 
@@ -535,6 +537,7 @@ async function main() {
           id: src.leagueId.slice(0, 8).toLowerCase(),
           name: src.leagueName,
           status: leagueStatus(src.leagueName),
+          lastSeen: TODAY,
           teams,
         });
       } else if (pairs.length) {
@@ -544,6 +547,7 @@ async function main() {
           id: src.leagueId.slice(0, 8).toLowerCase(),
           name: src.leagueName,
           status: leagueStatus(src.leagueName),
+          lastSeen: TODAY,
           teams: [],
           link: clubUrl,
         });
@@ -560,20 +564,33 @@ async function main() {
     const prevById = new Map((prev?.competitions || []).filter((c) => c && c.id).map((c) => [c.id, c]));
 
     // (a) Per-competition regression: if a league we DID scrape came back much
-    //     thinner than last time, keep the previous (good) version of that league.
+    //     thinner than last time, keep the previous (good) version of that league —
+    //     but stamp it as seen today, since it WAS discovered (just a thin read), so
+    //     it doesn't later age out via (b).
     for (let i = 0; i < competitions.length; i++) {
       const cur = competitions[i], old = prevById.get(cur.id);
       if (!old) continue;
       const rOld = richness(old);
       if (rOld > 0 && richness(cur) < rOld * 0.6) {
         log(`  regression in "${cur.name}" (richness ${richness(cur)} < ${rOld}) — keeping previous`);
-        competitions[i] = old;
+        competitions[i] = { ...old, lastSeen: TODAY };
       }
     }
-    // (b) Retain any competition that vanished entirely from this run.
+    // (b) Retain a competition that's absent from this run ONLY if it was seen
+    //     recently — a one-off LTA hiccup is transient, but a season that has rolled
+    //     off the discovery window stays missing and should be allowed to retire.
+    //     (A missing lastSeen is treated as recent, so legacy data is never dropped.)
+    const daysSince = (d) => d ? (Date.now() - Date.parse(d)) / 86400000 : 0;
     const haveIds = new Set(competitions.map((c) => c.id));
     for (const pc of prevById.values()) {
-      if (!haveIds.has(pc.id)) { log(`  retained (missing this run): ${pc.name}`); competitions.push(pc); }
+      if (haveIds.has(pc.id)) continue;
+      const age = daysSince(pc.lastSeen);
+      if (age <= RETAIN_DAYS) {
+        log(`  retained (missing this run, last seen ${pc.lastSeen || "unknown"}): ${pc.name}`);
+        competitions.push(pc); // keep its old lastSeen so it keeps ageing toward retirement
+      } else {
+        log(`  retired (missing ${Math.round(age)}d, past ${RETAIN_DAYS}d window): ${pc.name}`);
+      }
     }
 
     const totalTeams = competitions.reduce((n, c) => n + c.teams.length, 0);
@@ -581,12 +598,18 @@ async function main() {
       await dumpDebug(page, "no-teams");
       throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
     }
-    // (c) Backstop: even after reconciliation, refuse to publish a sweeping drop in
-    //     total teams versus the last good data — keep the existing file instead.
-    const prevTeams = [...prevById.values()].reduce((n, c) => n + (c.teams?.length || 0), 0);
-    if (prevTeams > 0 && totalTeams < prevTeams * 0.5) {
+    // (c) Backstop: refuse to publish a sweeping drop in teams — but measured only
+    //     across competitions present in BOTH runs, so a legitimate seasonal turnover
+    //     (a smaller new season replacing a bigger old one) doesn't false-trigger;
+    //     this only catches the continuing leagues all collapsing at once.
+    let prevOverlap = 0, curOverlap = 0;
+    for (const c of competitions) {
+      const old = prevById.get(c.id);
+      if (old) { curOverlap += c.teams.length; prevOverlap += (old.teams?.length || 0); }
+    }
+    if (prevOverlap > 0 && curOverlap < prevOverlap * 0.5) {
       await dumpDebug(page, "team-drop");
-      throw new Error(`Team count collapsed (${totalTeams} vs ${prevTeams} previously) — keeping existing results.js untouched.`);
+      throw new Error(`Continuing-league team count collapsed (${curOverlap} vs ${prevOverlap} previously) — keeping existing results.js untouched.`);
     }
 
     const players = buildLeaderboard(competitions);
