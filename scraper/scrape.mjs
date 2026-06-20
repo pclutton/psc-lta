@@ -236,19 +236,8 @@ function discoveryTargets() {
 // (#Query → /LeagueHome/DoSearch). Returns the club id or null.
 let leagueDumpCount = 0;
 async function probeClub(page, lg, clubQuery) {
-  await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
-  await acceptCookies(page);
-  await page.waitForTimeout(800);
-  const input = await page.$('#Query, input[name="Query"]');
-  if (!input) return null;
-  await input.click();
-  await input.type(clubQuery, { delay: 40 });
-  // Suggestions are <li data-asg-href="/league/…/club/{id}" data-asg-title="…">
-  await page.waitForSelector("[data-asg-href]", { timeout: 6000 }).catch(() => {});
-  await page.waitForTimeout(400);
-  if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
   // Match the FULL club name — "Paddington" alone also hits "Paddington Recreation Ground".
-  return page.evaluate((clubName) => {
+  const readMatch = () => page.evaluate((clubName) => {
     const want = clubName.toLowerCase();
     const pick = [...document.querySelectorAll("[data-asg-href]")].find(
       (el) => /\/club\/\d+/.test(el.getAttribute("data-asg-href") || "") &&
@@ -257,6 +246,30 @@ async function probeClub(page, lg, clubQuery) {
     const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
     return m ? m[1] : null;
   }, clubQuery);
+
+  // The autosuggest (#Query → /LeagueHome/DoSearch) is occasionally slow/empty, so
+  // retry the search a few times before giving up — a transient miss here used to
+  // drop the whole league.
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
+      await acceptCookies(page);
+      await page.waitForTimeout(700);
+      const input = await page.$('#Query, input[name="Query"]');
+      if (!input) { await page.waitForTimeout(600 * attempt); continue; }
+      await input.click({ clickCount: 3 }).catch(() => {});
+      await input.fill("").catch(() => {});
+      await input.type(clubQuery, { delay: 50 });
+      // Wait specifically for a club suggestion to appear.
+      await page.waitForSelector('[data-asg-href*="/club/"]', { timeout: 9000 }).catch(() => {});
+      await page.waitForTimeout(500);
+      if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
+      const clubId = await readMatch();
+      if (clubId) return clubId;
+    } catch (e) { log(`  probe attempt ${attempt} error:`, e.message); }
+    if (attempt < 3) await page.waitForTimeout(900 * attempt);
+  }
+  return null;
 }
 
 // Discover every league the club is in across the rolling year window, then find
@@ -295,9 +308,9 @@ async function discoverSources(page) {
       }
     }
   }
-  if (!out.length && cfg.fallbackLeagueId && cfg.fallbackClubId) {
-    out.push({ leagueId: cfg.fallbackLeagueId, leagueName: cfg.season, clubId: cfg.fallbackClubId });
-  }
+  // NB: no stale single-league fallback. If discovery/probing comes back empty
+  // (a transient LTA hiccup), we return nothing → main throws → the previous good
+  // results.js is kept, rather than overwriting it with one stale league.
   return out;
 }
 
@@ -439,6 +452,15 @@ function buildLeaderboard(competitions) {
   return players;
 }
 
+// Load the previously-published data (the committed results.js), if any.
+async function loadPrevious() {
+  try {
+    if (!existsSync(OUT)) return null;
+    const txt = await readFile(OUT, "utf8");
+    return JSON.parse(txt.replace(/^\s*window\.__PSC_RESULTS__\s*=\s*/, "").replace(/;\s*$/, ""));
+  } catch (e) { log("could not read previous results:", e.message); return null; }
+}
+
 async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; PSC-results-bot/1.0)" });
@@ -495,6 +517,20 @@ async function main() {
           teams: [],
           link: clubUrl,
         });
+      }
+    }
+
+    // Robustness: never let a competition silently vanish. If this run failed to
+    // produce a league it had before (a transient per-league failure), retain that
+    // league's last-known data instead of dropping it from the page.
+    const prev = await loadPrevious();
+    if (prev && Array.isArray(prev.competitions)) {
+      const haveIds = new Set(competitions.map((c) => c.id));
+      for (const pc of prev.competitions) {
+        if (pc && pc.id && !haveIds.has(pc.id)) {
+          log(`  retained from previous run (missing this time): ${pc.name}`);
+          competitions.push(pc);
+        }
       }
     }
 
