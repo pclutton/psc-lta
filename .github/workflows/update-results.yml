@@ -24,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so the commit step can rebase before pushing
 
       # --- scrape only on schedule / manual runs, not on ordinary pushes ---
       - name: Set up Node
@@ -54,7 +56,14 @@ jobs:
           if ! git diff --quiet -- data/results.js; then
             git add data/results.js
             git commit -m "chore: refresh LTA results [skip ci]"
-            git push
+            # The remote may have moved while we scraped (a concurrent push/deploy),
+            # which would reject the push. Rebase onto it and retry a few times.
+            pushed=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash origin main && git push; then pushed=1; break; fi
+              echo "push attempt $i failed (remote moved?); retrying in 5s"; sleep 5
+            done
+            if [ "$pushed" != "1" ]; then echo "could not push refreshed data after retries"; exit 1; fi
           else
             echo "No data changes."
           fi
