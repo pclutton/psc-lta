@@ -463,6 +463,28 @@ function buildTeam(draw, teamName, label, pscCount) {
   };
 }
 
+// Build one knockout/cup entry from a draw that has no league table. Captures the
+// club's last *played* match (opponent, score, win/loss) so a viewer can tell whether
+// the club is still in (last match won, or none played yet) or knocked out (lost).
+// `link` points at the bracket page. Matches are taken in draw (round) order, so the
+// last one the club appears in is the furthest round it has reached.
+function buildKnockout(draw, leagueName, pair) {
+  const lbl = parseLabel(pair.draw.text || draw.teamLabel || "");
+  const sub = [lbl.name, lbl.division].filter(Boolean).join(" ").trim();
+  const name = (sub && !leagueName.toLowerCase().includes(lbl.name.toLowerCase()))
+    ? `${leagueName} — ${sub}` : leagueName;
+  const mine = (draw.matches || []).filter(
+    (m) => (isPsc(m.home) || isPsc(m.away)) && m.hs != null && m.as != null);
+  let last = null;
+  if (mine.length) {
+    const m = mine[mine.length - 1];
+    const home = isPsc(m.home);
+    const sf = home ? m.hs : m.as, sa = home ? m.as : m.hs;
+    last = { opponent: home ? m.away : m.home, scoreFor: sf, scoreAgainst: sa, won: sf > sa, date: m.date || "" };
+  }
+  return { name, link: draw.url, last, live: !last || last.won };
+}
+
 // Scrape a PSC team page for its squad and each player's per-team Win-Loss
 // record (shown as "Win-Loss  4-4 (8)"). Sorted most wins first.
 async function scrapeTeamPlayers(page, url) {
@@ -557,6 +579,7 @@ async function scrapeClub(page, club) {
   log(`scraping ${sources.length} competition(s)`);
 
     const competitions = [];
+    const knockouts = []; // every cup/knockout entry, grouped into one tab at the end
     for (const src of sources) {
       const clubUrl = `${cfg.baseUrl}/league/${src.leagueId}/club/${src.clubId}`;
       let pairs = [];
@@ -569,7 +592,15 @@ async function scrapeClub(page, club) {
         try {
           let draw = drawCache.get(pair.draw.href);
           if (!draw) { draw = await scrapeDraw(page, pair.draw); drawCache.set(pair.draw.href, draw); }
-          if (!draw.standings.length) { log("skip (no standings):", pair.draw.href); continue; }
+          if (!draw.standings.length) {
+            // No league table → a knockout/cup draw. Capture the club's last match.
+            const ko = buildKnockout(draw, src.leagueName, pair);
+            if (!knockouts.some((k) => k.link === ko.link)) {
+              knockouts.push(ko);
+              log(`  knockout: ${ko.name} — ${ko.last ? (ko.last.won ? "won " : "lost ") + ko.last.scoreFor + "-" + ko.last.scoreAgainst + " vs " + ko.last.opponent : "no matches yet"}`);
+            }
+            continue;
+          }
           const pscCount = draw.standings.filter((r) => isPsc(r.name)).length;
           const team = buildTeam(draw, pair.team.text, pair.draw.text, pscCount);
           try { team.players = await scrapeTeamPlayers(page, pair.team.href); }
@@ -593,32 +624,44 @@ async function scrapeClub(page, club) {
           lastSeen: TODAY,
           teams,
         });
-      } else if (pairs.length) {
-        // PSC is entered but there's no league table (a knockout cup) — link out.
-        log(`  link-only: ${src.leagueName}`);
+      }
+    }
+
+    // Config-declared link sources. A knockout link (e.g. the NPL finals, on LTA's
+    // legacy interface we don't scrape) joins the grouped Knockout tab as a link-only
+    // entry; any other link becomes its own link-out tab.
+    for (const ls of (s.sources || []).filter((x) => x.type === "link")) {
+      if (ls.knockout) {
+        if (!knockouts.some((k) => k.link === ls.url)) {
+          knockouts.push({ name: ls.name || "Knockout", link: ls.url, last: null, live: null, linkOnly: true });
+        }
+      } else {
+        const key = (ls.id || ls.name || ls.url || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 12);
         competitions.push({
-          id: src.leagueId.slice(0, 8).toLowerCase(),
-          name: src.leagueName,
-          status: leagueStatus(src.leagueName),
+          id: "link-" + key,
+          name: ls.name || "External competition",
+          status: ls.status || leagueStatus(ls.name || ""),
           lastSeen: TODAY,
           teams: [],
-          link: clubUrl,
+          link: ls.url,
         });
       }
     }
 
-    // Config-declared link-only competitions (e.g. NPL, which lives on LTA's legacy
-    // results interface we don't table-scrape). Shown as a tab that links straight out.
-    for (const ls of (s.sources || []).filter((x) => x.type === "link")) {
-      const key = (ls.id || ls.name || ls.url || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 12);
+    // Group every knockout/cup entry into a single tab. Sort: still in first, then
+    // knocked out, then link-only; alphabetical within each group.
+    if (knockouts.length) {
+      const rank = (k) => (k.linkOnly ? 2 : (k.live ? 0 : 1));
+      knockouts.sort((a, b) => rank(a) - rank(b) || (a.name || "").localeCompare(b.name || ""));
       competitions.push({
-        id: "link-" + key,
-        name: ls.name || "External competition",
-        status: ls.status || leagueStatus(ls.name || ""),
+        id: "knockouts",
+        name: "Knockout Competitions",
+        status: "current",
         lastSeen: TODAY,
         teams: [],
-        link: ls.url,
+        knockouts,
       });
+      log(`knockouts: ${knockouts.length} (${knockouts.filter((k) => k.live).length} still in)`);
     }
 
     // --- Reconcile this run against the last good data so a transient hiccup can
@@ -626,7 +669,8 @@ async function scrapeClub(page, club) {
     // competition carries (standings rows + fixtures), so a league that loaded thin
     // (lazy-load race) or collapsed to a bare link is caught as well as one missing.
     const richness = (c) =>
-      (c.teams || []).reduce((n, t) => n + (t.standings?.length || 0) + (t.matches?.length || 0), 0);
+      (c.teams || []).reduce((n, t) => n + (t.standings?.length || 0) + (t.matches?.length || 0), 0) +
+      (c.knockouts?.length || 0);
     const prev = await loadPrevious();
     const prevById = new Map((prev?.competitions || []).filter((c) => c && c.id).map((c) => [c.id, c]));
 

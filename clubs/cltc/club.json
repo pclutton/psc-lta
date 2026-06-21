@@ -29,7 +29,7 @@
       { "type": "leagues", "leagues": [
         { "id": "3057A6B7-C664-4833-A537-3321AADCBA44", "name": "Seniors League 2026" }
       ] },
-      { "type": "link", "name": "NPL — National Premier League", "url": "https://npltennis.com/results", "status": "current" }
+      { "type": "link", "knockout": true, "name": "NPL — National Premier League", "url": "https://npltennis.com/results" }
     ]
   }
 }

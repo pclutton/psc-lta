@@ -90,11 +90,11 @@ repository secrets (for the Action) — never commit credentials.
 
 ## Roadmap / TODO
 
-- **Knockout cups & NPL are link-only — do better.** Cup competitions (e.g. Middlesex
-  Summer Cup) and NPL currently show as a tab that links out, because they have no
-  league table. Render the actual **knockout draw** instead (bracket / rounds + match
-  results), scraped from the draw page. NPL additionally needs a parser for LTA's
-  legacy `/sport/draw.aspx` interface (different DOM from the modern site).
+- **Knockouts** are grouped into one **"Knockout Competitions"** tab listing each cup
+  with the club's **last match** (opponent + score) and a Still-in / Out badge, sorted
+  still-in first. Remaining: render the full **bracket** (all rounds) per cup, and
+  scrape **NPL** (league + finals) which lives on LTA's legacy `/sport/draw.aspx`
+  interface (different DOM) — for now NPL is a link inside the Knockout tab.
 
 ## Status
 

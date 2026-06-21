@@ -225,6 +225,21 @@
   .src-note a{color:var(--brand-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
 
+  /* Knockout competitions list */
+  ul.kolist{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:780px}
+  ul.kolist li{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);font-size:14px;flex-wrap:wrap}
+  ul.kolist li:first-child{border-top:none}
+  .ko-name{font-weight:600;flex:1 1 220px;min-width:0}
+  .ko-name a{color:var(--brand-navy);text-decoration:none}
+  .ko-name a:hover{text-decoration:underline}
+  .ko-res{font-size:13px;color:var(--muted);flex:1 1 200px;font-variant-numeric:tabular-nums}
+  .ko-res .w{color:var(--win);font-weight:600}
+  .ko-res .l{color:var(--loss);font-weight:600}
+  .ko-status{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 10px;border-radius:999px;flex:none}
+  .ko-status.in{background:#e3f3e8;color:var(--win)}
+  .ko-status.out{background:#fbe9e9;color:var(--loss)}
+  .ko-status.link{background:var(--brand-navy-tint);color:var(--brand-navy-dark)}
+
   /* ===== Phone layout — a parallel version applied only to phones (the
      .is-phone class is set once on load by device; desktop is never affected). ===== */
   .is-phone .compview{grid-template-columns:1fr}
@@ -356,6 +371,11 @@
       <p style="margin:0 0 14px;font-size:14px"><b id="linkPanelTitle"></b> is a knockout competition, so there's no league table to show here.</p>
       <a id="linkPanelBtn" class="lta-btn" href="#" target="_blank" rel="noopener">View the draw &amp; fixtures on LTA ↗</a>
     </div>
+  </section>
+
+  <section class="block" id="knockoutPanel" hidden>
+    <h2 class="sec">Knockout competitions <span class="hint">— last match played; still in vs knocked out</span></h2>
+    <ul class="kolist" id="knockoutList"></ul>
   </section>
 
   <section class="block" id="playersBlock" hidden>
@@ -551,6 +571,15 @@ function selectComp(i){
   setTab(t => t.dataset.view === "comp" && +t.dataset.i === i);
   $("#playersBlock").hidden = true;
   const c = DATA.competitions[i];
+  // Grouped knockout tab: a list of cups/knockouts with each one's last match.
+  if(c.knockouts){
+    $("#compView").hidden = true;
+    $("#linkPanel").hidden = true;
+    $("#knockoutPanel").hidden = false;
+    renderKnockouts(c);
+    return;
+  }
+  $("#knockoutPanel").hidden = true;
   if(c.link){
     $("#compView").hidden = true;
     $("#linkPanel").hidden = false;
@@ -564,8 +593,27 @@ function selectComp(i){
   selectTeam(0);
 }
 
+function renderKnockouts(c){
+  $("#knockoutList").innerHTML = (c.knockouts||[]).map(k=>{
+    const nameCell = k.link ? `<a href="${k.link}" target="_blank" rel="noopener">${k.name} ↗</a>` : k.name;
+    let res = "", status = "";
+    if(k.linkOnly){
+      // A league/finals on an external site we don't scrape — just provide the link.
+    } else if(k.last){
+      const verb = k.last.won ? "beat" : "lost to";
+      res = `<span class="${k.last.won?'w':'l'}">${verb} ${k.last.opponent} ${k.last.scoreFor}–${k.last.scoreAgainst}</span>${k.last.date?` · <span style="color:var(--muted)">${k.last.date}</span>`:""}`;
+      status = k.live ? `<span class="ko-status in">Still in</span>` : `<span class="ko-status out">Out</span>`;
+    } else {
+      res = `<span style="color:var(--muted)">Not started yet</span>`;
+      status = `<span class="ko-status in">Entered</span>`;
+    }
+    return `<li><span class="ko-name">${nameCell}</span><span class="ko-res">${res}</span>${status}</li>`;
+  }).join("");
+}
+
 function selectPlayersView(){
   $("#linkPanel").hidden = true;
+  $("#knockoutPanel").hidden = true;
   setTab(t => t.dataset.view === "players");
   $("#compView").hidden = true;
   $("#playersBlock").hidden = false;
