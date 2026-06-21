@@ -297,15 +297,23 @@ async function probeClub(page, lg, clubQuery) {
     const m = pick && (pick.getAttribute("data-asg-href") || "").match(/\/club\/(\d+)/);
     return m ? m[1] : null;
   }, clubQuery);
+  // Best-effort league name from the page, so explicit (e.g. seniors) leagues with no
+  // configured name still get a sensible tab label.
+  const readName = () => page.evaluate(() =>
+    (document.querySelector("h1, .header__title, .nav-list__title")?.textContent ||
+     (document.title || "").replace(/\s*[|–-]\s*(LTA|Tennis).*/i, ""))
+      .replace(/\s+/g, " ").trim());
 
   // The autosuggest (#Query → /LeagueHome/DoSearch) is occasionally slow/empty, so
   // retry the search a few times before giving up — a transient miss here used to
   // drop the whole league.
+  let leagueName = null;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       await page.goto(`${cfg.baseUrl}/league/${lg.id}`, { waitUntil: "networkidle", timeout: 60000 });
       await acceptCookies(page);
       await page.waitForTimeout(700);
+      if (!leagueName) leagueName = (await readName().catch(() => null)) || null;
       const input = await page.$('#Query, input[name="Query"]');
       if (!input) { await page.waitForTimeout(600 * attempt); continue; }
       await input.click({ clickCount: 3 }).catch(() => {});
@@ -316,11 +324,11 @@ async function probeClub(page, lg, clubQuery) {
       await page.waitForTimeout(500);
       if (DEBUG && leagueDumpCount < 2) { leagueDumpCount++; await dumpDebug(page, "league-search"); }
       const clubId = await readMatch();
-      if (clubId) return clubId;
+      if (clubId) return { clubId, leagueName };
     } catch (e) { log(`  probe attempt ${attempt} error:`, e.message); }
     if (attempt < 3) await page.waitForTimeout(900 * attempt);
   }
-  return null;
+  return { clubId: null, leagueName };
 }
 
 // Discover every league a club is in, across one or more configured sources, then
@@ -338,8 +346,8 @@ async function discoverSources(page) {
     if (!lg.id || seenLeague.has(lg.id)) return;
     seenLeague.add(lg.id);
     try {
-      const clubId = await probeClub(page, lg, clubQuery);
-      const name = lg.name || `League ${lg.id.slice(0, 8)}`;
+      const { clubId, leagueName } = await probeClub(page, lg, clubQuery);
+      const name = lg.name || leagueName || `League ${lg.id.slice(0, 8)}`;
       if (clubId) { log(`  ✓ ${name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: name, clubId }); }
       else log(`  · ${name} → club not found in search`);
     } catch (e) { log("  league probe failed:", lg.id, e.message); }

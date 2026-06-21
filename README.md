@@ -5,7 +5,7 @@ standings, fixtures and a player leaderboard into one mobile-friendly view, so m
 don't have to navigate the LTA competition site. **One shared codebase serves many
 clubs**, each with its own branded page.
 
-**Live:** https://pclutton.github.io/psc-lta/ (Paddington Sports Club; Cumberland LTC at `/cltc/`)
+**Live:** https://pclutton.github.io/lta-club/ (Paddington Sports Club; Cumberland LTC at `/cltc/`)
 
 ---
 
@@ -87,6 +87,14 @@ page HTML to `scraper/debug/` when adjusting selectors).
 The LTA league/standings pages are public; the scraper reads them anonymously. An
 optional login is supported via `LTA_USERNAME` / `LTA_PASSWORD` env vars (locally) or
 repository secrets (for the Action) — never commit credentials.
+
+## Roadmap / TODO
+
+- **Knockout cups & NPL are link-only — do better.** Cup competitions (e.g. Middlesex
+  Summer Cup) and NPL currently show as a tab that links out, because they have no
+  league table. Render the actual **knockout draw** instead (bracket / rounds + match
+  results), scraped from the draw page. NPL additionally needs a parser for LTA's
+  legacy `/sport/draw.aspx` interface (different DOM from the modern site).
 
 ## Status
 
