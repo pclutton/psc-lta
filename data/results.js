@@ -2,14 +2,14 @@ window.__PSC_RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-20T17:27:30.093Z",
+  "generatedAt": "2026-06-21T09:58:44.372Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-20",
+      "lastSeen": "2026-06-21",
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -986,7 +986,7 @@ window.__PSC_RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-20",
+      "lastSeen": "2026-06-21",
       "teams": [
         {
           "name": "Mens Doubles",
@@ -4272,7 +4272,7 @@ window.__PSC_RESULTS__ = {
       "id": "c9f24f13",
       "name": "Middlesex Summer Cup 2026",
       "status": "current",
-      "lastSeen": "2026-06-20",
+      "lastSeen": "2026-06-21",
       "teams": [],
       "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/37"
     }
