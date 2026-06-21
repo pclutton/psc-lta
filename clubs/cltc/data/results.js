@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T19:32:25.672Z",
+  "generatedAt": "2026-06-21T19:57:19.149Z",
   "sample": false,
   "competitions": [
     {
@@ -6149,6 +6149,446 @@ window.__RESULTS__ = {
       "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/12"
     },
     {
+      "id": "3057a6b7",
+      "name": "LTA - Tennis for Britain",
+      "status": "current",
+      "lastSeen": "2026-06-21",
+      "teams": [
+        {
+          "name": "40/Over",
+          "division": "Division 1",
+          "pscName": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+          "leagueUrl": "https://competitions.lta.org.uk/league/3057A6B7-C664-4833-A537-3321AADCBA44/draw/3",
+          "position": 2,
+          "of": 8,
+          "played": 7,
+          "won": 4,
+          "lost": 2,
+          "points": 84,
+          "form": [
+            "W",
+            "L",
+            "W",
+            "W"
+          ],
+          "standings": [
+            {
+              "rank": 1,
+              "name": "Hazelwood Lawn Tennis & Squash Club 1",
+              "played": 7,
+              "won": 7,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "94-18",
+              "points": 94,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
+              "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "played": 7,
+              "won": 4,
+              "drawn": 1,
+              "lost": 2,
+              "rubbers": "84-28",
+              "points": 84,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
+              "name": "Coolhurst LTC 1",
+              "played": 7,
+              "won": 4,
+              "drawn": 1,
+              "lost": 2,
+              "rubbers": "66-46",
+              "points": 66,
+              "form": [
+                "L",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "Teddington Lawn Tennis Club 1",
+              "played": 7,
+              "won": 3,
+              "drawn": 2,
+              "lost": 2,
+              "rubbers": "58-54",
+              "points": 58,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Ealing Lawn Tennis Club 1",
+              "played": 7,
+              "won": 1,
+              "drawn": 4,
+              "lost": 2,
+              "rubbers": "50-62",
+              "points": 50,
+              "form": [
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "The Hurlingham Club 1",
+              "played": 7,
+              "won": 1,
+              "drawn": 2,
+              "lost": 4,
+              "rubbers": "44-68",
+              "points": 44,
+              "form": [
+                "L",
+                "L",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 7,
+              "name": "Muswell Hill Methodist LTC 1",
+              "played": 7,
+              "won": 1,
+              "drawn": 3,
+              "lost": 3,
+              "rubbers": "42-70",
+              "points": 42,
+              "form": [
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 8,
+              "name": "Totteridge Tennis Club 1",
+              "played": 7,
+              "won": 0,
+              "drawn": 1,
+              "lost": 6,
+              "rubbers": "10-102",
+              "points": 10,
+              "form": [
+                "L",
+                "L",
+                "L",
+                "L"
+              ]
+            }
+          ],
+          "matches": [
+            {
+              "home": "Teddington Lawn Tennis Club 1",
+              "away": "The Hurlingham Club 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Fri 19/09/2025"
+            },
+            {
+              "home": "Totteridge Tennis Club 1",
+              "away": "Coolhurst LTC 1",
+              "hs": 0,
+              "as": 16,
+              "date": "Sun 12/10/2025"
+            },
+            {
+              "home": "Ealing Lawn Tennis Club 1",
+              "away": "Hazelwood Lawn Tennis & Squash Club 1",
+              "hs": 4,
+              "as": 12,
+              "date": "Sun 19/10/2025"
+            },
+            {
+              "home": "Muswell Hill Methodist LTC 1",
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Sun 08/02/2026"
+            },
+            {
+              "home": "The Hurlingham Club 1",
+              "away": "Coolhurst LTC 1",
+              "hs": 6,
+              "as": 10,
+              "date": "Sun 23/11/2025"
+            },
+            {
+              "home": "Teddington Lawn Tennis Club 1",
+              "away": "Muswell Hill Methodist LTC 1",
+              "hs": 14,
+              "as": 2,
+              "date": "Mon 24/11/2025"
+            },
+            {
+              "home": "Hazelwood Lawn Tennis & Squash Club 1",
+              "away": "Totteridge Tennis Club 1",
+              "hs": 16,
+              "as": 0,
+              "date": "Mon 24/11/2025"
+            },
+            {
+              "home": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "away": "Ealing Lawn Tennis Club 1",
+              "hs": 16,
+              "as": 0,
+              "date": "Sat 31/01/2026"
+            },
+            {
+              "home": "Ealing Lawn Tennis Club 1",
+              "away": "Teddington Lawn Tennis Club 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Sun 05/10/2025"
+            },
+            {
+              "home": "Coolhurst LTC 1",
+              "away": "Hazelwood Lawn Tennis & Squash Club 1",
+              "hs": 4,
+              "as": 12,
+              "date": "Fri 12/12/2025"
+            },
+            {
+              "home": "Muswell Hill Methodist LTC 1",
+              "away": "The Hurlingham Club 1",
+              "hs": 14,
+              "as": 2,
+              "date": "Sun 14/12/2025"
+            },
+            {
+              "home": "Totteridge Tennis Club 1",
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "hs": 0,
+              "as": 16,
+              "date": "Sun 01/03/2026"
+            },
+            {
+              "home": "Muswell Hill Methodist LTC 1",
+              "away": "Ealing Lawn Tennis Club 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Sun 18/01/2026"
+            },
+            {
+              "home": "The Hurlingham Club 1",
+              "away": "Hazelwood Lawn Tennis & Squash Club 1",
+              "hs": 4,
+              "as": 12,
+              "date": "Sun 18/01/2026"
+            },
+            {
+              "home": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "away": "Coolhurst LTC 1",
+              "hs": 6,
+              "as": 10,
+              "date": "Fri 23/01/2026"
+            },
+            {
+              "home": "Teddington Lawn Tennis Club 1",
+              "away": "Totteridge Tennis Club 1",
+              "hs": 16,
+              "as": 0,
+              "date": "Fri 23/01/2026"
+            },
+            {
+              "home": "Totteridge Tennis Club 1",
+              "away": "Muswell Hill Methodist LTC 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Sun 01/02/2026"
+            },
+            {
+              "home": "Coolhurst LTC 1",
+              "away": "Teddington Lawn Tennis Club 1",
+              "hs": 4,
+              "as": 12,
+              "date": "Fri 13/02/2026"
+            },
+            {
+              "home": "Hazelwood Lawn Tennis & Squash Club 1",
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "hs": 10,
+              "as": 6,
+              "date": "Fri 13/02/2026"
+            },
+            {
+              "home": "Ealing Lawn Tennis Club 1",
+              "away": "The Hurlingham Club 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Sun 15/02/2026"
+            },
+            {
+              "home": "Teddington Lawn Tennis Club 1",
+              "away": "Hazelwood Lawn Tennis & Squash Club 1",
+              "hs": 0,
+              "as": 16,
+              "date": "Fri 06/03/2026"
+            },
+            {
+              "home": "Muswell Hill Methodist LTC 1",
+              "away": "Coolhurst LTC 1",
+              "hs": 2,
+              "as": 14,
+              "date": "Sun 08/03/2026"
+            },
+            {
+              "home": "The Hurlingham Club 1",
+              "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "hs": 0,
+              "as": 16,
+              "date": "Sun 08/03/2026"
+            },
+            {
+              "home": "Ealing Lawn Tennis Club 1",
+              "away": "Totteridge Tennis Club 1",
+              "hs": 14,
+              "as": 2,
+              "date": "Sun 08/03/2026"
+            },
+            {
+              "home": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "away": "Teddington Lawn Tennis Club 1",
+              "hs": 16,
+              "as": 0,
+              "date": "Sat 17/01/2026"
+            },
+            {
+              "home": "Coolhurst LTC 1",
+              "away": "Ealing Lawn Tennis Club 1",
+              "hs": 8,
+              "as": 8,
+              "date": "Fri 27/03/2026"
+            },
+            {
+              "home": "Hazelwood Lawn Tennis & Squash Club 1",
+              "away": "Muswell Hill Methodist LTC 1",
+              "hs": 16,
+              "as": 0,
+              "date": "Fri 27/03/2026"
+            },
+            {
+              "home": "Totteridge Tennis Club 1",
+              "away": "The Hurlingham Club 1",
+              "hs": 0,
+              "as": 16,
+              "date": "Sun 29/03/2026"
+            }
+          ],
+          "results": [],
+          "fixtures": [],
+          "players": [
+            {
+              "name": "Juliet Huggett",
+              "won": 6,
+              "lost": 2,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/374"
+            },
+            {
+              "name": "Javier Gonzalez Lastra",
+              "won": 5,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/559"
+            },
+            {
+              "name": "Mike Llewellyn",
+              "won": 5,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/498"
+            },
+            {
+              "name": "Adam Boucher",
+              "won": 3,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/373"
+            },
+            {
+              "name": "Iain Gannon",
+              "won": 3,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/560"
+            },
+            {
+              "name": "Gabriela Wilkinson",
+              "won": 2,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/558"
+            },
+            {
+              "name": "Libby Lyons",
+              "won": 2,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/646"
+            },
+            {
+              "name": "Logan Mair",
+              "won": 2,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/649"
+            },
+            {
+              "name": "Rachel Sheridan",
+              "won": 2,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/647"
+            },
+            {
+              "name": "Shane Weston",
+              "won": 2,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/663"
+            },
+            {
+              "name": "Natalie Bell",
+              "won": 2,
+              "lost": 2,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/567"
+            },
+            {
+              "name": "Neel Khimasia",
+              "won": 2,
+              "lost": 2,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/372"
+            },
+            {
+              "name": "Cybele Cortina",
+              "won": 2,
+              "lost": 6,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/375"
+            },
+            {
+              "name": "Tashiya Mirando",
+              "won": 0,
+              "lost": 2,
+              "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/680"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "link-nplnationalp",
       "name": "NPL — National Premier League",
       "status": "current",
@@ -6159,6 +6599,20 @@ window.__RESULTS__ = {
   ],
   "players": [
     {
+      "name": "Mike Llewellyn",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2090",
+      "won": 14,
+      "lost": 9,
+      "played": 23
+    },
+    {
+      "name": "Iain Gannon",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1385",
+      "won": 13,
+      "lost": 7,
+      "played": 20
+    },
+    {
       "name": "Thomas Brennan",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/3547",
       "won": 11,
@@ -6166,11 +6620,18 @@ window.__RESULTS__ = {
       "played": 11
     },
     {
-      "name": "Iain Gannon",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1385",
+      "name": "Natalie Bell",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2446",
       "won": 10,
       "lost": 6,
       "played": 16
+    },
+    {
+      "name": "Neel Khimasia",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2089",
+      "won": 10,
+      "lost": 16,
+      "played": 26
     },
     {
       "name": "Jacob Coenraad de klerk",
@@ -6180,11 +6641,11 @@ window.__RESULTS__ = {
       "played": 9
     },
     {
-      "name": "Mike Llewellyn",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2090",
+      "name": "Javier Gonzalez Lastra",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/3392",
       "won": 9,
-      "lost": 8,
-      "played": 17
+      "lost": 5,
+      "played": 14
     },
     {
       "name": "Bill Jennings",
@@ -6194,11 +6655,11 @@ window.__RESULTS__ = {
       "played": 20
     },
     {
-      "name": "Natalie Bell",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2446",
+      "name": "Juliet Huggett",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/374",
       "won": 8,
-      "lost": 4,
-      "played": 12
+      "lost": 3,
+      "played": 11
     },
     {
       "name": "Tom Winters",
@@ -6213,13 +6674,6 @@ window.__RESULTS__ = {
       "won": 8,
       "lost": 10,
       "played": 18
-    },
-    {
-      "name": "Neel Khimasia",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2089",
-      "won": 8,
-      "lost": 14,
-      "played": 22
     },
     {
       "name": "Romilly Smith",
@@ -6311,6 +6765,13 @@ window.__RESULTS__ = {
       "won": 6,
       "lost": 4,
       "played": 10
+    },
+    {
+      "name": "Shane Weston",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1383",
+      "won": 6,
+      "lost": 5,
+      "played": 11
     },
     {
       "name": "Andra Marinescu",
@@ -6411,6 +6872,13 @@ window.__RESULTS__ = {
       "played": 4
     },
     {
+      "name": "Libby Lyons",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5209",
+      "won": 4,
+      "lost": 0,
+      "played": 4
+    },
+    {
       "name": "Lucas Smallwood",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1197",
       "won": 4,
@@ -6446,6 +6914,13 @@ window.__RESULTS__ = {
       "played": 6
     },
     {
+      "name": "Gabriela Wilkinson",
+      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4223",
+      "won": 4,
+      "lost": 2,
+      "played": 6
+    },
+    {
       "name": "Michael Clarkson",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4374",
       "won": 4,
@@ -6474,13 +6949,6 @@ window.__RESULTS__ = {
       "played": 7
     },
     {
-      "name": "Javier Gonzalez Lastra",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/3392",
-      "won": 4,
-      "lost": 4,
-      "played": 8
-    },
-    {
       "name": "Megan Wilson",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1512",
       "won": 4,
@@ -6493,13 +6961,6 @@ window.__RESULTS__ = {
       "won": 4,
       "lost": 4,
       "played": 8
-    },
-    {
-      "name": "Shane Weston",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/1383",
-      "won": 4,
-      "lost": 5,
-      "played": 9
     },
     {
       "name": "Jack Long-Martinez",
@@ -6549,6 +7010,13 @@ window.__RESULTS__ = {
       "won": 3,
       "lost": 0,
       "played": 3
+    },
+    {
+      "name": "Adam Boucher",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/373",
+      "won": 3,
+      "lost": 1,
+      "played": 4
     },
     {
       "name": "Avi Shah",
@@ -6635,8 +7103,8 @@ window.__RESULTS__ = {
       "played": 2
     },
     {
-      "name": "Libby Lyons",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5209",
+      "name": "Logan Mair",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/649",
       "won": 2,
       "lost": 0,
       "played": 2
@@ -6644,6 +7112,13 @@ window.__RESULTS__ = {
     {
       "name": "Nnaemeka Ngoka",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/604",
+      "won": 2,
+      "lost": 0,
+      "played": 2
+    },
+    {
+      "name": "Rachel Sheridan",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/647",
       "won": 2,
       "lost": 0,
       "played": 2
@@ -6675,13 +7150,6 @@ window.__RESULTS__ = {
       "won": 2,
       "lost": 0,
       "played": 2
-    },
-    {
-      "name": "Juliet Huggett",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4225",
-      "won": 2,
-      "lost": 1,
-      "played": 3
     },
     {
       "name": "Kiaan Andersson",
@@ -6747,13 +7215,6 @@ window.__RESULTS__ = {
       "played": 4
     },
     {
-      "name": "Gabriela Wilkinson",
-      "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4223",
-      "won": 2,
-      "lost": 2,
-      "played": 4
-    },
-    {
       "name": "Valeria Barzi",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1667",
       "won": 2,
@@ -6780,6 +7241,13 @@ window.__RESULTS__ = {
       "won": 2,
       "lost": 4,
       "played": 6
+    },
+    {
+      "name": "Cybele Cortina",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/375",
+      "won": 2,
+      "lost": 6,
+      "played": 8
     },
     {
       "name": "George White",
@@ -6994,6 +7462,13 @@ window.__RESULTS__ = {
     {
       "name": "Pietro Cardi",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/587",
+      "won": 0,
+      "lost": 2,
+      "played": 2
+    },
+    {
+      "name": "Tashiya Mirando",
+      "url": "https://competitions.lta.org.uk/league/3057a6b7-c664-4833-a537-3321aadcba44/player/680",
       "won": 0,
       "lost": 2,
       "played": 2
