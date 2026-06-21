@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T20:03:54.733Z",
+  "generatedAt": "2026-06-21T20:11:08.551Z",
   "sample": false,
   "competitions": [
     {
@@ -6150,7 +6150,7 @@ window.__RESULTS__ = {
     },
     {
       "id": "3057a6b7",
-      "name": "LTA - Tennis for Britain",
+      "name": "Seniors League 2026",
       "status": "current",
       "lastSeen": "2026-06-21",
       "teams": [
