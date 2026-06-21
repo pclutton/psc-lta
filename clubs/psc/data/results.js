@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T09:58:44.372Z",
+  "generatedAt": "2026-06-21T19:34:00.596Z",
   "sample": false,
   "competitions": [
     {
@@ -3183,6 +3183,22 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Teddington Lawn Tennis Club 3",
+              "played": 4,
+              "won": 3,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "68-28",
+              "points": 68,
+              "form": [
+                "W",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Pinner Lawn Tennis Club 2",
               "played": 4,
               "won": 1,
@@ -3194,21 +3210,6 @@ window.__RESULTS__ = {
                 "L",
                 "L",
                 "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Teddington Lawn Tennis Club 3",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "44-28",
-              "points": 44,
-              "form": [
-                "W",
-                "W",
-                "L"
               ]
             },
             {
@@ -3274,14 +3275,15 @@ window.__RESULTS__ = {
             {
               "rank": 7,
               "name": "David Lloyd Club Northwood 1",
-              "played": 3,
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "32-40",
+              "lost": 3,
+              "rubbers": "32-64",
               "points": 32,
               "form": [
                 "W",
+                "L",
                 "L",
                 "L"
               ]
@@ -3397,8 +3399,8 @@ window.__RESULTS__ = {
             {
               "home": "Teddington Lawn Tennis Club 3",
               "away": "David Lloyd Club Northwood 1",
-              "hs": null,
-              "as": null,
+              "hs": 24,
+              "as": 0,
               "date": "Fri 19/06/2026"
             },
             {
