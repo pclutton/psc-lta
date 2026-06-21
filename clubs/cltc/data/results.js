@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T20:11:08.551Z",
+  "generatedAt": "2026-06-21T20:33:35.802Z",
   "sample": false,
   "competitions": [
     {
@@ -6141,14 +6141,6 @@ window.__RESULTS__ = {
       ]
     },
     {
-      "id": "c9f24f13",
-      "name": "Middlesex Summer Cup 2026",
-      "status": "current",
-      "lastSeen": "2026-06-21",
-      "teams": [],
-      "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/12"
-    },
-    {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
@@ -6587,6 +6579,42 @@ window.__RESULTS__ = {
           ]
         }
       ]
+    },
+    {
+      "id": "knockouts",
+      "name": "Knockout Competitions",
+      "status": "current",
+      "lastSeen": "2026-06-21",
+      "teams": [],
+      "knockouts": [
+        {
+          "name": "Middlesex Summer Cup 2026 — Mixed Doubles Division 1",
+          "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/draw/1",
+          "last": {
+            "opponent": "The Queens Club Limited 1",
+            "scoreFor": 4,
+            "scoreAgainst": 5,
+            "won": false,
+            "date": "Sat 16/05/2026"
+          },
+          "live": false
+        },
+        {
+          "name": "NPL — National Premier League",
+          "link": "https://npltennis.com/results",
+          "last": null,
+          "live": null,
+          "linkOnly": true
+        }
+      ]
+    },
+    {
+      "id": "c9f24f13",
+      "name": "Middlesex Summer Cup 2026",
+      "status": "current",
+      "lastSeen": "2026-06-21",
+      "teams": [],
+      "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/12"
     },
     {
       "id": "link-nplnationalp",

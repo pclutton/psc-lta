@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T20:12:43.533Z",
+  "generatedAt": "2026-06-21T20:35:04.320Z",
   "sample": false,
   "competitions": [
     {
@@ -4267,6 +4267,27 @@ window.__RESULTS__ = {
               "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5181"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "knockouts",
+      "name": "Knockout Competitions",
+      "status": "current",
+      "lastSeen": "2026-06-21",
+      "teams": [],
+      "knockouts": [
+        {
+          "name": "Middlesex Summer Cup 2026 — Mixed Doubles Division 1",
+          "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/draw/1",
+          "last": {
+            "opponent": "Ealing Lawn Tennis Club 1",
+            "scoreFor": 1,
+            "scoreAgainst": 5,
+            "won": false,
+            "date": "Sat 25/04/2026"
+          },
+          "live": false
         }
       ]
     },
