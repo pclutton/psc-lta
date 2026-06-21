@@ -299,10 +299,14 @@ async function probeClub(page, lg, clubQuery) {
   }, clubQuery);
   // Best-effort league name from the page, so explicit (e.g. seniors) leagues with no
   // configured name still get a sensible tab label.
-  const readName = () => page.evaluate(() =>
-    (document.querySelector("h1, .header__title, .nav-list__title")?.textContent ||
-     (document.title || "").replace(/\s*[|–-]\s*(LTA|Tennis).*/i, ""))
-      .replace(/\s+/g, " ").trim());
+  const readName = () => page.evaluate(() => {
+    let t = (document.querySelector("h1, .header__title, .nav-list__title")?.textContent ||
+             document.title || "").replace(/\s+/g, " ").trim();
+    // Ignore the generic site title (the league name isn't rendered there) — caller
+    // then falls back to a configured name or the id.
+    if (/tennis for britain/i.test(t) || /^lta\b/i.test(t)) return "";
+    return t.replace(/\s*[|–-]\s*(LTA|Tennis for Britain).*/i, "").trim();
+  });
 
   // The autosuggest (#Query → /LeagueHome/DoSearch) is occasionally slow/empty, so
   // retry the search a few times before giving up — a transient miss here used to
