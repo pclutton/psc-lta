@@ -1,8 +1,9 @@
 name: Update results & deploy
 
 # Two modes, one workflow:
-#   • push to main        → just rebuild & deploy the page (fast, no scraping)
-#   • schedule / manual   → scrape the LTA site, commit fresh data, then deploy
+#   • push to main        → just rebuild the site & deploy (fast, no scraping)
+#   • schedule / manual   → scrape every club, commit fresh data, build & deploy
+# The site is built from app/ + clubs/<slug>/ into _site/ and that is what deploys.
 on:
   schedule:
     - cron: "0 6 * * *"   # 06:00 UTC daily
@@ -27,35 +28,35 @@ jobs:
         with:
           fetch-depth: 0   # full history so the commit step can rebase before pushing
 
-      # --- scrape only on schedule / manual runs, not on ordinary pushes ---
+      # Node is needed for the build (both modes) and the scraper (scrape mode).
       - name: Set up Node
-        if: github.event_name != 'push'
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
+      # --- scrape only on schedule / manual runs, not on ordinary pushes ---
       - name: Install scraper deps
         if: github.event_name != 'push'
         working-directory: scraper
         run: npm install
 
-      - name: Scrape LTA results (fail-safe — keeps last good data on error)
+      - name: Scrape all clubs (fail-safe — keeps each club's last good data on error)
         if: github.event_name != 'push'
         working-directory: scraper
         env:
           # Optional. Leave the secrets unset to scrape anonymously (the default).
           LTA_USERNAME: ${{ secrets.LTA_USERNAME }}
           LTA_PASSWORD: ${{ secrets.LTA_PASSWORD }}
-        run: npm run scrape || echo "Scrape failed; keeping existing data/results.js"
+        run: npm run scrape || echo "Scrape failed; keeping existing data"
 
       - name: Commit refreshed data
         if: github.event_name != 'push'
         run: |
-          git config user.name "psc-results-bot"
+          git config user.name "results-bot"
           git config user.email "actions@users.noreply.github.com"
-          if ! git diff --quiet -- data/results.js; then
-            git add data/results.js
-            git commit -m "chore: refresh LTA results [skip ci]"
+          if ! git diff --quiet -- clubs; then
+            git add clubs
+            git commit -m "chore: refresh results [skip ci]"
             # The remote may have moved while we scraped (a concurrent push/deploy),
             # which would reject the push. Rebase onto it and retry a few times.
             pushed=0
@@ -68,11 +69,14 @@ jobs:
             echo "No data changes."
           fi
 
-      # --- always publish the current repo (page + committed data) ---
+      # --- build the deployable site (both modes) and publish it ---
+      - name: Build site
+        run: node scripts/build-site.mjs
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build

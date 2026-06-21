@@ -1,9 +1,9 @@
 {
-  "name": "psc-tennis-scraper",
-  "version": "1.0.0",
+  "name": "tennis-results-scraper",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Scrapes Paddington Sports Club results from the LTA competition site into data/results.json",
+  "description": "Scrapes each club's LTA results into clubs/<slug>/data/results.js",
   "scripts": {
     "scrape": "node scrape.mjs",
     "postinstall": "playwright install chromium"

@@ -1,0 +1,32 @@
+{
+  "slug": "psc",
+  "name": "Paddington Sports Club",
+  "shortName": "PSC",
+  "tagline": "LTA leagues results & standings",
+  "website": "https://www.psclondon.com/",
+  "matcher": "paddington",
+  "address": "Paddington Sports Club · Castellain Road, Maida Vale, London W9 1HQ",
+  "colors": {
+    "navy": "#222e62",
+    "navyDark": "#161f45",
+    "navyTint": "#eef0f7",
+    "gold": "#ffcb05",
+    "red": "#ed1c24"
+  },
+  "nav": [
+    { "label": "Membership", "href": "https://www.psclondon.com/membership" },
+    { "label": "Tennis", "href": "https://www.psclondon.com/tennis", "active": true },
+    { "label": "Squash", "href": "https://www.psclondon.com/squash" },
+    { "label": "Bowls", "href": "https://www.psclondon.com/bowls" },
+    { "label": "Fitness", "href": "https://www.psclondon.com/fitness" }
+  ],
+  "social": ["Instagram", "TikTok", "Twitter", "Facebook"],
+  "scrape": {
+    "baseUrl": "https://competitions.lta.org.uk",
+    "clubSearch": "Paddington Sports Club",
+    "year": "auto",
+    "sources": [
+      { "type": "group", "url": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF" }
+    ]
+  }
+}

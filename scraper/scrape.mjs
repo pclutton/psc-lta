@@ -1,9 +1,12 @@
-// PSC tennis results scraper
+// Multi-club tennis results scraper
 // -----------------------------------------------------------------------------
-// Drives a headless Chromium browser (via Playwright) to read the club's results
+// Drives a headless Chromium browser (via Playwright) to read each club's results
 // from the LTA / TournamentSoftware competition site, which has no public API and
-// gates content behind a cookie-consent wall. Output: ../data/results.js (a JS
-// global, so the page also opens straight from disk via file://).
+// gates content behind a cookie-consent wall. Loops over every club defined in
+// ../clubs/<slug>/club.json and writes ../clubs/<slug>/data/results.js (a JS global,
+// so each page also opens straight from disk via file://). NPL competitions live on
+// the same LTA platform, so they are just extra discovery sources — not a separate
+// backend.
 //
 // Design goals:
 //   * Fail safe  - if a run produces no teams, the existing results.js is kept.
@@ -18,22 +21,42 @@
 // -----------------------------------------------------------------------------
 
 import { chromium } from "playwright";
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(__dirname, "../data/results.js");
+const CLUBS_DIR = resolve(__dirname, "../clubs");
 const DEBUG_DIR = resolve(__dirname, "debug");
 const DEBUG = process.env.DEBUG === "1";
 const TODAY = new Date().toISOString().slice(0, 10); // YYYY-MM-DD, for lastSeen stamps
 const RETAIN_DAYS = 14; // how long a missing competition is kept before it's allowed to retire
 
-const cfg = JSON.parse(await readFile(resolve(__dirname, "config.json"), "utf8"));
+// Per-club state, (re)set at the start of each club in scrapeClub(). The helper
+// functions below read these, so generalising to many clubs needed no signature churn.
+let cfg = null;          // { baseUrl, clubName, discovery: { year, clubSearch } }
+let OUT = null;          // clubs/<slug>/data/results.js for the club being scraped
+let homeMatch = /paddington/i; // regex marking the home club's rows in a standings table
 
 const log = (...a) => console.log("[scrape]", ...a);
-const isPsc = (name) => name && name.toLowerCase().includes("paddington");
+const isPsc = (name) => !!name && homeMatch.test(name);
+
+// Load every clubs/<slug>/club.json (each carries branding + a `scrape` block).
+async function loadClubs() {
+  const entries = await readdir(CLUBS_DIR, { withFileTypes: true });
+  const clubs = [];
+  for (const e of entries) {
+    if (!e.isDirectory()) continue;
+    const file = resolve(CLUBS_DIR, e.name, "club.json");
+    if (!existsSync(file)) continue;
+    const club = JSON.parse(await readFile(file, "utf8"));
+    club.slug = club.slug || e.name;
+    if (club.scrape) clubs.push(club);
+    else log(`skip ${e.name}: no "scrape" block in club.json`);
+  }
+  return clubs;
+}
 
 // Retry a navigation/scrape step a few times. The LTA SPA intermittently times
 // out or renders late; a single transient failure on a data page used to silently
@@ -300,45 +323,58 @@ async function probeClub(page, lg, clubQuery) {
   return null;
 }
 
-// Discover every league the club is in across the rolling year window, then find
-// the club's id within each. Returns [] if nothing is found (no stale fallback).
+// Discover every league a club is in, across one or more configured sources, then
+// find the club's id within each. A source is either a county/association GROUP page
+// to crawl (type:"group") or an explicit list of league GUIDs (type:"leagues") — the
+// latter is how NPL competitions are wired in, since their npltennis.com links point
+// at this same LTA platform. Returns [] if nothing is found (no stale fallback): a
+// transient LTA hiccup then yields nothing → the previous good results.js is kept.
 async function discoverSources(page) {
   const out = [];
   const seenLeague = new Set();
   const clubQuery = cfg.discovery?.clubSearch || cfg.clubName;
-  if (cfg.discovery?.groupUrl) {
-    for (const tgt of discoveryTargets()) {
-      await page.goto(`${cfg.discovery.groupUrl}?LeagueFilterYear=${tgt.year}`, { waitUntil: "networkidle", timeout: 60000 });
-      await acceptCookies(page);
-      await page.waitForTimeout(1500);
-      if (DEBUG) await dumpDebug(page, "group");
 
-      let leagues = await page.$$eval("a[href*='/league/']", (as) => {
-        const seen = {}, res = [];
-        for (const a of as) {
-          const m = a.href.match(/\/league\/([0-9A-Fa-f-]{36})(?:[/?#]|$)/);
-          const name = a.textContent.replace(/\s+/g, " ").trim();
-          if (m && name && name.length > 4 && !seen[m[1]]) { seen[m[1]] = 1; res.push({ id: m[1], name }); }
-        }
-        return res;
-      });
-      if (tgt.winterOnly) leagues = leagues.filter((l) => /winter|floodlit/i.test(l.name));
-      log(`discovery: ${leagues.length} leagues for ${tgt.year}${tgt.winterOnly ? " (winter only)" : ""}`);
+  const addLeague = async (lg) => {
+    if (!lg.id || seenLeague.has(lg.id)) return;
+    seenLeague.add(lg.id);
+    try {
+      const clubId = await probeClub(page, lg, clubQuery);
+      const name = lg.name || `League ${lg.id.slice(0, 8)}`;
+      if (clubId) { log(`  ✓ ${name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: name, clubId }); }
+      else log(`  · ${name} → club not found in search`);
+    } catch (e) { log("  league probe failed:", lg.id, e.message); }
+  };
 
-      for (const lg of leagues) {
-        if (seenLeague.has(lg.id)) continue;
-        seenLeague.add(lg.id);
-        try {
-          const clubId = await probeClub(page, lg, clubQuery);
-          if (clubId) { log(`  ✓ ${lg.name} → club ${clubId}`); out.push({ leagueId: lg.id, leagueName: lg.name, clubId }); }
-          else log(`  · ${lg.name} → club not found in search`);
-        } catch (e) { log("  league probe failed:", lg.id, e.message); }
+  for (const src of (cfg.discovery?.sources || [])) {
+    if (src.type === "group" && src.url) {
+      for (const tgt of discoveryTargets()) {
+        await page.goto(`${src.url}?LeagueFilterYear=${tgt.year}`, { waitUntil: "networkidle", timeout: 60000 });
+        await acceptCookies(page);
+        await page.waitForTimeout(1500);
+        if (DEBUG) await dumpDebug(page, "group");
+
+        let leagues = await page.$$eval("a[href*='/league/']", (as) => {
+          const seen = {}, res = [];
+          for (const a of as) {
+            const m = a.href.match(/\/league\/([0-9A-Fa-f-]{36})(?:[/?#]|$)/);
+            const name = a.textContent.replace(/\s+/g, " ").trim();
+            if (m && name && name.length > 4 && !seen[m[1]]) { seen[m[1]] = 1; res.push({ id: m[1], name }); }
+          }
+          return res;
+        });
+        if (tgt.winterOnly) leagues = leagues.filter((l) => /winter|floodlit/i.test(l.name));
+        log(`discovery: ${leagues.length} leagues for ${tgt.year}${tgt.winterOnly ? " (winter only)" : ""}`);
+        for (const lg of leagues) await addLeague(lg);
       }
+    } else if (src.type === "leagues") {
+      // Explicit league GUIDs (e.g. NPL), optionally with names: [{id,name}] or ids:[...]
+      const list = src.leagues || (src.ids || []).map((id) => ({ id }));
+      log(`discovery: ${list.length} explicit league(s)`);
+      for (const lg of list) await addLeague(lg);
+    } else {
+      log("  unknown/empty source (skipped):", JSON.stringify(src));
     }
   }
-  // NB: no stale single-league fallback. If discovery/probing comes back empty
-  // (a transient LTA hiccup), we return nothing → main throws → the previous good
-  // results.js is kept, rather than overwriting it with one stale league.
   return out;
 }
 
@@ -489,19 +525,24 @@ async function loadPrevious() {
   try {
     if (!existsSync(OUT)) return null;
     const txt = await readFile(OUT, "utf8");
-    return JSON.parse(txt.replace(/^\s*window\.__PSC_RESULTS__\s*=\s*/, "").replace(/;\s*$/, ""));
+    return JSON.parse(txt.replace(/^\s*window\.__RESULTS__\s*=\s*/, "").replace(/;\s*$/, ""));
   } catch (e) { log("could not read previous results:", e.message); return null; }
 }
 
-async function main() {
-  const browser = await chromium.launch();
-  const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; PSC-results-bot/1.0)" });
-  try {
-    await maybeLogin(page);
+// Scrape one club into clubs/<slug>/data/results.js. Sets the per-club module state
+// the helper functions read, then runs discover → scrape → reconcile → write.
+async function scrapeClub(page, club) {
+  const s = club.scrape;
+  cfg = { baseUrl: s.baseUrl, clubName: club.name, discovery: { year: s.year, clubSearch: s.clubSearch, sources: s.sources } };
+  OUT = resolve(CLUBS_DIR, club.slug, "data", "results.js");
+  homeMatch = new RegExp(club.matcher || escapeReg(club.name), "i");
 
-    const sources = await discoverSources(page);
-    if (!sources.length) throw new Error("No leagues found for the club (discovery returned nothing).");
-    log(`scraping ${sources.length} competition(s)`);
+  await maybeLogin(page);
+  const sources = await discoverSources(page);
+  // No early throw on empty discovery: a transient hiccup is handled by the retain/
+  // reconcile step below (it re-adds the previous good competitions). We only fail at
+  // the very end if there is genuinely nothing to show (and no history to fall back on).
+  log(`scraping ${sources.length} competition(s)`);
 
     const competitions = [];
     for (const src of sources) {
@@ -554,6 +595,20 @@ async function main() {
       }
     }
 
+    // Config-declared link-only competitions (e.g. NPL, which lives on LTA's legacy
+    // results interface we don't table-scrape). Shown as a tab that links straight out.
+    for (const ls of (s.sources || []).filter((x) => x.type === "link")) {
+      const key = (ls.id || ls.name || ls.url || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 12);
+      competitions.push({
+        id: "link-" + key,
+        name: ls.name || "External competition",
+        status: ls.status || leagueStatus(ls.name || ""),
+        lastSeen: TODAY,
+        teams: [],
+        link: ls.url,
+      });
+    }
+
     // --- Reconcile this run against the last good data so a transient hiccup can
     // never replace good data with worse data. "Richness" = how much real content a
     // competition carries (standings rows + fixtures), so a league that loaded thin
@@ -594,9 +649,9 @@ async function main() {
     }
 
     const totalTeams = competitions.reduce((n, c) => n + c.teams.length, 0);
-    if (totalTeams === 0) {
-      await dumpDebug(page, "no-teams");
-      throw new Error("Scrape produced 0 teams — keeping existing results.json untouched.");
+    if (competitions.length === 0) {
+      await dumpDebug(page, "no-comps");
+      throw new Error("Nothing to publish (no competitions and no history) — keeping any existing results.js untouched.");
     }
     // (c) Backstop: refuse to publish a sweeping drop in teams — but measured only
     //     across competitions present in BOTH runs, so a legitimate seasonal turnover
@@ -614,25 +669,44 @@ async function main() {
 
     const players = buildLeaderboard(competitions);
 
+    const groupSrc = (s.sources || []).find((x) => x.type === "group" && x.url);
     const out = {
-      clubName: cfg.clubName,
-      season: (cfg.discovery?.year && cfg.discovery.year !== "auto") ? cfg.discovery.year : String(new Date().getFullYear()),
-      sourceUrl: cfg.discovery?.groupUrl || cfg.baseUrl,
+      clubName: club.name,
+      season: (s.year && s.year !== "auto") ? s.year : String(new Date().getFullYear()),
+      sourceUrl: groupSrc ? groupSrc.url : s.baseUrl,
       generatedAt: new Date().toISOString(),
       sample: false,
       competitions,
       players,
     };
     // Written as a JS global (not bare JSON) so the page also works from file://
-    await writeFile(OUT, "window.__PSC_RESULTS__ = " + JSON.stringify(out, null, 2) + ";\n", "utf8");
+    await mkdir(dirname(OUT), { recursive: true });
+    await writeFile(OUT, "window.__RESULTS__ = " + JSON.stringify(out, null, 2) + ";\n", "utf8");
     log(`wrote ${OUT} — ${totalTeams} teams across ${competitions.length} competitions`);
+}
+
+// Loop every configured club. One club's failure keeps its existing data and does not
+// abort the others; the whole run only fails if every club fails.
+async function main() {
+  const clubs = await loadClubs();
+  if (!clubs.length) throw new Error(`No clubs found under ${CLUBS_DIR}`);
+  log(`clubs: ${clubs.map((c) => c.slug).join(", ")}`);
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; tennis-results-bot/1.0)" });
+  let failures = 0;
+  try {
+    for (const club of clubs) {
+      log(`\n===== ${club.name} (${club.slug}) =====`);
+      try { await scrapeClub(page, club); }
+      catch (e) { failures++; log(`club ${club.slug} failed (keeping its existing data): ${e.message}`); }
+    }
   } finally {
     await browser.close();
   }
+  if (failures === clubs.length) throw new Error("All clubs failed to scrape.");
 }
 
 main().catch((e) => {
   console.error("[scrape] FAILED:", e.message);
-  if (!existsSync(OUT)) console.error("[scrape] and no existing results.json exists — the page will show an error.");
   process.exit(1);
 });

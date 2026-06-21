@@ -1,0 +1,32 @@
+{
+  "slug": "cltc",
+  "name": "Cumberland Lawn Tennis Club",
+  "shortName": "Cumberland",
+  "tagline": "LTA & NPL results & standings",
+  "website": "https://cltc-hcc.com/",
+  "matcher": "cumberland",
+  "address": "Cumberland Lawn Tennis Club · Lymington Road, London NW6 · 020 7435 6022",
+  "colors": {
+    "navy": "#443c90",
+    "navyDark": "#2f2a66",
+    "navyTint": "#ecebf6",
+    "gold": "#f5c518",
+    "red": "#c0392b"
+  },
+  "nav": [
+    { "label": "Club site", "href": "https://cltc-hcc.com/" },
+    { "label": "Tennis", "href": "https://cltc-hcc.com/tennis-4/", "active": true }
+  ],
+  "social": [
+    { "label": "Instagram", "href": "https://www.instagram.com/cumberland_ltc/" }
+  ],
+  "scrape": {
+    "baseUrl": "https://competitions.lta.org.uk",
+    "clubSearch": "Cumberland Lawn Tennis Club",
+    "year": "auto",
+    "sources": [
+      { "type": "group", "url": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF" },
+      { "type": "link", "name": "NPL — National Premier League", "url": "https://npltennis.com/results", "status": "current" }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 node_modules/
+_site/
 scraper/debug/
 *.log
 .DS_Store
