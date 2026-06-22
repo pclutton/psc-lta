@@ -77,7 +77,13 @@ async function buildClub(slug, shell) {
 
 async function main() {
   if (!existsSync(APP)) throw new Error(`Missing app shell: ${APP}`);
-  const shell = await readFile(APP, "utf8");
+  // Cache-bust the per-club scripts on every build so browsers can't serve a stale
+  // club.js / results.js against a freshly-fetched page.
+  const version = Date.now().toString(36);
+  const shell = (await readFile(APP, "utf8"))
+    .replace('src="club.js"', `src="club.js?v=${version}"`)
+    .replace('src="data/results.js"', `src="data/results.js?v=${version}"`);
+  log(`build version ${version}`);
 
   await rm(SITE, { recursive: true, force: true });
   await mkdir(SITE, { recursive: true });
