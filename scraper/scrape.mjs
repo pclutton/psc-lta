@@ -695,6 +695,10 @@ async function scrapeClub(page, club) {
     const haveIds = new Set(competitions.map((c) => c.id));
     for (const pc of prevById.values()) {
       if (haveIds.has(pc.id)) continue;
+      // Don't resurrect a pure link-only competition: it carries no scraped content,
+      // so its absence isn't data loss — and it's usually been superseded (e.g. cups
+      // and NPL now live inside the grouped "knockouts" tab). Drop it immediately.
+      if (pc.link && !(pc.teams?.length) && !(pc.knockouts?.length)) continue;
       const age = daysSince(pc.lastSeen);
       if (age <= RETAIN_DAYS) {
         log(`  retained (missing this run, last seen ${pc.lastSeen || "unknown"}): ${pc.name}`);
