@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-22T06:51:59.135Z",
+  "generatedAt": "2026-06-22T12:17:19.059Z",
   "sample": false,
   "competitions": [
     {
@@ -515,28 +515,30 @@ window.__RESULTS__ = {
             {
               "rank": 4,
               "name": "The Parsons Green Club 1",
-              "played": 3,
-              "won": 1,
+              "played": 4,
+              "won": 2,
               "drawn": 0,
               "lost": 2,
-              "rubbers": "14-22",
-              "points": 2,
+              "rubbers": "22-26",
+              "points": 4,
               "form": [
                 "W",
                 "L",
-                "L"
+                "L",
+                "W"
               ]
             },
             {
               "rank": 5,
               "name": "Teddington Lawn Tennis Club 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "6-18",
+              "lost": 3,
+              "rubbers": "10-26",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -638,8 +640,8 @@ window.__RESULTS__ = {
             {
               "home": "The Parsons Green Club 1",
               "away": "Teddington Lawn Tennis Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 8,
+              "as": 4,
               "date": "Sun 21/06/2026"
             },
             {

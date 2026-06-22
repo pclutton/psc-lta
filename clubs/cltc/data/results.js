@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-22T06:50:24.635Z",
+  "generatedAt": "2026-06-22T12:15:51.989Z",
   "sample": false,
   "competitions": [
     {
@@ -62,15 +62,16 @@ window.__RESULTS__ = {
             {
               "rank": 3,
               "name": "Ealing Lawn Tennis Club 1",
-              "played": 4,
-              "won": 1,
+              "played": 5,
+              "won": 2,
               "drawn": 0,
               "lost": 3,
-              "rubbers": "24-24",
-              "points": 2,
+              "rubbers": "32-28",
+              "points": 4,
               "form": [
                 "L",
                 "L",
+                "W",
                 "W",
                 "L"
               ]
@@ -78,13 +79,14 @@ window.__RESULTS__ = {
             {
               "rank": 4,
               "name": "Hazelwood Lawn Tennis & Squash Club 1",
-              "played": 1,
+              "played": 2,
               "won": 0,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "0-12",
+              "lost": 2,
+              "rubbers": "4-20",
               "points": 0,
               "form": [
+                "L",
                 "L"
               ]
             }
@@ -149,8 +151,8 @@ window.__RESULTS__ = {
             {
               "home": "Hazelwood Lawn Tennis & Squash Club 1",
               "away": "Ealing Lawn Tennis Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 4,
+              "as": 8,
               "date": "Sun 14/06/2026"
             },
             {
@@ -450,7 +452,7 @@ window.__RESULTS__ = {
           "division": "",
           "pscName": "Cumberland Lawn Tennis Club 2",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/9",
-          "position": 6,
+          "position": 5,
           "of": 6,
           "played": 3,
           "won": 0,
@@ -481,13 +483,14 @@ window.__RESULTS__ = {
             {
               "rank": 2,
               "name": "Chandos Lawn Tennis Club 1",
-              "played": 3,
-              "won": 3,
+              "played": 4,
+              "won": 4,
               "drawn": 0,
               "lost": 0,
-              "rubbers": "26-10",
-              "points": 6,
+              "rubbers": "36-12",
+              "points": 8,
               "form": [
+                "W",
                 "W",
                 "W",
                 "W"
@@ -526,12 +529,12 @@ window.__RESULTS__ = {
             },
             {
               "rank": 5,
-              "name": "Hackney Tennis 1",
+              "name": "Cumberland Lawn Tennis Club 2",
               "played": 3,
               "won": 0,
               "drawn": 0,
               "lost": 3,
-              "rubbers": "18-18",
+              "rubbers": "8-28",
               "points": 0,
               "form": [
                 "L",
@@ -541,14 +544,15 @@ window.__RESULTS__ = {
             },
             {
               "rank": 6,
-              "name": "Cumberland Lawn Tennis Club 2",
-              "played": 3,
+              "name": "Hackney Tennis 1",
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "8-28",
+              "lost": 4,
+              "rubbers": "20-28",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -636,8 +640,8 @@ window.__RESULTS__ = {
             {
               "home": "Chandos Lawn Tennis Club 1",
               "away": "Hackney Tennis 1",
-              "hs": null,
-              "as": null,
+              "hs": 10,
+              "as": 2,
               "date": "Sun 21/06/2026"
             },
             {
