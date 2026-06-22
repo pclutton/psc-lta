@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-21T20:33:35.802Z",
+  "generatedAt": "2026-06-22T06:50:24.635Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-21",
+      "lastSeen": "2026-06-22",
       "teams": [
         {
           "name": "11&U Boys Division 1",
@@ -1454,7 +1454,7 @@ window.__RESULTS__ = {
           "division": "",
           "pscName": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/65",
-          "position": 1,
+          "position": 2,
           "of": 4,
           "played": 3,
           "won": 2,
@@ -1468,6 +1468,23 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Conway Lawn Tennis Club 1",
+              "played": 5,
+              "won": 3,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "22-8",
+              "points": 6,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
               "played": 3,
               "won": 2,
@@ -1482,39 +1499,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 2,
-              "name": "Conway Lawn Tennis Club 1",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "16-8",
-              "points": 4,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 3,
-              "name": "Oakleigh Park Lawn Tennis & Squash Club 1",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "8-16",
-              "points": 4,
-              "form": [
-                "W",
-                "L",
-                "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 4,
               "name": "Vicars Moor LTC 1",
               "played": 5,
               "won": 2,
@@ -1528,6 +1513,23 @@ window.__RESULTS__ = {
                 "L",
                 "L",
                 "W"
+              ]
+            },
+            {
+              "rank": 4,
+              "name": "Oakleigh Park Lawn Tennis & Squash Club 1",
+              "played": 5,
+              "won": 2,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "8-22",
+              "points": 4,
+              "form": [
+                "W",
+                "L",
+                "L",
+                "W",
+                "L"
               ]
             }
           ],
@@ -1598,8 +1600,8 @@ window.__RESULTS__ = {
             {
               "home": "Conway Lawn Tennis Club 1",
               "away": "Oakleigh Park Lawn Tennis & Squash Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 0,
               "date": "Sun 21/06/2026"
             },
             {
@@ -2521,7 +2523,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-21",
+      "lastSeen": "2026-06-22",
       "teams": [
         {
           "name": "Mens Doubles (1)",
@@ -6144,7 +6146,7 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-21",
+      "lastSeen": "2026-06-22",
       "teams": [
         {
           "name": "40/Over",
@@ -6584,7 +6586,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-21",
+      "lastSeen": "2026-06-22",
       "teams": [],
       "knockouts": [
         {
@@ -6607,22 +6609,6 @@ window.__RESULTS__ = {
           "linkOnly": true
         }
       ]
-    },
-    {
-      "id": "c9f24f13",
-      "name": "Middlesex Summer Cup 2026",
-      "status": "current",
-      "lastSeen": "2026-06-21",
-      "teams": [],
-      "link": "https://competitions.lta.org.uk/league/C9F24F13-B399-4FB1-A171-8CCED75F85B1/club/12"
-    },
-    {
-      "id": "link-nplnationalp",
-      "name": "NPL — National Premier League",
-      "status": "current",
-      "lastSeen": "2026-06-21",
-      "teams": [],
-      "link": "https://npltennis.com/results"
     }
   ],
   "players": [
