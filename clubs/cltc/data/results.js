@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-22T12:15:51.989Z",
+  "generatedAt": "2026-06-23T09:53:45.790Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-22",
+      "lastSeen": "2026-06-23",
       "teams": [
         {
           "name": "11&U Boys Division 1",
@@ -2527,7 +2527,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-22",
+      "lastSeen": "2026-06-23",
       "teams": [
         {
           "name": "Mens Doubles (1)",
@@ -4705,13 +4705,13 @@ window.__RESULTS__ = {
           "position": 1,
           "of": 7,
           "played": 4,
-          "won": 2,
-          "lost": 2,
-          "points": 52,
+          "won": 3,
+          "lost": 1,
+          "points": 59,
           "form": [
             "W",
             "L",
-            "L",
+            "W",
             "W"
           ],
           "standings": [
@@ -4719,15 +4719,15 @@ window.__RESULTS__ = {
               "rank": 1,
               "name": "Cumberland 1",
               "played": 4,
-              "won": 2,
+              "won": 3,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "52-44",
-              "points": 52,
+              "lost": 1,
+              "rubbers": "59-37",
+              "points": 59,
               "form": [
                 "W",
                 "L",
-                "L",
+                "W",
                 "W"
               ]
             },
@@ -4761,20 +4761,37 @@ window.__RESULTS__ = {
             },
             {
               "rank": 4,
-              "name": "Cumberland 2",
-              "played": 2,
+              "name": "Totteridge 1",
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "27-21",
-              "points": 27,
+              "lost": 3,
+              "rubbers": "30-66",
+              "points": 30,
               "form": [
+                "L",
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Globe 1",
+              "played": 3,
+              "won": 1,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "28-44",
+              "points": 28,
+              "form": [
+                "L",
                 "L",
                 "W"
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "Coolhurst LTC 1",
               "played": 3,
               "won": 1,
@@ -4789,29 +4806,14 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
-              "name": "Totteridge 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "20-52",
-              "points": 20,
-              "form": [
-                "L",
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 7,
-              "name": "Globe 1",
+              "name": "Cumberland 2",
               "played": 2,
               "won": 0,
               "drawn": 0,
               "lost": 2,
-              "rubbers": "14-34",
-              "points": 14,
+              "rubbers": "20-28",
+              "points": 20,
               "form": [
                 "L",
                 "L"
@@ -4871,8 +4873,8 @@ window.__RESULTS__ = {
             {
               "home": "Cumberland 2",
               "away": "Cumberland 1",
-              "hs": 17,
-              "as": 7,
+              "hs": 10,
+              "as": 14,
               "date": "Mon 15/06/2026"
             },
             {
@@ -4885,8 +4887,8 @@ window.__RESULTS__ = {
             {
               "home": "Totteridge 1",
               "away": "Globe 1",
-              "hs": null,
-              "as": null,
+              "hs": 10,
+              "as": 14,
               "date": "Mon 22/06/2026"
             },
             {
@@ -5079,30 +5081,30 @@ window.__RESULTS__ = {
           "division": "East Premier",
           "pscName": "Cumberland 2",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/51",
-          "position": 4,
+          "position": 7,
           "of": 7,
           "played": 2,
-          "won": 1,
-          "lost": 1,
-          "points": 27,
+          "won": 0,
+          "lost": 2,
+          "points": 20,
           "form": [
             "L",
-            "W"
+            "L"
           ],
           "standings": [
             {
               "rank": 1,
               "name": "Cumberland 1",
               "played": 4,
-              "won": 2,
+              "won": 3,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "52-44",
-              "points": 52,
+              "lost": 1,
+              "rubbers": "59-37",
+              "points": 59,
               "form": [
                 "W",
                 "L",
-                "L",
+                "W",
                 "W"
               ]
             },
@@ -5136,20 +5138,37 @@ window.__RESULTS__ = {
             },
             {
               "rank": 4,
-              "name": "Cumberland 2",
-              "played": 2,
+              "name": "Totteridge 1",
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "27-21",
-              "points": 27,
+              "lost": 3,
+              "rubbers": "30-66",
+              "points": 30,
               "form": [
+                "L",
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 5,
+              "name": "Globe 1",
+              "played": 3,
+              "won": 1,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "28-44",
+              "points": 28,
+              "form": [
+                "L",
                 "L",
                 "W"
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "Coolhurst LTC 1",
               "played": 3,
               "won": 1,
@@ -5164,29 +5183,14 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
-              "name": "Totteridge 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "20-52",
-              "points": 20,
-              "form": [
-                "L",
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 7,
-              "name": "Globe 1",
+              "name": "Cumberland 2",
               "played": 2,
               "won": 0,
               "drawn": 0,
               "lost": 2,
-              "rubbers": "14-34",
-              "points": 14,
+              "rubbers": "20-28",
+              "points": 20,
               "form": [
                 "L",
                 "L"
@@ -5246,8 +5250,8 @@ window.__RESULTS__ = {
             {
               "home": "Cumberland 2",
               "away": "Cumberland 1",
-              "hs": 17,
-              "as": 7,
+              "hs": 10,
+              "as": 14,
               "date": "Mon 15/06/2026"
             },
             {
@@ -5260,8 +5264,8 @@ window.__RESULTS__ = {
             {
               "home": "Totteridge 1",
               "away": "Globe 1",
-              "hs": null,
-              "as": null,
+              "hs": 10,
+              "as": 14,
               "date": "Mon 22/06/2026"
             },
             {
@@ -6150,7 +6154,7 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-22",
+      "lastSeen": "2026-06-23",
       "teams": [
         {
           "name": "40/Over",
@@ -6590,7 +6594,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-22",
+      "lastSeen": "2026-06-23",
       "teams": [],
       "knockouts": [
         {
