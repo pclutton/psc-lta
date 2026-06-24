@@ -86,8 +86,10 @@
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 22px}
   .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
   .tab[aria-selected="true"]{background:var(--brand-navy);border-color:var(--brand-navy);color:#fff;font-weight:600}
-  .tab--players{margin-left:auto;border-color:var(--brand-gold)}
+  .tabright{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center}  /* right cluster: Recent + Players, kept together */
+  .tab--players{border-color:var(--brand-gold)}
   .tab--players[aria-selected="false"]{color:var(--brand-navy-dark)}
+  .tab--recent{border-color:var(--brand-navy-tint)}
   .tfin{font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:#eef0f7;color:var(--muted);padding:1px 6px;border-radius:999px;margin-left:6px;vertical-align:1px}
   .tab[aria-selected="true"] .tfin{background:rgba(255,255,255,.22);color:#fff}
   .dt-status{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
@@ -208,6 +210,7 @@
   .res-tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;flex:none}
   .res-tag.W{background:var(--brand-navy-tint);color:var(--brand-navy-dark)}
   .res-tag.L{background:#fbe9e9;color:var(--loss)}
+  .res-tag.D{background:#fdf3df;color:#9a6b00}
 
   .sec .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px}
   #playerSearch{width:100%;max-width:340px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;margin-bottom:12px}
@@ -241,11 +244,19 @@
   .ko-status.out{background:#fbe9e9;color:var(--loss)}
   .ko-status.link{background:var(--brand-navy-tint);color:var(--brand-navy-dark)}
 
+  /* Recent matches table */
+  table.recent td.rdate{color:var(--muted);white-space:nowrap}
+  table.recent td.rteam{font-weight:600}
+  table.recent td.rscore{font-weight:700;font-variant-numeric:tabular-nums}
+  table.recent td.rscore.w{color:var(--win)}
+  table.recent td.rscore.l{color:var(--loss)}
+  table.recent td.rscore.d{color:var(--draw)}
+
   /* ===== Phone layout — a parallel version applied only to phones (the
      .is-phone class is set once on load by device; desktop is never affected). ===== */
   .is-phone .compview{grid-template-columns:1fr}
   .is-phone nav.main{display:none}
-  .is-phone .tab--players{margin-left:0}
+  .is-phone .tab--players,.is-phone .tabright{margin-left:0}
   .is-phone .tabs{margin:18px 0 16px}
   /* Header: short title + compact bars */
   .is-phone .topbar .wrap{height:52px}
@@ -379,6 +390,18 @@
     <ul class="kolist" id="knockoutList"></ul>
   </section>
 
+  <section class="block" id="recentPanel" hidden>
+    <h2 class="sec">Recent matches <span class="hint">— played in the last 7 days</span></h2>
+    <div class="tablewrap">
+      <table class="recent">
+        <thead><tr>
+          <th>Date</th><th>Team</th><th>Opponent</th><th class="num">Res</th><th class="num">Score</th>
+        </tr></thead>
+        <tbody id="recentList"></tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="block" id="playersBlock" hidden>
     <h2 class="sec">Player leaderboard <span class="hint">— ranked by wins, across all teams</span></h2>
     <input id="playerSearch" type="search" placeholder="Find your name…" aria-label="Search players by name" />
@@ -408,7 +431,7 @@
 <script>
 const statusLabel = {promo:"Top half", mid:"Mid-table", releg:"Bottom"};
 const $ = s => document.querySelector(s);
-let DATA, currentComp, currentTeam, detailView = "standings";
+let DATA, currentComp, currentTeam, detailView = "standings", RECENT = [];
 
 function statusFor(t){
   if(!t.of) return "promo";
@@ -427,13 +450,86 @@ function renderTabs(){
     const arrow = c.link ? ' ↗' : '';
     return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${arrow}${fin?' <span class="tfin">Finished</span>':''}</button>`;
   }).join("");
-  if((DATA.players||[]).length){
-    html += `<button class="tab tab--players" role="tab" data-view="players" aria-selected="false">🏆 Players</button>`;
-  }
+  // Right-hand cluster: Recent Matches sits to the LEFT of Players; the first of the
+  // two gets the auto margin that pushes the cluster to the right.
+  RECENT = buildRecent();
+  const right = [];
+  if(RECENT.length) right.push(`<button class="tab tab--recent" role="tab" data-view="recent" aria-selected="false">📅 Recent Matches</button>`);
+  if((DATA.players||[]).length) right.push(`<button class="tab tab--players" role="tab" data-view="players" aria-selected="false">🏆 Players</button>`);
+  if(right.length) html += `<span class="tabright">${right.join("")}</span>`;
   $("#tabs").innerHTML = html;
   document.querySelectorAll(".tab").forEach(tab=>{
-    tab.addEventListener("click",()=> tab.dataset.view === "players" ? selectPlayersView() : selectComp(+tab.dataset.i));
+    tab.addEventListener("click",()=>{
+      const v = tab.dataset.view;
+      if(v === "players") selectPlayersView();
+      else if(v === "recent") selectRecentView();
+      else selectComp(+tab.dataset.i);
+    });
   });
+}
+
+const result = (sf, sa) => sf > sa ? "W" : sf < sa ? "L" : "D";
+
+// Parse the LTA match date "Sun 26/04/2026" → a UTC Date (date only).
+function parseUKDate(s){
+  const m = (s||"").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  return m ? new Date(Date.UTC(+m[3], +m[2]-1, +m[1])) : null;
+}
+
+// All of the club's matches played within the last 7 days (inclusive) of the refresh
+// date, across every team and cup, most-recent first.
+function buildRecent(){
+  const ref = DATA.generatedAt ? new Date(DATA.generatedAt) : new Date();
+  const refUTC = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth(), ref.getUTCDate());
+  const inWindow = (d) => { const diff = Math.round((refUTC - d.getTime())/86400000); return diff >= 0 && diff <= 6; };
+  const norm = (s) => (s||"").toLowerCase().replace(/\s+/g," ").trim();
+  const out = [];
+  for(const c of (DATA.competitions||[])){
+    for(const t of (c.teams||[])){
+      const mine = norm(t.pscName||"");
+      for(const m of (t.matches||[])){
+        if(m.hs==null || m.as==null || m.hs==="" || m.as==="") continue; // not played yet
+        const homeIsClub = isPsc(m.home), awayIsClub = isPsc(m.away);
+        if(!homeIsClub && !awayIsClub) continue;
+        // Attribute to THIS team only, so a club with two teams in one division isn't double-counted.
+        const clubSide = homeIsClub ? m.home : m.away;
+        if(mine && norm(clubSide) !== mine) continue;
+        const d = parseUKDate(m.date); if(!d || !inWindow(d)) continue;
+        const sf = homeIsClub ? +m.hs : +m.as, sa = homeIsClub ? +m.as : +m.hs;
+        out.push({ t:d.getTime(), date:d, team:t.name + (t.division ? " · "+t.division : ""), opponent: homeIsClub ? m.away : m.home, res: result(sf,sa), sf, sa });
+      }
+    }
+    for(const k of (c.knockouts||[])){
+      if(!k.last) continue;
+      const d = parseUKDate(k.last.date); if(!d || !inWindow(d)) continue;
+      out.push({ t:d.getTime(), date:d, team:k.name, opponent:k.last.opponent, res: result(k.last.scoreFor, k.last.scoreAgainst), sf:k.last.scoreFor, sa:k.last.scoreAgainst });
+    }
+  }
+  out.sort((a,b)=> b.t - a.t);
+  return out;
+}
+
+function renderRecent(){
+  if(!RECENT.length){ $("#recentList").innerHTML = `<tr><td colspan="5" class="nores">No matches played in the last 7 days.</td></tr>`; return; }
+  const fmt = (d) => d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});
+  $("#recentList").innerHTML = RECENT.map(r=>`
+    <tr>
+      <td class="rdate">${fmt(r.date)}</td>
+      <td class="rteam">${r.team}</td>
+      <td>${r.opponent}</td>
+      <td class="num"><span class="res-tag ${r.res}">${r.res}</span></td>
+      <td class="num rscore ${r.res.toLowerCase()}">${r.sf}–${r.sa}</td>
+    </tr>`).join("");
+}
+
+function selectRecentView(){
+  $("#linkPanel").hidden = true;
+  $("#knockoutPanel").hidden = true;
+  $("#playersBlock").hidden = true;
+  $("#compView").hidden = true;
+  $("#recentPanel").hidden = false;
+  setTab(t => t.dataset.view === "recent");
+  renderRecent();
 }
 
 function setTab(pred){
@@ -571,6 +667,7 @@ function selectComp(i){
   currentComp = i;
   setTab(t => t.dataset.view === "comp" && +t.dataset.i === i);
   $("#playersBlock").hidden = true;
+  $("#recentPanel").hidden = true;
   const c = DATA.competitions[i];
   // Grouped knockout tab: a list of cups/knockouts with each one's last match.
   if(c.knockouts){
@@ -615,6 +712,7 @@ function renderKnockouts(c){
 function selectPlayersView(){
   $("#linkPanel").hidden = true;
   $("#knockoutPanel").hidden = true;
+  $("#recentPanel").hidden = true;
   setTab(t => t.dataset.view === "players");
   $("#compView").hidden = true;
   $("#playersBlock").hidden = false;
