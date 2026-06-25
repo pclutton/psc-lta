@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-25T09:34:29.576Z",
+  "generatedAt": "2026-06-25T20:08:48.385Z",
   "sample": false,
   "competitions": [
     {
@@ -3782,13 +3782,6 @@ window.__RESULTS__ = {
               "date": "Mon 08/06/2026"
             },
             {
-              "home": "Paddington Sports Club 4",
-              "away": "Lowlands Club 2",
-              "hs": null,
-              "as": null,
-              "date": "Thu 11/06/2026"
-            },
-            {
               "home": "David Lloyd Club Sudbury Hill 1",
               "away": "Paddington Sports Club 4",
               "hs": null,
@@ -3850,6 +3843,13 @@ window.__RESULTS__ = {
               "hs": null,
               "as": null,
               "date": "Mon 20/07/2026"
+            },
+            {
+              "home": "Paddington Sports Club 4",
+              "away": "Lowlands Club 2",
+              "hs": null,
+              "as": null,
+              "date": "Thu 23/07/2026"
             },
             {
               "home": "David Lloyd Club Northwood 2",
@@ -4336,6 +4336,7 @@ window.__RESULTS__ = {
             "won": false,
             "date": "Sat 25/04/2026"
           },
+          "next": null,
           "live": false
         }
       ]
