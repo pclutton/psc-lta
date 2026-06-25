@@ -2,34 +2,51 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-24T09:41:25.842Z",
+  "generatedAt": "2026-06-25T09:33:04.837Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [
         {
           "name": "11&U Boys Division 1",
           "division": "",
           "pscName": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/22",
-          "position": 2,
+          "position": 1,
           "of": 4,
-          "played": 3,
-          "won": 2,
+          "played": 4,
+          "won": 3,
           "lost": 1,
-          "points": 4,
+          "points": 6,
           "form": [
             "L",
+            "W",
             "W",
             "W"
           ],
           "standings": [
             {
               "rank": 1,
+              "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
+              "played": 4,
+              "won": 3,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "34-14",
+              "points": 6,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Hackney Tennis 1",
               "played": 4,
               "won": 3,
@@ -41,21 +58,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "L",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "22-14",
-              "points": 4,
-              "form": [
-                "L",
-                "W",
                 "W"
               ]
             },
@@ -79,13 +81,14 @@ window.__RESULTS__ = {
             {
               "rank": 4,
               "name": "Hazelwood Lawn Tennis & Squash Club 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "4-20",
+              "lost": 3,
+              "rubbers": "4-32",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -165,8 +168,8 @@ window.__RESULTS__ = {
             {
               "home": "Hazelwood Lawn Tennis & Squash Club 1",
               "away": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
-              "hs": null,
-              "as": null,
+              "hs": 0,
+              "as": 12,
               "date": "Sun 21/06/2026"
             },
             {
@@ -182,15 +185,33 @@ window.__RESULTS__ = {
           "players": [
             {
               "name": "Jake Jacobs",
-              "won": 4,
+              "won": 6,
               "lost": 0,
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1228"
+            },
+            {
+              "name": "Zacharia Aneizi",
+              "won": 4,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1230"
             },
             {
               "name": "Avi Shah",
               "won": 3,
               "lost": 1,
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1227"
+            },
+            {
+              "name": "Rohan Andersson",
+              "won": 3,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/585"
+            },
+            {
+              "name": "Sam Mayeur Lam",
+              "won": 3,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1523"
             },
             {
               "name": "Fares Mechri",
@@ -203,24 +224,6 @@ window.__RESULTS__ = {
               "won": 2,
               "lost": 0,
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1229"
-            },
-            {
-              "name": "Zacharia Aneizi",
-              "won": 2,
-              "lost": 0,
-              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1230"
-            },
-            {
-              "name": "Rohan Andersson",
-              "won": 1,
-              "lost": 1,
-              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/585"
-            },
-            {
-              "name": "Sam Mayeur Lam",
-              "won": 1,
-              "lost": 1,
-              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1523"
             },
             {
               "name": "Daniel Gronlykke Mouriz",
@@ -2556,7 +2559,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [
         {
           "name": "Mens Doubles (1)",
@@ -3767,6 +3770,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Coolhurst LTC 2",
+              "played": 5,
+              "won": 4,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "84-36",
+              "points": 84,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Finchley Manor Tennis Squash and Health Club 2",
               "played": 5,
               "won": 3,
@@ -3780,22 +3800,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Coolhurst LTC 2",
-              "played": 4,
-              "won": 3,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "68-28",
-              "points": 68,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "W"
               ]
             },
             {
@@ -3817,15 +3821,16 @@ window.__RESULTS__ = {
             {
               "rank": 5,
               "name": "Elmwood Lawn Tennis Club 1",
-              "played": 5,
+              "played": 6,
               "won": 1,
               "drawn": 1,
-              "lost": 3,
-              "rubbers": "48-72",
-              "points": 48,
+              "lost": 4,
+              "rubbers": "56-88",
+              "points": 56,
               "form": [
                 "L",
                 "W",
+                "L",
                 "L",
                 "L"
               ]
@@ -4027,8 +4032,8 @@ window.__RESULTS__ = {
             {
               "home": "Elmwood Lawn Tennis Club 1",
               "away": "Coolhurst LTC 2",
-              "hs": null,
-              "as": null,
+              "hs": 8,
+              "as": 16,
               "date": "Wed 24/06/2026"
             },
             {
@@ -4271,6 +4276,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Coolhurst LTC 2",
+              "played": 5,
+              "won": 4,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "84-36",
+              "points": 84,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Finchley Manor Tennis Squash and Health Club 2",
               "played": 5,
               "won": 3,
@@ -4284,22 +4306,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Coolhurst LTC 2",
-              "played": 4,
-              "won": 3,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "68-28",
-              "points": 68,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "W"
               ]
             },
             {
@@ -4321,15 +4327,16 @@ window.__RESULTS__ = {
             {
               "rank": 5,
               "name": "Elmwood Lawn Tennis Club 1",
-              "played": 5,
+              "played": 6,
               "won": 1,
               "drawn": 1,
-              "lost": 3,
-              "rubbers": "48-72",
-              "points": 48,
+              "lost": 4,
+              "rubbers": "56-88",
+              "points": 56,
               "form": [
                 "L",
                 "W",
+                "L",
                 "L",
                 "L"
               ]
@@ -4531,8 +4538,8 @@ window.__RESULTS__ = {
             {
               "home": "Elmwood Lawn Tennis Club 1",
               "away": "Coolhurst LTC 2",
-              "hs": null,
-              "as": null,
+              "hs": 8,
+              "as": 16,
               "date": "Wed 24/06/2026"
             },
             {
@@ -5449,7 +5456,7 @@ window.__RESULTS__ = {
           "division": "East Intermediate",
           "pscName": "Cumberland 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/64",
-          "position": 6,
+          "position": 7,
           "of": 8,
           "played": 2,
           "won": 1,
@@ -5494,6 +5501,22 @@ window.__RESULTS__ = {
             },
             {
               "rank": 3,
+              "name": "Hackney 1",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "48-44",
+              "points": 48,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L"
+              ]
+            },
+            {
+              "rank": 4,
               "name": "Coolhurst 2",
               "played": 4,
               "won": 2,
@@ -5509,22 +5532,21 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
-              "name": "Hackney 1",
-              "played": 3,
+              "rank": 5,
+              "name": "Finchley Manor 1",
+              "played": 2,
               "won": 2,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "42-30",
-              "points": 42,
+              "lost": 0,
+              "rubbers": "30-14",
+              "points": 30,
               "form": [
-                "L",
                 "W",
                 "W"
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "Muswell Hill Methodist 1",
               "played": 3,
               "won": 1,
@@ -5539,7 +5561,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
+              "rank": 7,
               "name": "Cumberland 3",
               "played": 2,
               "won": 1,
@@ -5550,19 +5572,6 @@ window.__RESULTS__ = {
               "form": [
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Finchley Manor 1",
-              "played": 1,
-              "won": 1,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "16-8",
-              "points": 16,
-              "form": [
-                "W"
               ]
             },
             {
@@ -5602,13 +5611,6 @@ window.__RESULTS__ = {
               "hs": 6,
               "as": 18,
               "date": "Mon 11/05/2026"
-            },
-            {
-              "home": "Finchley Manor 1",
-              "away": "Cumberland 3",
-              "hs": null,
-              "as": null,
-              "date": "Thu 14/05/2026"
             },
             {
               "home": "Cumberland 3",
@@ -5676,8 +5678,8 @@ window.__RESULTS__ = {
             {
               "home": "Hackney 1",
               "away": "Finchley Manor 1",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 14,
               "date": "Mon 22/06/2026"
             },
             {
@@ -5690,6 +5692,13 @@ window.__RESULTS__ = {
             {
               "home": "Conway 1",
               "away": "Muswell Hill Methodist 1",
+              "hs": null,
+              "as": null,
+              "date": "Fri 03/07/2026"
+            },
+            {
+              "home": "Finchley Manor 1",
+              "away": "Cumberland 3",
               "hs": null,
               "as": null,
               "date": "Fri 03/07/2026"
@@ -6243,7 +6252,7 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [
         {
           "name": "40/Over",
@@ -6683,7 +6692,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [],
       "knockouts": [
         {
@@ -6850,6 +6859,13 @@ window.__RESULTS__ = {
       "played": 6
     },
     {
+      "name": "Jake Jacobs",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1228",
+      "won": 6,
+      "lost": 0,
+      "played": 6
+    },
+    {
       "name": "John Thompson",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4373",
       "won": 6,
@@ -7004,15 +7020,15 @@ window.__RESULTS__ = {
       "played": 11
     },
     {
-      "name": "Jake Jacobs",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1228",
+      "name": "Lucas Smallwood",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1197",
       "won": 4,
       "lost": 0,
       "played": 4
     },
     {
-      "name": "Lucas Smallwood",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1197",
+      "name": "Zacharia Aneizi",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1230",
       "won": 4,
       "lost": 0,
       "played": 4
@@ -7165,6 +7181,20 @@ window.__RESULTS__ = {
       "played": 4
     },
     {
+      "name": "Rohan Andersson",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/585",
+      "won": 3,
+      "lost": 1,
+      "played": 4
+    },
+    {
+      "name": "Sam Mayeur Lam",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1523",
+      "won": 3,
+      "lost": 1,
+      "played": 4
+    },
+    {
       "name": "Anastasia Argent",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/2445",
       "won": 3,
@@ -7272,13 +7302,6 @@ window.__RESULTS__ = {
     {
       "name": "William Senou",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/285",
-      "won": 2,
-      "lost": 0,
-      "played": 2
-    },
-    {
-      "name": "Zacharia Aneizi",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1230",
       "won": 2,
       "lost": 0,
       "played": 2
@@ -7440,20 +7463,6 @@ window.__RESULTS__ = {
     {
       "name": "Paul de Saint Rapt",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/542",
-      "won": 1,
-      "lost": 1,
-      "played": 2
-    },
-    {
-      "name": "Rohan Andersson",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/585",
-      "won": 1,
-      "lost": 1,
-      "played": 2
-    },
-    {
-      "name": "Sam Mayeur Lam",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1523",
       "won": 1,
       "lost": 1,
       "played": 2

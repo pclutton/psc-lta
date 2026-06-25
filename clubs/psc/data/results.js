@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-24T09:42:49.365Z",
+  "generatedAt": "2026-06-25T09:34:29.576Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -531,28 +531,30 @@ window.__RESULTS__ = {
             {
               "rank": 5,
               "name": "Teddington Lawn Tennis Club 1",
-              "played": 3,
-              "won": 0,
+              "played": 4,
+              "won": 1,
               "drawn": 0,
               "lost": 3,
-              "rubbers": "10-26",
-              "points": 0,
+              "rubbers": "18-30",
+              "points": 2,
               "form": [
                 "L",
                 "L",
+                "W",
                 "L"
               ]
             },
             {
               "rank": 6,
               "name": "The Hurlingham Club 2",
-              "played": 3,
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "6-30",
+              "lost": 4,
+              "rubbers": "10-38",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -626,8 +628,8 @@ window.__RESULTS__ = {
             {
               "home": "Teddington Lawn Tennis Club 1",
               "away": "The Hurlingham Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 8,
+              "as": 4,
               "date": "Sun 14/06/2026"
             },
             {
@@ -1006,7 +1008,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [
         {
           "name": "Mens Doubles",
@@ -2288,6 +2290,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 3,
+              "name": "Harrow Baptist Tennis Club 1",
+              "played": 5,
+              "won": 3,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "76-44",
+              "points": 76,
+              "form": [
+                "W",
+                "L",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
               "name": "Hatch End Lawn Tennis Club 3",
               "played": 4,
               "won": 4,
@@ -2303,33 +2322,18 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
-              "name": "Harrow Baptist Tennis Club 1",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "52-44",
-              "points": 52,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 5,
               "name": "Harrow Lawn Tennis Club 4",
-              "played": 4,
+              "played": 5,
               "won": 1,
               "drawn": 2,
-              "lost": 1,
-              "rubbers": "46-50",
+              "lost": 2,
+              "rubbers": "46-74",
               "points": 46,
               "form": [
                 "L",
-                "W"
+                "W",
+                "L"
               ]
             },
             {
@@ -2541,8 +2545,8 @@ window.__RESULTS__ = {
             {
               "home": "Harrow Baptist Tennis Club 1",
               "away": "Harrow Lawn Tennis Club 4",
-              "hs": null,
-              "as": null,
+              "hs": 24,
+              "as": 0,
               "date": "Tue 23/06/2026"
             },
             {
@@ -4319,7 +4323,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-24",
+      "lastSeen": "2026-06-25",
       "teams": [],
       "knockouts": [
         {
