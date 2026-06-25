@@ -90,6 +90,7 @@
   .tab--players{border-color:var(--brand-gold)}
   .tab--players[aria-selected="false"]{color:var(--brand-navy-dark)}
   .tab--recent{border-color:var(--brand-navy-tint)}
+  .tab--upcoming{border-color:var(--brand-gold)}
   .tfin{font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:#eef0f7;color:var(--muted);padding:1px 6px;border-radius:999px;margin-left:6px;vertical-align:1px}
   .tab[aria-selected="true"] .tfin{background:rgba(255,255,255,.22);color:#fff}
   .dt-status{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
@@ -244,13 +245,18 @@
   .ko-status.out{background:#fbe9e9;color:var(--loss)}
   .ko-status.link{background:var(--brand-navy-tint);color:var(--brand-navy-dark)}
 
-  /* Recent matches table */
+  /* Recent / Upcoming matches tables */
   table.recent td.rdate{color:var(--muted);white-space:nowrap}
   table.recent td.rteam{font-weight:600}
   table.recent td.rscore{font-weight:700;font-variant-numeric:tabular-nums}
   table.recent td.rscore.w{color:var(--win)}
   table.recent td.rscore.l{color:var(--loss)}
   table.recent td.rscore.d{color:var(--draw)}
+  table.upcoming td.uleague{color:var(--muted)}
+  .uleague-sub{display:none}                /* league shows as its own column on desktop */
+  .ha-tag{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .ha-tag.home{background:var(--brand-navy-tint);color:var(--brand-navy-dark)}
+  .ha-tag.away{background:#eef1ee;color:var(--muted)}
 
   /* ===== Phone layout — a parallel version applied only to phones (the
      .is-phone class is set once on load by device; desktop is never affected). ===== */
@@ -292,6 +298,23 @@
   .is-phone table.matrix .rowhead,.is-phone table.matrix th.corner{position:sticky;left:0;z-index:2}
   .is-phone table.matrix .rowhead .rankdot{margin-right:0}
   .is-phone .matrix-legend{font-size:11px;margin:8px 10px 12px}
+  /* Recent/Upcoming on phone: tighten; for Upcoming drop the wide League column and
+     show the league as a sub-line under the team, and pin the Date column for swiping. */
+  .is-phone table.recent thead th,.is-phone table.recent tbody td{padding:8px 6px}
+  .is-phone table.recent td.rdate{font-size:12px}
+  /* Upcoming on phone: one card per fixture (shows every field, no sideways scroll). */
+  .is-phone #upcomingPanel .tablewrap{overflow:visible}
+  .is-phone table.upcoming,.is-phone table.upcoming tbody{display:block}
+  .is-phone table.upcoming thead{display:none}
+  .is-phone table.upcoming tr{display:block;border:1px solid var(--line);border-radius:12px;padding:10px 13px;margin:0 0 10px;box-shadow:var(--shadow)}
+  .is-phone table.upcoming tr:nth-child(even) td{background:none}
+  .is-phone table.upcoming td{display:block;border:none;padding:1px 0;white-space:normal;text-align:left}
+  .is-phone table.upcoming td.rdate{display:inline-block;color:var(--muted);font-size:12.5px}
+  .is-phone table.upcoming td.hacell{display:inline-block;float:right}
+  .is-phone table.upcoming td.uleague{display:none}
+  .is-phone table.upcoming .uleague-sub{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+  .is-phone table.upcoming td.rteam{font-weight:700;font-size:14px;margin-top:3px}
+  .is-phone table.upcoming td.uopp::before{content:"vs ";color:var(--muted)}
 </style>
 </head>
 <body>
@@ -390,6 +413,18 @@
     <ul class="kolist" id="knockoutList"></ul>
   </section>
 
+  <section class="block" id="upcomingPanel" hidden>
+    <h2 class="sec">Upcoming matches <span class="hint">— who's at home · <span id="upcomingRange"></span></span></h2>
+    <div class="tablewrap">
+      <table class="recent upcoming">
+        <thead><tr>
+          <th>Date</th><th class="num">H/A</th><th>League</th><th>Team</th><th>Opponent</th>
+        </tr></thead>
+        <tbody id="upcomingList"></tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="block" id="recentPanel" hidden>
     <h2 class="sec">Recent matches <span class="hint">— played in the last 7 days</span></h2>
     <div class="tablewrap">
@@ -431,7 +466,7 @@
 <script>
 const statusLabel = {promo:"Top half", mid:"Mid-table", releg:"Bottom"};
 const $ = s => document.querySelector(s);
-let DATA, currentComp, currentTeam, detailView = "standings", RECENT = [];
+let DATA, currentComp, currentTeam, detailView = "standings", RECENT = [], UPCOMING = [];
 
 function statusFor(t){
   if(!t.of) return "promo";
@@ -450,11 +485,13 @@ function renderTabs(){
     const arrow = c.link ? ' ↗' : '';
     return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${arrow}${fin?' <span class="tfin">Finished</span>':''}</button>`;
   }).join("");
-  // Right-hand cluster: Recent Matches sits to the LEFT of Players; the first of the
-  // two gets the auto margin that pushes the cluster to the right.
+  // Right-hand cluster, in order: Upcoming · Recent · Players. Kept together and pushed
+  // to the right; each tab only appears when it has something to show.
+  UPCOMING = buildUpcoming();
   RECENT = buildRecent();
   const right = [];
-  if(RECENT.length) right.push(`<button class="tab tab--recent" role="tab" data-view="recent" aria-selected="false">📅 Recent Matches</button>`);
+  if(UPCOMING.length) right.push(`<button class="tab tab--upcoming" role="tab" data-view="upcoming" aria-selected="false">🗓️ Upcoming Matches</button>`);
+  if(RECENT.length) right.push(`<button class="tab tab--recent" role="tab" data-view="recent" aria-selected="false">🕑 Recent Matches</button>`);
   if((DATA.players||[]).length) right.push(`<button class="tab tab--players" role="tab" data-view="players" aria-selected="false">🏆 Players</button>`);
   if(right.length) html += `<span class="tabright">${right.join("")}</span>`;
   $("#tabs").innerHTML = html;
@@ -463,12 +500,14 @@ function renderTabs(){
       const v = tab.dataset.view;
       if(v === "players") selectPlayersView();
       else if(v === "recent") selectRecentView();
+      else if(v === "upcoming") selectUpcomingView();
       else selectComp(+tab.dataset.i);
     });
   });
 }
 
 const result = (sf, sa) => sf > sa ? "W" : sf < sa ? "L" : "D";
+const isPlayed = (m) => !(m.hs==null || m.hs==="" || m.as==null || m.as==="");
 
 // Parse the LTA match date "Sun 26/04/2026" → a UTC Date (date only).
 function parseUKDate(s){
@@ -526,10 +565,76 @@ function selectRecentView(){
   $("#linkPanel").hidden = true;
   $("#knockoutPanel").hidden = true;
   $("#playersBlock").hidden = true;
+  $("#upcomingPanel").hidden = true;
   $("#compView").hidden = true;
   $("#recentPanel").hidden = false;
   setTab(t => t.dataset.view === "recent");
   renderRecent();
+}
+
+function upcomingDays(){ return (window.__CLUB__ && +window.__CLUB__.upcomingDays) || 7; }
+
+// Every club fixture NOT yet played within the next `upcomingDays` (default 7, today
+// inclusive) of the refresh date, across all teams and cups, soonest first — so members
+// can see who's at home. League fixtures come from each team's match list; cup fixtures
+// from each knockout's `next`. (NPL fixtures live on an external site and aren't captured.)
+function buildUpcoming(){
+  const N = upcomingDays();
+  const ref = DATA.generatedAt ? new Date(DATA.generatedAt) : new Date();
+  const refUTC = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth(), ref.getUTCDate());
+  const inWindow = (d) => { const diff = Math.round((d.getTime() - refUTC)/86400000); return diff >= 0 && diff <= N-1; };
+  const norm = (s) => (s||"").toLowerCase().replace(/\s+/g," ").trim();
+  const out = [];
+  for(const c of (DATA.competitions||[])){
+    for(const t of (c.teams||[])){
+      const mine = norm(t.pscName||"");
+      for(const m of (t.matches||[])){
+        if(isPlayed(m)) continue; // only fixtures still to play
+        const homeIsClub = isPsc(m.home), awayIsClub = isPsc(m.away);
+        if(!homeIsClub && !awayIsClub) continue;
+        const clubSide = homeIsClub ? m.home : m.away;
+        if(mine && norm(clubSide) !== mine) continue;
+        const d = parseUKDate(m.date); if(!d || !inWindow(d)) continue;
+        out.push({ t:d.getTime(), date:d, home:homeIsClub, league:c.name, team:t.name + (t.division ? " · "+t.division : ""), opponent: homeIsClub ? m.away : m.home });
+      }
+    }
+    for(const k of (c.knockouts||[])){
+      if(!k.next || !k.next.opponent) continue;
+      const d = parseUKDate(k.next.date); if(!d || !inWindow(d)) continue;
+      out.push({ t:d.getTime(), date:d, home:!!k.next.home, league:k.name, team:k.name, opponent:k.next.opponent });
+    }
+  }
+  out.sort((a,b)=> a.t - b.t);
+  return out;
+}
+
+function renderUpcoming(){
+  const N = upcomingDays();
+  const ref = DATA.generatedAt ? new Date(DATA.generatedAt) : new Date();
+  const start = new Date(Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth(), ref.getUTCDate()));
+  const end = new Date(start.getTime() + (N-1)*86400000);
+  const fmt = (d) => d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});
+  $("#upcomingRange").textContent = `${fmt(start)} – ${fmt(end)}`;
+  if(!UPCOMING.length){ $("#upcomingList").innerHTML = `<tr><td colspan="5" class="nores">No matches scheduled in this period.</td></tr>`; return; }
+  $("#upcomingList").innerHTML = UPCOMING.map(r=>`
+    <tr>
+      <td class="rdate">${fmt(r.date)}</td>
+      <td class="num hacell"><span class="ha-tag ${r.home?'home':'away'}">${r.home?'Home':'Away'}</span></td>
+      <td class="uleague">${r.league}</td>
+      <td class="rteam">${r.team}<div class="uleague-sub">${r.league}</div></td>
+      <td class="uopp">${r.opponent}</td>
+    </tr>`).join("");
+}
+
+function selectUpcomingView(){
+  $("#linkPanel").hidden = true;
+  $("#knockoutPanel").hidden = true;
+  $("#playersBlock").hidden = true;
+  $("#recentPanel").hidden = true;
+  $("#compView").hidden = true;
+  $("#upcomingPanel").hidden = false;
+  setTab(t => t.dataset.view === "upcoming");
+  renderUpcoming();
 }
 
 function setTab(pred){
@@ -668,6 +773,7 @@ function selectComp(i){
   setTab(t => t.dataset.view === "comp" && +t.dataset.i === i);
   $("#playersBlock").hidden = true;
   $("#recentPanel").hidden = true;
+  $("#upcomingPanel").hidden = true;
   const c = DATA.competitions[i];
   // Grouped knockout tab: a list of cups/knockouts with each one's last match.
   if(c.knockouts){
@@ -713,6 +819,7 @@ function selectPlayersView(){
   $("#linkPanel").hidden = true;
   $("#knockoutPanel").hidden = true;
   $("#recentPanel").hidden = true;
+  $("#upcomingPanel").hidden = true;
   setTab(t => t.dataset.view === "players");
   $("#compView").hidden = true;
   $("#playersBlock").hidden = false;

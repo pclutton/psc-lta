@@ -473,16 +473,29 @@ function buildKnockout(draw, leagueName, pair) {
   const sub = [lbl.name, lbl.division].filter(Boolean).join(" ").trim();
   const name = (sub && !leagueName.toLowerCase().includes(lbl.name.toLowerCase()))
     ? `${leagueName} — ${sub}` : leagueName;
-  const mine = (draw.matches || []).filter(
-    (m) => (isPsc(m.home) || isPsc(m.away)) && m.hs != null && m.as != null);
+  const clubMatches = (draw.matches || []).filter((m) => isPsc(m.home) || isPsc(m.away));
+  const played = clubMatches.filter((m) => m.hs != null && m.as != null);
   let last = null;
-  if (mine.length) {
-    const m = mine[mine.length - 1];
+  if (played.length) {
+    const m = played[played.length - 1];
     const home = isPsc(m.home);
     const sf = home ? m.hs : m.as, sa = home ? m.as : m.hs;
     last = { opponent: home ? m.away : m.home, scoreFor: sf, scoreAgainst: sa, won: sf > sa, date: m.date || "" };
   }
-  return { name, link: draw.url, last, live: !last || last.won };
+  // The club's next unplayed cup fixture (so upcoming-matches view doesn't miss a cup
+  // round). Earliest by date; only when the opponent is known.
+  const dnum = (s) => { const m = (s || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? Date.UTC(+m[3], +m[2]-1, +m[1]) : null; };
+  let next = null;
+  const upcoming = clubMatches
+    .filter((m) => (m.hs == null || m.as == null) && dnum(m.date) != null)
+    .map((m) => ({ m, d: dnum(m.date) }))
+    .sort((a, b) => a.d - b.d);
+  for (const { m } of upcoming) {
+    const home = isPsc(m.home);
+    const opp = home ? m.away : m.home;
+    if (opp && opp.trim()) { next = { opponent: opp, home, date: m.date }; break; }
+  }
+  return { name, link: draw.url, last, next, live: !last || last.won };
 }
 
 // Scrape a PSC team page for its squad and each player's per-team Win-Loss

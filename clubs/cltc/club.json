@@ -6,6 +6,7 @@
   "website": "https://cltc-hcc.com/",
   "matcher": "cumberland",
   "address": "Cumberland Lawn Tennis Club · Lymington Road, London NW6 · 020 7435 6022",
+  "upcomingDays": 7,
   "colors": {
     "navy": "#443c90",
     "navyDark": "#2f2a66",

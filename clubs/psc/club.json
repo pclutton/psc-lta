@@ -6,6 +6,7 @@
   "website": "https://www.psclondon.com/",
   "matcher": "paddington",
   "address": "Paddington Sports Club · Castellain Road, Maida Vale, London W9 1HQ",
+  "upcomingDays": 7,
   "colors": {
     "navy": "#222e62",
     "navyDark": "#161f45",
