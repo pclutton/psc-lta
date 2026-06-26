@@ -298,23 +298,25 @@
   .is-phone table.matrix .rowhead,.is-phone table.matrix th.corner{position:sticky;left:0;z-index:2}
   .is-phone table.matrix .rowhead .rankdot{margin-right:0}
   .is-phone .matrix-legend{font-size:11px;margin:8px 10px 12px}
-  /* Recent/Upcoming on phone: tighten; for Upcoming drop the wide League column and
-     show the league as a sub-line under the team, and pin the Date column for swiping. */
-  .is-phone table.recent thead th,.is-phone table.recent tbody td{padding:8px 6px}
-  .is-phone table.recent td.rdate{font-size:12px}
-  /* Upcoming on phone: one card per fixture (shows every field, no sideways scroll). */
-  .is-phone #upcomingPanel .tablewrap{overflow:visible}
-  .is-phone table.upcoming,.is-phone table.upcoming tbody{display:block}
-  .is-phone table.upcoming thead{display:none}
-  .is-phone table.upcoming tr{display:block;background:var(--surface);border:1px solid #d6d9e2;border-radius:12px;padding:11px 13px;margin:0 0 12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-  .is-phone table.upcoming tr:nth-child(even) td{background:none}
-  .is-phone table.upcoming td{display:block;border:none;padding:1px 0;white-space:normal;text-align:left}
-  .is-phone table.upcoming td.rdate{display:inline-block;color:var(--muted);font-size:12.5px}
+  /* Recent & Upcoming on phone: one card per match (every field visible, no sideways
+     scroll). The card base styling applies to both tables; a few columns differ. */
+  .is-phone #recentPanel .tablewrap,.is-phone #upcomingPanel .tablewrap{overflow:visible}
+  .is-phone table.recent,.is-phone table.recent tbody{display:block}
+  .is-phone table.recent thead{display:none}
+  .is-phone table.recent tr{display:block;background:var(--surface);border:1px solid #d6d9e2;border-radius:12px;padding:11px 13px;margin:0 0 12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .is-phone table.recent tr:nth-child(even) td{background:none}
+  .is-phone table.recent td{display:block;border:none;padding:1px 0;white-space:normal;text-align:left}
+  .is-phone table.recent td.rdate{display:inline-block;color:var(--brand-navy);font-weight:700;font-size:12.5px}
+  .is-phone table.recent td.rteam{font-weight:700;font-size:14px;margin-top:3px}
+  /* Upcoming-only columns */
   .is-phone table.upcoming td.hacell{display:inline-block;float:right}
   .is-phone table.upcoming td.uleague{display:none}
   .is-phone table.upcoming .uleague-sub{display:block;font-weight:400;font-size:11px;color:var(--muted)}
-  .is-phone table.upcoming td.rteam{font-weight:700;font-size:14px;margin-top:3px}
   .is-phone table.upcoming td.uopp::before{content:"vs ";color:var(--muted)}
+  /* Recent-only columns: opponent prefixed "vs"; result tag + score share a line */
+  .is-phone table.recent td.ropp::before{content:"vs ";color:var(--muted)}
+  .is-phone table.recent td.rres{display:inline-block;margin-top:4px}
+  .is-phone table.recent td.rscore{display:inline-block;margin-left:8px}
 </style>
 </head>
 <body>
@@ -555,8 +557,8 @@ function renderRecent(){
     <tr>
       <td class="rdate">${fmt(r.date)}</td>
       <td class="rteam">${r.team}</td>
-      <td>${r.opponent}</td>
-      <td class="num"><span class="res-tag ${r.res}">${r.res}</span></td>
+      <td class="ropp">${r.opponent}</td>
+      <td class="num rres"><span class="res-tag ${r.res}">${r.res}</span></td>
       <td class="num rscore ${r.res.toLowerCase()}">${r.sf}–${r.sa}</td>
     </tr>`).join("");
 }
