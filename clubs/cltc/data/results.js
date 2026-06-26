@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-25T20:07:25.632Z",
+  "generatedAt": "2026-06-26T09:38:06.011Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [
         {
           "name": "11&U Boys Division 1",
@@ -2559,7 +2559,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [
         {
           "name": "Mens Doubles (1)",
@@ -3770,6 +3770,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Finchley Manor Tennis Squash and Health Club 2",
+              "played": 6,
+              "won": 4,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "89-55",
+              "points": 89,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Coolhurst LTC 2",
               "played": 5,
               "won": 4,
@@ -3783,23 +3800,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Finchley Manor Tennis Squash and Health Club 2",
-              "played": 5,
-              "won": 3,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "71-49",
-              "points": 71,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "W",
-                "L"
               ]
             },
             {
@@ -3883,13 +3883,14 @@ window.__RESULTS__ = {
             {
               "rank": 9,
               "name": "Brampton Lawn Tennis Club 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "8-40",
-              "points": 8,
+              "lost": 3,
+              "rubbers": "14-58",
+              "points": 14,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -4039,8 +4040,8 @@ window.__RESULTS__ = {
             {
               "home": "Brampton Lawn Tennis Club 1",
               "away": "Finchley Manor Tennis Squash and Health Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 18,
               "date": "Thu 25/06/2026"
             },
             {
@@ -4276,6 +4277,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Finchley Manor Tennis Squash and Health Club 2",
+              "played": 6,
+              "won": 4,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "89-55",
+              "points": 89,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Coolhurst LTC 2",
               "played": 5,
               "won": 4,
@@ -4289,23 +4307,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "W"
-              ]
-            },
-            {
-              "rank": 3,
-              "name": "Finchley Manor Tennis Squash and Health Club 2",
-              "played": 5,
-              "won": 3,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "71-49",
-              "points": 71,
-              "form": [
-                "W",
-                "L",
-                "W",
-                "W",
-                "L"
               ]
             },
             {
@@ -4389,13 +4390,14 @@ window.__RESULTS__ = {
             {
               "rank": 9,
               "name": "Brampton Lawn Tennis Club 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "8-40",
-              "points": 8,
+              "lost": 3,
+              "rubbers": "14-58",
+              "points": 14,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -4545,8 +4547,8 @@ window.__RESULTS__ = {
             {
               "home": "Brampton Lawn Tennis Club 1",
               "away": "Finchley Manor Tennis Squash and Health Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 6,
+              "as": 18,
               "date": "Thu 25/06/2026"
             },
             {
@@ -6252,7 +6254,7 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [
         {
           "name": "40/Over",
@@ -6692,7 +6694,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [],
       "knockouts": [
         {

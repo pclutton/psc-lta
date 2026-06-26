@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-25T20:08:48.385Z",
+  "generatedAt": "2026-06-26T09:39:30.621Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -1008,14 +1008,14 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [
         {
           "name": "Mens Doubles",
           "division": "West Intermediate",
           "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/8",
-          "position": 7,
+          "position": 8,
           "of": 8,
           "played": 3,
           "won": 0,
@@ -1044,6 +1044,21 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Eastcote Lawn Tennis Club 1",
+              "played": 4,
+              "won": 1,
+              "drawn": 1,
+              "lost": 2,
+              "rubbers": "50-46",
+              "points": 50,
+              "form": [
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Ealing Lawn Tennis Club 2",
               "played": 4,
               "won": 0,
@@ -1056,7 +1071,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 3,
+              "rank": 4,
               "name": "David Lloyd Club Acton Park 1",
               "played": 3,
               "won": 1,
@@ -1069,7 +1084,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
+              "rank": 5,
               "name": "West Middlesex Lawn Tennis Club Ltd 1",
               "played": 3,
               "won": 2,
@@ -1080,20 +1095,6 @@ window.__RESULTS__ = {
               "form": [
                 "W",
                 "W"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Eastcote Lawn Tennis Club 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 1,
-              "lost": 1,
-              "rubbers": "40-32",
-              "points": 40,
-              "form": [
-                "W",
-                "L"
               ]
             },
             {
@@ -1113,6 +1114,22 @@ window.__RESULTS__ = {
             },
             {
               "rank": 7,
+              "name": "Teddington Lawn Tennis Club 2",
+              "played": 4,
+              "won": 1,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "30-66",
+              "points": 30,
+              "form": [
+                "L",
+                "L",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 8,
               "name": "Paddington Sports Club 1",
               "played": 3,
               "won": 0,
@@ -1121,21 +1138,6 @@ window.__RESULTS__ = {
               "rubbers": "26-46",
               "points": 26,
               "form": [
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 8,
-              "name": "Teddington Lawn Tennis Club 2",
-              "played": 3,
-              "won": 0,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "16-56",
-              "points": 16,
-              "form": [
-                "L",
                 "L",
                 "L"
               ]
@@ -1250,8 +1252,8 @@ window.__RESULTS__ = {
             {
               "home": "Eastcote Lawn Tennis Club 1",
               "away": "Teddington Lawn Tennis Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 10,
+              "as": 14,
               "date": "Thu 25/06/2026"
             },
             {
@@ -1421,7 +1423,7 @@ window.__RESULTS__ = {
           "division": "North West Division 3",
           "pscName": "Paddington Sports Club 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/35",
-          "position": 3,
+          "position": 4,
           "of": 8,
           "played": 4,
           "won": 2,
@@ -1452,6 +1454,22 @@ window.__RESULTS__ = {
             },
             {
               "rank": 2,
+              "name": "Kenton Lawn Tennis Club 2",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "58-38",
+              "points": 58,
+              "form": [
+                "L",
+                "L",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 3,
               "name": "Headstone Lawn Tennis Club 2",
               "played": 4,
               "won": 2,
@@ -1467,7 +1485,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 3,
+              "rank": 4,
               "name": "Paddington Sports Club 3",
               "played": 4,
               "won": 2,
@@ -1483,33 +1501,19 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
+              "rank": 5,
               "name": "Harrow Weald Lawn Tennis Club 1",
-              "played": 3,
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "36-36",
-              "points": 36,
+              "lost": 3,
+              "rubbers": "38-58",
+              "points": 38,
               "form": [
                 "W",
                 "L",
+                "L",
                 "L"
-              ]
-            },
-            {
-              "rank": 5,
-              "name": "Kenton Lawn Tennis Club 2",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "36-36",
-              "points": 36,
-              "form": [
-                "L",
-                "L",
-                "W"
               ]
             },
             {
@@ -1659,8 +1663,8 @@ window.__RESULTS__ = {
             {
               "home": "Harrow Weald Lawn Tennis Club 1",
               "away": "Kenton Lawn Tennis Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 2,
+              "as": 22,
               "date": "Thu 25/06/2026"
             },
             {
@@ -1863,6 +1867,22 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Holland Park Lawn Tennis Club 2",
+              "played": 4,
+              "won": 4,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "60-36",
+              "points": 60,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Teddington Lawn Tennis Club 6",
               "played": 4,
               "won": 2,
@@ -1877,7 +1897,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 2,
+              "rank": 3,
               "name": "Thistleworth LTC 1",
               "played": 4,
               "won": 2,
@@ -1892,7 +1912,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 3,
+              "rank": 4,
               "name": "Brentham Lawn Tennis Club 2",
               "played": 3,
               "won": 2,
@@ -1904,21 +1924,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "Holland Park Lawn Tennis Club 2",
-              "played": 3,
-              "won": 3,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "44-28",
-              "points": 44,
-              "form": [
-                "W",
-                "W",
-                "W"
               ]
             },
             {
@@ -1967,13 +1972,14 @@ window.__RESULTS__ = {
             {
               "rank": 8,
               "name": "Wycombe House 1",
-              "played": 3,
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "14-58",
-              "points": 14,
+              "lost": 4,
+              "rubbers": "22-74",
+              "points": 22,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -2089,8 +2095,8 @@ window.__RESULTS__ = {
             {
               "home": "Holland Park Lawn Tennis Club 2",
               "away": "Wycombe House 1",
-              "hs": null,
-              "as": null,
+              "hs": 16,
+              "as": 8,
               "date": "Thu 25/06/2026"
             },
             {
@@ -4323,7 +4329,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-25",
+      "lastSeen": "2026-06-26",
       "teams": [],
       "knockouts": [
         {
