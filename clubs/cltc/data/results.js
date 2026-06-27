@@ -2,21 +2,21 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-26T09:38:06.011Z",
+  "generatedAt": "2026-06-27T08:44:39.683Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [
         {
           "name": "11&U Boys Division 1",
           "division": "",
           "pscName": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/22",
-          "position": 1,
+          "position": 2,
           "of": 4,
           "played": 4,
           "won": 3,
@@ -31,6 +31,23 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Hackney Tennis 1",
+              "played": 5,
+              "won": 4,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "38-22",
+              "points": 8,
+              "form": [
+                "W",
+                "W",
+                "L",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Cumberland Lawn Tennis Club & Hampstead Cricket 1",
               "played": 4,
               "won": 3,
@@ -42,22 +59,6 @@ window.__RESULTS__ = {
                 "L",
                 "W",
                 "W",
-                "W"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Hackney Tennis 1",
-              "played": 4,
-              "won": 3,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "26-22",
-              "points": 6,
-              "form": [
-                "W",
-                "W",
-                "L",
                 "W"
               ]
             },
@@ -81,13 +82,14 @@ window.__RESULTS__ = {
             {
               "rank": 4,
               "name": "Hazelwood Lawn Tennis & Squash Club 1",
-              "played": 3,
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "4-32",
+              "lost": 4,
+              "rubbers": "4-44",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -140,8 +142,8 @@ window.__RESULTS__ = {
             {
               "home": "Hackney Tennis 1",
               "away": "Hazelwood Lawn Tennis & Squash Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 12,
+              "as": 0,
               "date": "Sat 06/06/2026"
             },
             {
@@ -709,7 +711,7 @@ window.__RESULTS__ = {
           "division": "Open Mens Division 2",
           "pscName": "Cumberland Lawn Tennis Club 3",
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/10",
-          "position": 3,
+          "position": 4,
           "of": 6,
           "played": 4,
           "won": 2,
@@ -755,6 +757,21 @@ window.__RESULTS__ = {
             },
             {
               "rank": 3,
+              "name": "David Lloyd Club Finchley 1",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "22-14",
+              "points": 4,
+              "form": [
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
               "name": "Cumberland Lawn Tennis Club 3",
               "played": 4,
               "won": 2,
@@ -770,32 +787,19 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
-              "name": "David Lloyd Club Finchley 1",
-              "played": 2,
-              "won": 1,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "14-10",
-              "points": 2,
-              "form": [
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 5,
               "name": "Coolhurst LTC 1",
-              "played": 3,
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "16-20",
+              "lost": 3,
+              "rubbers": "20-28",
               "points": 2,
               "form": [
                 "L",
                 "L",
-                "W"
+                "W",
+                "L"
               ]
             },
             {
@@ -882,8 +886,8 @@ window.__RESULTS__ = {
             {
               "home": "Coolhurst LTC 1",
               "away": "David Lloyd Club Finchley 1",
-              "hs": null,
-              "as": null,
+              "hs": 4,
+              "as": 8,
               "date": "Sun 14/06/2026"
             },
             {
@@ -2559,7 +2563,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [
         {
           "name": "Mens Doubles (1)",
@@ -6031,13 +6035,6 @@ window.__RESULTS__ = {
               "date": "Thu 28/05/2026"
             },
             {
-              "home": "Totteridge 2",
-              "away": "Cumberland 4",
-              "hs": null,
-              "as": null,
-              "date": "Tue 02/06/2026"
-            },
-            {
               "home": "Temple Fortune 2",
               "away": "David Lloyd Finchley 2",
               "hs": 4,
@@ -6050,13 +6047,6 @@ window.__RESULTS__ = {
               "hs": 16,
               "as": 8,
               "date": "Tue 09/06/2026"
-            },
-            {
-              "home": "Chandos 3",
-              "away": "Brondesbury 3",
-              "hs": null,
-              "as": null,
-              "date": "Thu 11/06/2026"
             },
             {
               "home": "Totteridge 2",
@@ -6130,10 +6120,24 @@ window.__RESULTS__ = {
             },
             {
               "home": "Chandos 3",
+              "away": "Brondesbury 3",
+              "hs": null,
+              "as": null,
+              "date": "Tue 14/07/2026"
+            },
+            {
+              "home": "Chandos 3",
               "away": "Temple Fortune 1",
               "hs": null,
               "as": null,
               "date": "Thu 16/07/2026"
+            },
+            {
+              "home": "Totteridge 2",
+              "away": "Cumberland 4",
+              "hs": null,
+              "as": null,
+              "date": "Mon 20/07/2026"
             },
             {
               "home": "Temple Fortune 2",
@@ -6254,7 +6258,7 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [
         {
           "name": "40/Over",
@@ -6694,7 +6698,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [],
       "knockouts": [
         {

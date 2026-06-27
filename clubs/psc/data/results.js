@@ -2,14 +2,14 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-26T09:39:30.621Z",
+  "generatedAt": "2026-06-27T08:46:07.094Z",
   "sample": false,
   "competitions": [
     {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -1008,7 +1008,7 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [
         {
           "name": "Mens Doubles",
@@ -2329,6 +2329,39 @@ window.__RESULTS__ = {
             },
             {
               "rank": 5,
+              "name": "Lowlands Club 4",
+              "played": 5,
+              "won": 3,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "49-67",
+              "points": 49,
+              "form": [
+                "L",
+                "W",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 6,
+              "name": "Greenford Tennis Club 1",
+              "played": 4,
+              "won": 1,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "48-44",
+              "points": 48,
+              "form": [
+                "W",
+                "L",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 7,
               "name": "Harrow Lawn Tennis Club 4",
               "played": 5,
               "won": 1,
@@ -2338,37 +2371,6 @@ window.__RESULTS__ = {
               "points": 46,
               "form": [
                 "L",
-                "W",
-                "L"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "Greenford Tennis Club 1",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "40-32",
-              "points": 40,
-              "form": [
-                "W",
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Lowlands Club 4",
-              "played": 4,
-              "won": 2,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "37-59",
-              "points": 37,
-              "form": [
-                "L",
-                "W",
                 "W",
                 "L"
               ]
@@ -2544,8 +2546,8 @@ window.__RESULTS__ = {
             {
               "home": "Lowlands Club 4",
               "away": "Greenford Tennis Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 12,
+              "as": 8,
               "date": "Thu 18/06/2026"
             },
             {
@@ -2561,13 +2563,6 @@ window.__RESULTS__ = {
               "hs": 4,
               "as": 20,
               "date": "Tue 23/06/2026"
-            },
-            {
-              "home": "Hatch End Lawn Tennis Club 3",
-              "away": "Lowlands Club 4",
-              "hs": null,
-              "as": null,
-              "date": "Thu 25/06/2026"
             },
             {
               "home": "Greenford Tennis Club 1",
@@ -2603,6 +2598,13 @@ window.__RESULTS__ = {
               "hs": null,
               "as": null,
               "date": "Thu 09/07/2026"
+            },
+            {
+              "home": "Hatch End Lawn Tennis Club 3",
+              "away": "Lowlands Club 4",
+              "hs": null,
+              "as": null,
+              "date": "Tue 14/07/2026"
             },
             {
               "home": "Harrow Baptist Tennis Club 1",
@@ -2761,7 +2763,7 @@ window.__RESULTS__ = {
           "division": "West Intermediate",
           "pscName": "Paddington Sports Club 1",
           "leagueUrl": "https://competitions.lta.org.uk/league/90416C0A-A17C-4E71-93C5-7C8A860DF1CF/draw/22",
-          "position": 6,
+          "position": 7,
           "of": 8,
           "played": 4,
           "won": 2,
@@ -2776,6 +2778,22 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "The Hurlingham Club 1",
+              "played": 4,
+              "won": 3,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "64-32",
+              "points": 64,
+              "form": [
+                "W",
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Pinner Lawn Tennis Club 1",
               "played": 4,
               "won": 2,
@@ -2790,7 +2808,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 2,
+              "rank": 3,
               "name": "Wayfarers LTC 1",
               "played": 4,
               "won": 2,
@@ -2806,7 +2824,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 3,
+              "rank": 4,
               "name": "Virgin Active Chiswick Riverside 1",
               "played": 4,
               "won": 2,
@@ -2821,7 +2839,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
+              "rank": 5,
               "name": "Teddington Lawn Tennis Club 2",
               "played": 4,
               "won": 2,
@@ -2837,7 +2855,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "David Lloyd Club Acton Park 1",
               "played": 4,
               "won": 2,
@@ -2853,7 +2871,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
+              "rank": 7,
               "name": "Paddington Sports Club 1",
               "played": 4,
               "won": 2,
@@ -2869,30 +2887,16 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 7,
-              "name": "The Hurlingham Club 1",
-              "played": 3,
-              "won": 2,
-              "drawn": 0,
-              "lost": 1,
-              "rubbers": "40-32",
-              "points": 40,
-              "form": [
-                "W",
-                "W",
-                "L"
-              ]
-            },
-            {
               "rank": 8,
               "name": "Lowlands Club 1",
-              "played": 3,
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "12-60",
+              "lost": 4,
+              "rubbers": "12-84",
               "points": 12,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -2980,8 +2984,8 @@ window.__RESULTS__ = {
             {
               "home": "The Hurlingham Club 1",
               "away": "Lowlands Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 24,
+              "as": 0,
               "date": "Mon 15/06/2026"
             },
             {
@@ -3795,13 +3799,6 @@ window.__RESULTS__ = {
               "date": "Tue 16/06/2026"
             },
             {
-              "home": "Lowlands Club 2",
-              "away": "David Lloyd Club Northwood 2",
-              "hs": null,
-              "as": null,
-              "date": "Thu 25/06/2026"
-            },
-            {
               "home": "David Lloyd Club Northwood 2",
               "away": "David Lloyd Club Sudbury Hill 1",
               "hs": null,
@@ -3842,6 +3839,13 @@ window.__RESULTS__ = {
               "hs": null,
               "as": null,
               "date": "Tue 14/07/2026"
+            },
+            {
+              "home": "Lowlands Club 2",
+              "away": "David Lloyd Club Northwood 2",
+              "hs": null,
+              "as": null,
+              "date": "Fri 17/07/2026"
             },
             {
               "home": "Eastcote Lawn Tennis Club 2",
@@ -4329,7 +4333,7 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-26",
+      "lastSeen": "2026-06-27",
       "teams": [],
       "knockouts": [
         {
