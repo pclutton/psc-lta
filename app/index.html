@@ -230,6 +230,7 @@
   .src-note a{color:var(--brand-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
   #compNote{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:7px 12px;border-radius:8px;margin:-8px 0 16px}
+  .banner a,#compNote a{color:inherit;text-decoration:underline;font-weight:600}
   .tstale{color:var(--brand-gold);font-weight:700}
 
   /* Knockout competitions list */
@@ -788,8 +789,12 @@ function selectComp(i){
   $("#upcomingPanel").hidden = true;
   const c = DATA.competitions[i];
   const note = $("#compNote");
-  if(c.stale){ note.hidden = false; note.textContent = `Showing last-confirmed data${c.asOf?` (as of ${fmtDay(c.asOf)})`:""} — the most recent LTA update for this competition couldn't be read.`; }
-  else note.hidden = true;
+  if(c.stale){
+    const lta = (window.__CLUB__ || {}).ltaUrl;
+    const tail = lta ? ` <a href="${lta}" target="_blank" rel="noopener">View on the LTA website</a>.` : "";
+    note.hidden = false;
+    note.innerHTML = `Showing last-confirmed data${c.asOf?` (as of ${fmtDay(c.asOf)})`:""} — the most recent LTA update for this competition couldn't be read.${tail}`;
+  } else note.hidden = true;
   // Grouped knockout tab: a list of cups/knockouts with each one's last match.
   if(c.knockouts){
     $("#compView").hidden = true;
@@ -917,8 +922,10 @@ function boot(data){
   // Staleness notice: if the feed hasn't refreshed in a couple of days, tell visitors.
   if(data.generatedAt && (Date.now() - new Date(data.generatedAt).getTime())/86400000 > 2){
     const when = new Date(data.generatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+    const lta = (window.__CLUB__ || {}).ltaUrl;
+    const tail = lta ? ` See live results on the <a href="${lta}" target="_blank" rel="noopener">LTA website</a>.` : "";
     document.querySelector("main").insertAdjacentHTML("afterbegin",
-      `<div class="banner">⚠ These results were last updated ${when} and may be behind — the live feed normally refreshes daily.</div>`);
+      `<div class="banner">⚠ These results were last updated ${when} and may be behind — the live feed normally refreshes daily.${tail}</div>`);
   }
   renderTabs();
   // Default to the competition with the most teams (preferring a current season).
@@ -940,8 +947,10 @@ applyBranding(window.__CLUB__);
 if (window.__RESULTS__) {
   boot(window.__RESULTS__);
 } else {
+  const lta = (window.__CLUB__ || {}).ltaUrl;
+  const tail = lta ? ` Please try the <a href="${lta}" target="_blank" rel="noopener">LTA website</a>.` : "";
   document.querySelector("main").insertAdjacentHTML("afterbegin",
-    `<div class="banner" style="background:#fbe9e9;border-color:#e3b0b0;color:#8a2b2b">Results for this club haven't been published yet — they'll appear after the next scheduled update.</div>`);
+    `<div class="banner" style="background:#fbe9e9;border-color:#e3b0b0;color:#8a2b2b">Results for this club haven't been published yet — they'll appear after the next scheduled update.${tail}</div>`);
 }
 </script>
 </body>

@@ -745,6 +745,9 @@ async function scrapeClub(page, club) {
       if (age <= RETAIN_DAYS) {
         log(`  retained (missing this run, last seen ${pc.lastSeen || "unknown"}): ${pc.name}`);
         competitions.push({ ...pc, stale: true, asOf: asOfOf(pc) });
+        // A current league vanishing from discovery is a problem worth an alert; a
+        // finished league rolling off at season end is expected, so don't alert on it.
+        if (pc.status !== "completed") warnings.push(`"${pc.name}" was not found this run — kept last-good (as of ${asOfOf(pc)})`);
       } else {
         log(`  retired (missing ${Math.round(age)}d, past ${RETAIN_DAYS}d window): ${pc.name}`);
       }

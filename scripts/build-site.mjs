@@ -55,8 +55,14 @@ async function buildClub(slug, shell) {
   // Shared shell, verbatim.
   await writeFile(resolve(out, "index.html"), shell, "utf8");
 
-  // Branding only (drop the scraper block — it has no place on the public page).
+  // Branding only (drop the scraper block — it has no place on the public page). Expose
+  // the club's LTA group URL so the page can offer an "LTA website" fallback link when
+  // its own data is missing or stale.
   const { scrape, ...branding } = club;
+  if (!branding.ltaUrl) {
+    const g = (scrape?.sources || []).find((x) => x.type === "group" && x.url);
+    if (g) branding.ltaUrl = g.url;
+  }
   await writeFile(resolve(out, "club.js"), "window.__CLUB__ = " + JSON.stringify(branding, null, 2) + ";\n", "utf8");
 
   // Data (may be absent before the first scrape — warn but keep going). Validate it
