@@ -583,6 +583,7 @@ async function scrapeClub(page, club) {
   cfg = { baseUrl: s.baseUrl, clubName: club.name, discovery: { year: s.year, clubSearch: s.clubSearch, sources: s.sources } };
   OUT = resolve(CLUBS_DIR, club.slug, "data", "results.js");
   homeMatch = new RegExp(club.matcher || escapeReg(club.name), "i");
+  const warnings = []; // health notes that should turn the run "degraded" (→ CI alert)
 
   await maybeLogin(page);
   const sources = await discoverSources(page);
@@ -614,6 +615,14 @@ async function scrapeClub(page, club) {
             }
             continue;
           }
+          // Sanity: a draw whose rows mostly lack a name or numeric P/W/L is a bad read
+          // (e.g. an LTA markup change) — skip it so the competition reverts to last-good.
+          const saneRows = draw.standings.filter((r) => r.name && Number.isFinite(r.played) && Number.isFinite(r.won) && Number.isFinite(r.lost));
+          if (saneRows.length < draw.standings.length * 0.5) {
+            warnings.push(`suspect standings in "${src.leagueName}" — skipped`);
+            log(`  ! suspect standings, skipping draw: ${pair.draw.href}`);
+            continue;
+          }
           const pscCount = draw.standings.filter((r) => isPsc(r.name)).length;
           const team = buildTeam(draw, pair.team.text, pair.draw.text, pscCount);
           try { team.players = await scrapeTeamPlayers(page, pair.team.href); }
@@ -635,6 +644,8 @@ async function scrapeClub(page, club) {
           name: src.leagueName,
           status: leagueStatus(src.leagueName),
           lastSeen: TODAY,
+          asOf: TODAY,
+          stale: false,
           teams,
         });
       }
@@ -655,6 +666,8 @@ async function scrapeClub(page, club) {
           name: ls.name || "External competition",
           status: ls.status || leagueStatus(ls.name || ""),
           lastSeen: TODAY,
+          asOf: TODAY,
+          stale: false,
           teams: [],
           link: ls.url,
         });
@@ -671,51 +684,67 @@ async function scrapeClub(page, club) {
         name: "Knockout Competitions",
         status: "current",
         lastSeen: TODAY,
+        asOf: TODAY,
+        stale: false,
         teams: [],
         knockouts,
       });
       log(`knockouts: ${knockouts.length} (${knockouts.filter((k) => k.live).length} still in)`);
     }
 
-    // --- Reconcile this run against the last good data so a transient hiccup can
-    // never replace good data with worse data. "Richness" = how much real content a
-    // competition carries (standings rows + fixtures), so a league that loaded thin
-    // (lazy-load race) or collapsed to a bare link is caught as well as one missing.
+    // --- Reconcile this run against the last good data so a transient hiccup can never
+    // replace good data with worse. A competition is "degraded" vs its previous good
+    // version if it lost teams, lost all the matches/players it used to have, or its
+    // overall content dropped by >40%. Degraded → keep last-good, flagged `stale` with the
+    // `asOf` date it was last fully scraped (so the page can show "as of …").
     const richness = (c) =>
       (c.teams || []).reduce((n, t) => n + (t.standings?.length || 0) + (t.matches?.length || 0), 0) +
       (c.knockouts?.length || 0);
+    const sumLen = (c, f) => (c.teams || []).reduce((n, t) => n + (t[f]?.length || 0), 0);
     const prev = await loadPrevious();
     const prevById = new Map((prev?.competitions || []).filter((c) => c && c.id).map((c) => [c.id, c]));
+    const asOfOf = (c) => c.asOf || c.lastSeen || (prev?.generatedAt || "").slice(0, 10) || TODAY;
 
-    // (a) Per-competition regression: if a league we DID scrape came back much
-    //     thinner than last time, keep the previous (good) version of that league —
-    //     but stamp it as seen today, since it WAS discovered (just a thin read), so
-    //     it doesn't later age out via (b).
+    // Freshly-scraped totals (before any revert/retain) for the selector-drift canary.
+    const scraped = { matches: 0, players: 0, standings: 0 };
+    for (const c of competitions) for (const t of (c.teams || [])) {
+      scraped.matches += (t.matches?.length || 0);
+      scraped.players += (t.players?.length || 0);
+      scraped.standings += (t.standings?.length || 0);
+    }
+    const prevMatches = [...prevById.values()].reduce((n, c) => n + sumLen(c, "matches"), 0);
+    if (prevMatches >= 5 && scraped.matches === 0) {
+      warnings.push("matches collapsed to 0 across all competitions (possible LTA markup change)");
+      log("  ! canary: 0 matches scraped though the previous run had many");
+    }
+
+    // (a) Per-competition degraded check → keep last-good (flagged stale).
     for (let i = 0; i < competitions.length; i++) {
       const cur = competitions[i], old = prevById.get(cur.id);
       if (!old) continue;
-      const rOld = richness(old);
-      if (rOld > 0 && richness(cur) < rOld * 0.6) {
-        log(`  regression in "${cur.name}" (richness ${richness(cur)} < ${rOld}) — keeping previous`);
-        competitions[i] = { ...old, lastSeen: TODAY };
+      const degraded =
+        (cur.teams.length < old.teams.length) ||
+        (sumLen(old, "matches") > 0 && sumLen(cur, "matches") === 0) ||
+        (sumLen(old, "players") > 0 && sumLen(cur, "players") === 0) ||
+        (richness(old) > 0 && richness(cur) < richness(old) * 0.6);
+      if (degraded) {
+        log(`  degraded "${cur.name}" (now ${richness(cur)} vs ${richness(old)}) — keeping last-good (as of ${asOfOf(old)})`);
+        warnings.push(`"${cur.name}" came back incomplete — kept last-good (as of ${asOfOf(old)})`);
+        competitions[i] = { ...old, lastSeen: TODAY, stale: true, asOf: asOfOf(old) };
       }
     }
-    // (b) Retain a competition that's absent from this run ONLY if it was seen
-    //     recently — a one-off LTA hiccup is transient, but a season that has rolled
-    //     off the discovery window stays missing and should be allowed to retire.
-    //     (A missing lastSeen is treated as recent, so legacy data is never dropped.)
+    // (b) Retain a competition absent from this run if seen recently (transient miss, or
+    //     pre-retirement) — flagged stale. Seasonal roll-off ages out after RETAIN_DAYS.
+    //     A pure link-only comp is not resurrected (superseded by the knockouts tab).
     const daysSince = (d) => d ? (Date.now() - Date.parse(d)) / 86400000 : 0;
     const haveIds = new Set(competitions.map((c) => c.id));
     for (const pc of prevById.values()) {
       if (haveIds.has(pc.id)) continue;
-      // Don't resurrect a pure link-only competition: it carries no scraped content,
-      // so its absence isn't data loss — and it's usually been superseded (e.g. cups
-      // and NPL now live inside the grouped "knockouts" tab). Drop it immediately.
       if (pc.link && !(pc.teams?.length) && !(pc.knockouts?.length)) continue;
       const age = daysSince(pc.lastSeen);
       if (age <= RETAIN_DAYS) {
         log(`  retained (missing this run, last seen ${pc.lastSeen || "unknown"}): ${pc.name}`);
-        competitions.push(pc); // keep its old lastSeen so it keeps ageing toward retirement
+        competitions.push({ ...pc, stale: true, asOf: asOfOf(pc) });
       } else {
         log(`  retired (missing ${Math.round(age)}d, past ${RETAIN_DAYS}d window): ${pc.name}`);
       }
@@ -726,10 +755,7 @@ async function scrapeClub(page, club) {
       await dumpDebug(page, "no-comps");
       throw new Error("Nothing to publish (no competitions and no history) — keeping any existing results.js untouched.");
     }
-    // (c) Backstop: refuse to publish a sweeping drop in teams — but measured only
-    //     across competitions present in BOTH runs, so a legitimate seasonal turnover
-    //     (a smaller new season replacing a bigger old one) doesn't false-trigger;
-    //     this only catches the continuing leagues all collapsing at once.
+    // (c) Backstop: refuse to publish a sweeping team drop across continuing leagues.
     let prevOverlap = 0, curOverlap = 0;
     for (const c of competitions) {
       const old = prevById.get(c.id);
@@ -741,6 +767,14 @@ async function scrapeClub(page, club) {
     }
 
     const players = buildLeaderboard(competitions);
+    const staleCount = competitions.filter((c) => c.stale).length;
+    const health = {
+      ok: true,
+      degraded: warnings.length > 0,   // reverts/canary/sanity alert; routine retains don't
+      warnings,
+      totals: { comps: competitions.length, teams: totalTeams, matches: scraped.matches, players: players.length, stale: staleCount },
+      competitions: competitions.map((c) => ({ id: c.id, name: c.name, stale: !!c.stale, asOf: c.asOf || null })),
+    };
 
     const groupSrc = (s.sources || []).find((x) => x.type === "group" && x.url);
     const out = {
@@ -749,13 +783,15 @@ async function scrapeClub(page, club) {
       sourceUrl: groupSrc ? groupSrc.url : s.baseUrl,
       generatedAt: new Date().toISOString(),
       sample: false,
+      health,
       competitions,
       players,
     };
     // Written as a JS global (not bare JSON) so the page also works from file://
     await mkdir(dirname(OUT), { recursive: true });
     await writeFile(OUT, "window.__RESULTS__ = " + JSON.stringify(out, null, 2) + ";\n", "utf8");
-    log(`wrote ${OUT} — ${totalTeams} teams across ${competitions.length} competitions`);
+    log(`wrote ${OUT} — ${totalTeams} teams across ${competitions.length} competitions${staleCount ? ` (${staleCount} stale)` : ""}`);
+    return { slug: club.slug, ok: true, degraded: health.degraded, warnings };
 }
 
 // Loop every configured club. One club's failure keeps its existing data and does not
@@ -766,16 +802,29 @@ async function main() {
   log(`clubs: ${clubs.map((c) => c.slug).join(", ")}`);
   const browser = await chromium.launch();
   const page = await browser.newPage({ userAgent: "Mozilla/5.0 (compatible; tennis-results-bot/1.0)" });
+  const clubHealth = [];
   let failures = 0;
   try {
     for (const club of clubs) {
       log(`\n===== ${club.name} (${club.slug}) =====`);
-      try { await scrapeClub(page, club); }
-      catch (e) { failures++; log(`club ${club.slug} failed (keeping its existing data): ${e.message}`); }
+      try { clubHealth.push(await scrapeClub(page, club)); }
+      catch (e) {
+        failures++;
+        log(`club ${club.slug} failed (keeping its existing data): ${e.message}`);
+        clubHealth.push({ slug: club.slug, ok: false, degraded: true, warnings: [e.message] });
+      }
     }
   } finally {
     await browser.close();
   }
+  // Health summary for CI alerting — written even on total failure so the health gate
+  // (a separate workflow job) sees it. Deploy of last-good data happens regardless.
+  const anyProblem = clubHealth.some((h) => !h.ok || h.degraded);
+  await writeFile(resolve(__dirname, "health.json"),
+    JSON.stringify({ generatedAt: new Date().toISOString(), anyProblem, clubs: clubHealth }, null, 2) + "\n", "utf8");
+  log(anyProblem
+    ? `health: PROBLEMS — ${clubHealth.flatMap((h) => h.warnings || []).join("; ")}`
+    : "health: all clubs OK");
   if (failures === clubs.length) throw new Error("All clubs failed to scrape.");
 }
 

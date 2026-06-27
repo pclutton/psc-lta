@@ -1,6 +1,7 @@
 node_modules/
 _site/
 scraper/debug/
+scraper/health.json
 *.log
 .DS_Store
 scripts/*.ttf

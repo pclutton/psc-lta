@@ -78,6 +78,15 @@ jobs:
         with:
           path: _site
 
+      # Scrape health summary (for the alerting job below). Missing = scraper crashed.
+      - name: Upload scrape health
+        if: ${{ always() && github.event_name != 'push' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: health
+          path: scraper/health.json
+          if-no-files-found: ignore
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -87,3 +96,30 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Alerting only — never blocks the deploy (which only needs `build`). If the scrape
+  # failed or any club came back degraded, this job goes red so GitHub emails the owner,
+  # while the site keeps showing the last-good data that `deploy` just published.
+  health:
+    needs: build
+    if: ${{ always() && github.event_name != 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download scrape health
+        uses: actions/download-artifact@v4
+        with:
+          name: health
+          path: .
+        continue-on-error: true
+      - name: Fail if the scrape failed or degraded
+        run: |
+          if [ ! -f health.json ]; then
+            echo "::error::No health.json — the scraper crashed before reporting. Last-good data is still live."
+            exit 1
+          fi
+          cat health.json
+          if [ "$(jq -r .anyProblem health.json)" = "true" ]; then
+            echo "::error::Scrape reported problems (see warnings above). Last-good data is still live."
+            exit 1
+          fi
+          echo "All clubs healthy."

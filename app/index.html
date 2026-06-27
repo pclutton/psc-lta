@@ -229,6 +229,8 @@
   .src-note{font-size:12px;color:var(--muted);margin:6px 0 0}
   .src-note a{color:var(--brand-navy)}
   .banner{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:10px 14px;border-radius:10px;margin:18px 0 0}
+  #compNote{background:#fff7e6;border:1px solid #f0d9a0;color:#7a5a00;font-size:12.5px;padding:7px 12px;border-radius:8px;margin:-8px 0 16px}
+  .tstale{color:var(--brand-gold);font-weight:700}
 
   /* Knockout competitions list */
   ul.kolist{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:780px}
@@ -341,6 +343,7 @@
 
 <main class="wrap">
   <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="compNote" hidden></div>
 
   <div class="compview" id="compView">
   <section class="block teams-col" id="teamsBlock">
@@ -485,7 +488,7 @@ function renderTabs(){
   let html = DATA.competitions.map((c,i)=>{
     const fin = c.status === "completed";
     const arrow = c.link ? ' ↗' : '';
-    return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${arrow}${fin?' <span class="tfin">Finished</span>':''}</button>`;
+    return `<button class="tab" role="tab" data-view="comp" data-i="${i}" aria-selected="false">${c.name}${arrow}${c.stale?' <span class="tstale" title="Showing last-confirmed data">•</span>':''}${fin?' <span class="tfin">Finished</span>':''}</button>`;
   }).join("");
   // Right-hand cluster, in order: Upcoming · Recent · Players. Kept together and pushed
   // to the right; each tab only appears when it has something to show.
@@ -510,6 +513,11 @@ function renderTabs(){
 
 const result = (sf, sa) => sf > sa ? "W" : sf < sa ? "L" : "D";
 const isPlayed = (m) => !(m.hs==null || m.hs==="" || m.as==null || m.as==="");
+// Format a date string ("2026-06-26" or ISO) as "26 Jun 2026".
+function fmtDay(s){
+  const d = /^\d{4}-\d{2}-\d{2}/.test(s||"") ? new Date(s+"T00:00:00Z") : (s ? new Date(s) : null);
+  return d && !isNaN(d) ? d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}) : (s||"");
+}
 
 // Parse the LTA match date "Sun 26/04/2026" → a UTC Date (date only).
 function parseUKDate(s){
@@ -570,6 +578,7 @@ function selectRecentView(){
   $("#upcomingPanel").hidden = true;
   $("#compView").hidden = true;
   $("#recentPanel").hidden = false;
+  $("#compNote").hidden = true;
   setTab(t => t.dataset.view === "recent");
   renderRecent();
 }
@@ -635,6 +644,7 @@ function selectUpcomingView(){
   $("#recentPanel").hidden = true;
   $("#compView").hidden = true;
   $("#upcomingPanel").hidden = false;
+  $("#compNote").hidden = true;
   setTab(t => t.dataset.view === "upcoming");
   renderUpcoming();
 }
@@ -777,6 +787,9 @@ function selectComp(i){
   $("#recentPanel").hidden = true;
   $("#upcomingPanel").hidden = true;
   const c = DATA.competitions[i];
+  const note = $("#compNote");
+  if(c.stale){ note.hidden = false; note.textContent = `Showing last-confirmed data${c.asOf?` (as of ${fmtDay(c.asOf)})`:""} — the most recent LTA update for this competition couldn't be read.`; }
+  else note.hidden = true;
   // Grouped knockout tab: a list of cups/knockouts with each one's last match.
   if(c.knockouts){
     $("#compView").hidden = true;
@@ -822,6 +835,7 @@ function selectPlayersView(){
   $("#knockoutPanel").hidden = true;
   $("#recentPanel").hidden = true;
   $("#upcomingPanel").hidden = true;
+  $("#compNote").hidden = true;
   setTab(t => t.dataset.view === "players");
   $("#compView").hidden = true;
   $("#playersBlock").hidden = false;
@@ -900,6 +914,12 @@ function boot(data){
   $("#updated").textContent = data.generatedAt ? new Date(data.generatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "—";
   if(data.sourceUrl){ $("#sourceLink").href = data.sourceUrl; $("#sourceWrap").hidden = false; }
   $("#sampleBanner").hidden = !data.sample;
+  // Staleness notice: if the feed hasn't refreshed in a couple of days, tell visitors.
+  if(data.generatedAt && (Date.now() - new Date(data.generatedAt).getTime())/86400000 > 2){
+    const when = new Date(data.generatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+    document.querySelector("main").insertAdjacentHTML("afterbegin",
+      `<div class="banner">⚠ These results were last updated ${when} and may be behind — the live feed normally refreshes daily.</div>`);
+  }
   renderTabs();
   // Default to the competition with the most teams (preferring a current season).
   const comps = data.competitions;

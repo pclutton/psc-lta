@@ -59,10 +59,21 @@ async function buildClub(slug, shell) {
   const { scrape, ...branding } = club;
   await writeFile(resolve(out, "club.js"), "window.__CLUB__ = " + JSON.stringify(branding, null, 2) + ";\n", "utf8");
 
-  // Data (may be absent before the first scrape — warn but keep going).
+  // Data (may be absent before the first scrape — warn but keep going). Validate it
+  // parses and has at least one competition before publishing, so a corrupt/truncated
+  // write can't ship a broken page (the page falls back to its "not published" notice).
   const data = resolve(dir, "data", "results.js");
-  if (existsSync(data)) await cp(data, resolve(out, "data", "results.js"));
-  else log(`! ${slug}: no data/results.js yet (page will show a load error until first scrape)`);
+  if (existsSync(data)) {
+    let valid = false;
+    try {
+      const obj = JSON.parse((await readFile(data, "utf8")).replace(/^\s*window\.__RESULTS__\s*=\s*/, "").replace(/;\s*$/, ""));
+      valid = obj && Array.isArray(obj.competitions) && obj.competitions.length > 0;
+    } catch { valid = false; }
+    if (valid) await cp(data, resolve(out, "data", "results.js"));
+    else log(`! ${slug}: data/results.js is invalid or empty — skipping it (page shows the 'not published' notice)`);
+  } else {
+    log(`! ${slug}: no data/results.js yet (page will show a load error until first scrape)`);
+  }
 
   // Assets (logo + icons).
   const assets = resolve(dir, "assets");
