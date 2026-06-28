@@ -2,36 +2,41 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-28T09:21:33.500Z",
+  "generatedAt": "2026-06-28T18:18:51.087Z",
   "sample": false,
   "health": {
     "ok": true,
-    "degraded": false,
-    "warnings": [],
+    "degraded": true,
+    "warnings": [
+      "matches collapsed to 0 across all competitions (possible LTA markup change)",
+      "\"Middlesex Youth & National League - Summer 2026\" was not found this run — kept last-good (as of 2026-06-28)",
+      "\"Middlesex Summer League 2026\" was not found this run — kept last-good (as of 2026-06-28)",
+      "\"Knockout Competitions\" was not found this run — kept last-good (as of 2026-06-28)"
+    ],
     "totals": {
       "comps": 3,
       "teams": 12,
-      "matches": 275,
+      "matches": 0,
       "players": 102,
-      "stale": 0
+      "stale": 3
     },
     "competitions": [
       {
         "id": "61ce80d5",
         "name": "Middlesex Youth & National League - Summer 2026",
-        "stale": false,
+        "stale": true,
         "asOf": "2026-06-28"
       },
       {
         "id": "90416c0a",
         "name": "Middlesex Summer League 2026",
-        "stale": false,
+        "stale": true,
         "asOf": "2026-06-28"
       },
       {
         "id": "knockouts",
         "name": "Knockout Competitions",
-        "stale": false,
+        "stale": true,
         "asOf": "2026-06-28"
       }
     ]
@@ -43,7 +48,7 @@ window.__RESULTS__ = {
       "status": "current",
       "lastSeen": "2026-06-28",
       "asOf": "2026-06-28",
-      "stale": false,
+      "stale": true,
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -1048,7 +1053,7 @@ window.__RESULTS__ = {
       "status": "current",
       "lastSeen": "2026-06-28",
       "asOf": "2026-06-28",
-      "stale": false,
+      "stale": true,
       "teams": [
         {
           "name": "Mens Doubles",
@@ -4390,7 +4395,7 @@ window.__RESULTS__ = {
       "status": "current",
       "lastSeen": "2026-06-28",
       "asOf": "2026-06-28",
-      "stale": false,
+      "stale": true,
       "teams": [],
       "knockouts": [
         {

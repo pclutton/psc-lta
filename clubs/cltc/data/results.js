@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-28T09:20:06.623Z",
+  "generatedAt": "2026-06-28T18:18:35.774Z",
   "sample": false,
   "health": {
     "ok": true,
@@ -543,30 +543,32 @@ window.__RESULTS__ = {
             },
             {
               "rank": 3,
-              "name": "Ealing Lawn Tennis Club 1",
+              "name": "The Hurlingham Club 1",
               "played": 4,
               "won": 2,
               "drawn": 0,
               "lost": 2,
-              "rubbers": "18-30",
+              "rubbers": "16-32",
               "points": 4,
               "form": [
-                "W",
                 "L",
+                "W",
                 "L",
                 "W"
               ]
             },
             {
               "rank": 4,
-              "name": "The Hurlingham Club 1",
-              "played": 3,
-              "won": 1,
+              "name": "Ealing Lawn Tennis Club 1",
+              "played": 5,
+              "won": 2,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "8-28",
-              "points": 2,
+              "lost": 3,
+              "rubbers": "22-38",
+              "points": 4,
               "form": [
+                "W",
+                "L",
                 "L",
                 "W",
                 "L"
@@ -699,8 +701,8 @@ window.__RESULTS__ = {
             {
               "home": "Ealing Lawn Tennis Club 1",
               "away": "The Hurlingham Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 4,
+              "as": 8,
               "date": "Sun 28/06/2026"
             },
             {
@@ -1748,6 +1750,22 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Ealing Lawn Tennis Club 1",
+              "played": 3,
+              "won": 3,
+              "drawn": 0,
+              "lost": 0,
+              "rubbers": "36-0",
+              "points": 6,
+              "form": [
+                "W",
+                "W",
+                "W",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Hackney Tennis 1",
               "played": 4,
               "won": 3,
@@ -1761,21 +1779,6 @@ window.__RESULTS__ = {
                 "W",
                 "W",
                 "L"
-              ]
-            },
-            {
-              "rank": 2,
-              "name": "Ealing Lawn Tennis Club 1",
-              "played": 2,
-              "won": 2,
-              "drawn": 0,
-              "lost": 0,
-              "rubbers": "24-0",
-              "points": 4,
-              "form": [
-                "W",
-                "W",
-                "W"
               ]
             },
             {
@@ -1827,13 +1830,14 @@ window.__RESULTS__ = {
             {
               "rank": 6,
               "name": "Finchley Manor Tennis Squash and Health Club 1",
-              "played": 3,
+              "played": 4,
               "won": 0,
               "drawn": 0,
-              "lost": 3,
-              "rubbers": "4-32",
+              "lost": 4,
+              "rubbers": "4-44",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L",
                 "L"
@@ -1859,8 +1863,8 @@ window.__RESULTS__ = {
             {
               "home": "Ealing Lawn Tennis Club 1",
               "away": "Finchley Manor Tennis Squash and Health Club 1",
-              "hs": null,
-              "as": null,
+              "hs": 12,
+              "as": 0,
               "date": "Sun 19/04/2026"
             },
             {
@@ -5949,6 +5953,22 @@ window.__RESULTS__ = {
             },
             {
               "rank": 3,
+              "name": "Finchley 1",
+              "played": 4,
+              "won": 2,
+              "drawn": 0,
+              "lost": 2,
+              "rubbers": "47-45",
+              "points": 47,
+              "form": [
+                "W",
+                "L",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 4,
               "name": "Temple Fortune 1",
               "played": 3,
               "won": 3,
@@ -5963,7 +5983,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 4,
+              "rank": 5,
               "name": "Totteridge 2",
               "played": 3,
               "won": 1,
@@ -5977,7 +5997,7 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 5,
+              "rank": 6,
               "name": "Chandos 3",
               "played": 3,
               "won": 1,
@@ -5991,22 +6011,23 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 6,
-              "name": "Finchley 1",
-              "played": 3,
-              "won": 1,
+              "rank": 7,
+              "name": "Temple Fortune 2",
+              "played": 4,
+              "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "31-41",
-              "points": 31,
+              "lost": 4,
+              "rubbers": "16-76",
+              "points": 16,
               "form": [
-                "W",
+                "L",
+                "L",
                 "L",
                 "L"
               ]
             },
             {
-              "rank": 7,
+              "rank": 8,
               "name": "Brondesbury 3",
               "played": 2,
               "won": 0,
@@ -6015,21 +6036,6 @@ window.__RESULTS__ = {
               "rubbers": "12-36",
               "points": 12,
               "form": [
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 8,
-              "name": "Temple Fortune 2",
-              "played": 3,
-              "won": 0,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "12-60",
-              "points": 12,
-              "form": [
-                "L",
                 "L",
                 "L"
               ]
@@ -6130,8 +6136,8 @@ window.__RESULTS__ = {
             {
               "home": "Finchley 1",
               "away": "Temple Fortune 2",
-              "hs": null,
-              "as": null,
+              "hs": 16,
+              "as": 4,
               "date": "Thu 25/06/2026"
             },
             {
