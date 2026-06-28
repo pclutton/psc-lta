@@ -22,6 +22,19 @@
     { "label": "Fitness", "href": "https://www.psclondon.com/fitness" }
   ],
   "social": ["Instagram", "TikTok", "Twitter", "Facebook"],
+  "_teamNames_help": "Per league: map an LTA team's '<name> - <division>' to your internal name. Unmapped teams keep their LTA name. Update each season — the LTA divisions change. Internal names also drive sort order (within a division tier) before the West/North-West tiebreak.",
+  "teamNames": {
+    "Middlesex Summer League 2026": {
+      "Mens Doubles - West Intermediate": "Mens Team 1",
+      "Mens Doubles - West Division 3": "Mens Team 2",
+      "Mens Doubles - North West Division 3": "Mens Team 3",
+      "Mens Doubles - North West Division 5": "Mens Team 4",
+      "Womens Doubles - West Intermediate": "Womens Team 1",
+      "Womens Doubles - North West Division 1": "Womens Team 2",
+      "Womens Doubles - North West Division 2": "Womens Team 3",
+      "Womens Doubles - West Division 3": "Womens Team 4"
+    }
+  },
   "scrape": {
     "baseUrl": "https://competitions.lta.org.uk",
     "clubSearch": "Paddington Sports Club",
