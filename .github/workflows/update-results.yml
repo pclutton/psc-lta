@@ -7,7 +7,12 @@ name: Update results & deploy
 on:
   schedule:
     - cron: "0 6 * * *"   # 06:00 UTC daily
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      simulate:
+        description: "Slug to force-fail this run (fallback test, e.g. psc). Leave blank normally; self-heals next run."
+        required: false
+        default: ""
   push:
     branches: [main]
 
@@ -47,6 +52,7 @@ jobs:
           # Optional. Leave the secrets unset to scrape anonymously (the default).
           LTA_USERNAME: ${{ secrets.LTA_USERNAME }}
           LTA_PASSWORD: ${{ secrets.LTA_PASSWORD }}
+          SIMULATE_FAIL: ${{ github.event.inputs.simulate }}
         run: npm run scrape || echo "Scrape failed; keeping existing data"
 
       - name: Commit refreshed data

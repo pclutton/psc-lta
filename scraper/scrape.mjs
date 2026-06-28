@@ -587,6 +587,13 @@ async function scrapeClub(page, club) {
 
   await maybeLogin(page);
   const sources = await discoverSources(page);
+  // Test hook (dormant by default): `SIMULATE_FAIL=<slug>` forces an empty discovery for
+  // that club for ONE run, to exercise the keep-last-good + alert fallback. It needs no
+  // revert — any normal run (e.g. the nightly) heals it automatically.
+  if (process.env.SIMULATE_FAIL && process.env.SIMULATE_FAIL === club.slug) {
+    log(`SIMULATE_FAIL=${club.slug}: discarding discovery to exercise the fallback path`);
+    sources.length = 0;
+  }
   // No early throw on empty discovery: a transient hiccup is handled by the retain/
   // reconcile step below (it re-adds the previous good competitions). We only fail at
   // the very end if there is genuinely nothing to show (and no history to fall back on).
