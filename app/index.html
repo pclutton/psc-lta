@@ -484,30 +484,10 @@ function statusFor(t){
 // club config (window.__CLUB__.matcher), not a hard-coded club, so the shell is generic.
 const HOME_RE = new RegExp((window.__CLUB__ && window.__CLUB__.matcher) || "paddington", "i");
 function isPsc(name){ return HOME_RE.test(name || ""); }
-
-// Club-team display names + ordering. Per-league config in window.__CLUB__.teamNames maps
-// an LTA team's "<name> - <division>" to the club's own name; unmapped teams keep the LTA
-// name. Sort by gender then division tier, then (within a tier) by the internal name when
-// both teams have one — so e.g. "Team 2" (West) precedes "Team 3" (North West).
-const genderOrder = (n) => { n=(n||"").toLowerCase(); if(/wom|girl|ladies/.test(n)) return 1; if(/men|boy|gent/.test(n)) return 0; return 2; };
-const divisionRank = (d) => { d=(d||"").toLowerCase(); if(/premier/.test(d)) return 0; if(/intermediate/.test(d)) return 1; const m=d.match(/division\s*(\d+)/)||d.match(/\bdiv\.?\s*(\d+)/); return m ? 1 + +m[1] : 999; };
-function applyTeamConfig(data){
-  const cfg = (window.__CLUB__ && window.__CLUB__.teamNames) || {};
-  for(const c of (data.competitions||[])){
-    const map = cfg[c.name] || {};
-    for(const t of (c.teams||[])){
-      const key = t.division ? `${t.name} - ${t.division}` : t.name;
-      t._mapped = Object.prototype.hasOwnProperty.call(map, key);
-      t.displayName = t._mapped ? map[key] : t.name;
-    }
-    (c.teams||[]).sort((a,b)=>
-      genderOrder(a.name) - genderOrder(b.name) ||
-      divisionRank(a.division||a.name) - divisionRank(b.division||b.name) ||
-      ((a._mapped && b._mapped) ? a.displayName.localeCompare(b.displayName, undefined, {numeric:true}) : 0) ||
-      (a.division||"").localeCompare(b.division||"") ||
-      (a.name||"").localeCompare(b.name||""));
-  }
-}
+// Team labels + order are baked into the data by the scraper (from clubs/<slug>/teams.yaml):
+// each team may carry `displayName`/`displayDivision`; the page just renders those.
+const teamName = (t) => t.displayName || t.name;
+const teamDivision = (t) => t.displayDivision || t.division;
 
 function renderTabs(){
   let html = DATA.competitions.map((c,i)=>{
@@ -570,7 +550,7 @@ function buildRecent(){
         if(mine && norm(clubSide) !== mine) continue;
         const d = parseUKDate(m.date); if(!d || !inWindow(d)) continue;
         const sf = homeIsClub ? +m.hs : +m.as, sa = homeIsClub ? +m.as : +m.hs;
-        out.push({ t:d.getTime(), date:d, team:(t.displayName||t.name) + (t.division ? " · "+t.division : ""), opponent: homeIsClub ? m.away : m.home, res: result(sf,sa), sf, sa });
+        out.push({ t:d.getTime(), date:d, team:teamName(t) + (teamDivision(t) ? " · "+teamDivision(t) : ""), opponent: homeIsClub ? m.away : m.home, res: result(sf,sa), sf, sa });
       }
     }
     for(const k of (c.knockouts||[])){
@@ -631,7 +611,7 @@ function buildUpcoming(){
         const clubSide = homeIsClub ? m.home : m.away;
         if(mine && norm(clubSide) !== mine) continue;
         const d = parseUKDate(m.date); if(!d || !inWindow(d)) continue;
-        out.push({ t:d.getTime(), date:d, home:homeIsClub, league:c.name, team:(t.displayName||t.name) + (t.division ? " · "+t.division : ""), opponent: homeIsClub ? m.away : m.home });
+        out.push({ t:d.getTime(), date:d, home:homeIsClub, league:c.name, team:teamName(t) + (teamDivision(t) ? " · "+teamDivision(t) : ""), opponent: homeIsClub ? m.away : m.home });
       }
     }
     for(const k of (c.knockouts||[])){
@@ -681,12 +661,12 @@ function setTab(pred){
 function renderCards(){
   const c = DATA.competitions[currentComp];
   $("#cards").innerHTML = c.teams.map((t,i)=>{
-    const sub = t.of ? t.division : "Cup";
+    const sub = t.of ? teamDivision(t) : "Cup";
     const pos = t.of ? t.position : "–";
     const form = (t.form||[]).slice(-5);
-    return `<tr class="team-row" data-i="${i}" role="button" tabindex="0" aria-label="${t.displayName||t.name}">
+    return `<tr class="team-row" data-i="${i}" role="button" tabindex="0" aria-label="${teamName(t)}">
       <td class="num"><span class="rankdot">${pos}</span></td>
-      <td><div class="tname">${t.displayName||t.name}</div>${sub?`<div class="tsub">${sub}</div>`:''}</td>
+      <td><div class="tname">${teamName(t)}</div>${sub?`<div class="tsub">${sub}</div>`:''}</td>
       <td class="num">${t.played}</td><td class="num">${t.won}</td><td class="num">${t.lost}</td>
       <td>${form.length?`<span class="sform">${form.map(f=>`<span class="d ${f}">${f}</span>`).join("")}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
     </tr>`;
@@ -702,8 +682,8 @@ function renderDetail(){
   const comp = DATA.competitions[currentComp];
   const t = comp.teams[currentTeam];
   $("#detail").hidden = false;
-  $("#dtTeam").textContent = t.displayName||t.name;
-  $("#dtDiv").textContent = t.of ? t.division : "Cup competition";
+  $("#dtTeam").textContent = teamName(t);
+  $("#dtDiv").textContent = t.of ? teamDivision(t) : "Cup competition";
   const status = $("#dtStatus");
   const done = comp.status === "completed";
   status.hidden = false;
@@ -939,7 +919,6 @@ function applyBranding(c){
 
 function boot(data){
   DATA = data;
-  applyTeamConfig(data);   // map club team names + reorder before anything renders
   $("#seasonLabel").textContent = data.season || "Current season";
   $("#updated").textContent = data.generatedAt ? new Date(data.generatedAt).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "—";
   if(data.sourceUrl){ $("#sourceLink").href = data.sourceUrl; $("#sourceWrap").hidden = false; }

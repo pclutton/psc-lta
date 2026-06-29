@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 
 import { chromium } from "playwright";
+import yaml from "js-yaml";
 import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -498,6 +499,23 @@ function buildKnockout(draw, leagueName, pair) {
   return { name, link: draw.url, last, next, live: !last || last.won };
 }
 
+// Apply a club's team-name overrides (from clubs/<slug>/teams.yaml) to one league's
+// teams. A row matches a team when every LTA* field it specifies equals the team's
+// field (case-insensitive). DisplayEvent becomes the shown label (`displayName`);
+// DisplayDivision optionally relabels the division. `renamed` drives the sort tiebreak.
+const eqi = (a, b) => String(a ?? "").trim().toLowerCase() === String(b ?? "").trim().toLowerCase();
+function applyTeamOverrides(teams, rows) {
+  for (const t of teams) {
+    const row = (rows || []).find((r) => r &&
+      (r.LTAEvent == null || eqi(r.LTAEvent, t.name)) &&
+      (r.LTADivision == null || eqi(r.LTADivision, t.division)) &&
+      (r.LTATeam == null || eqi(r.LTATeam, t.pscName)));
+    if (!row) continue;
+    if (row.DisplayEvent) { t.displayName = String(row.DisplayEvent); t.renamed = true; }
+    if (row.DisplayDivision) t.displayDivision = String(row.DisplayDivision);
+  }
+}
+
 // Scrape a PSC team page for its squad and each player's per-team Win-Loss
 // record (shown as "Win-Loss  4-4 (8)"). Sorted most wins first.
 async function scrapeTeamPlayers(page, url) {
@@ -585,6 +603,14 @@ async function scrapeClub(page, club) {
   homeMatch = new RegExp(club.matcher || escapeReg(club.name), "i");
   const warnings = []; // health notes that should turn the run "degraded" (→ CI alert)
 
+  // Optional per-club team-name overrides (clubs/<slug>/teams.yaml), keyed by league name.
+  let teamConfig = {};
+  const teamsFile = resolve(CLUBS_DIR, club.slug, "teams.yaml");
+  if (existsSync(teamsFile)) {
+    try { teamConfig = yaml.load(await readFile(teamsFile, "utf8")) || {}; }
+    catch (e) { warnings.push(`teams.yaml parse error: ${e.message}`); log(`  ! teams.yaml parse error: ${e.message}`); }
+  }
+
   await maybeLogin(page);
   const sources = await discoverSources(page);
   // Test hook (dormant by default): `SIMULATE_FAIL=<slug>` forces an empty discovery for
@@ -639,11 +665,14 @@ async function scrapeClub(page, club) {
         } catch (e) { log("draw failed:", pair.draw.href, e.message); }
       }
       if (teams.length) {
-        // Men's teams together then women's; within each, highest division first
-        // (geographic prefix is only a tiebreak).
+        // Apply this league's team-name overrides, then sort: men's then women's; within
+        // each, highest division first; ties broken by the club's own label (so "Team 2"
+        // precedes "Team 3" regardless of West vs North-West); geography only as a last resort.
+        applyTeamOverrides(teams, teamConfig[src.leagueName]);
         teams.sort((a, b) =>
           genderOrder(a.name) - genderOrder(b.name) ||
           divisionRank(a.division || a.name) - divisionRank(b.division || b.name) ||
+          ((a.renamed && b.renamed) ? String(a.displayName).localeCompare(String(b.displayName), undefined, { numeric: true }) : 0) ||
           a.division.localeCompare(b.division) ||
           a.name.localeCompare(b.name));
         competitions.push({

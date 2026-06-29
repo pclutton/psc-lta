@@ -1,0 +1,21 @@
+# Team-name overrides for Paddington Sports Club.
+#
+# Rename an LTA "Event" (e.g. "Mens Doubles") to your own team label per division, so
+# members see which league each of their teams plays in. Keyed by LTA League name; each
+# row matches a team on the LTA fields given and renames it for display:
+#   matchers : LTAEvent, LTADivision, LTATeam   (any subset; all given must match)
+#   overrides: DisplayEvent (the shown label),  DisplayDivision (optional)
+# Unmatched teams keep their LTA name. The display label also drives sort order within a
+# division tier (so Team 2 sorts before Team 3 regardless of West vs North-West).
+#
+# UPDATE EACH SEASON — the LTA reassigns divisions/events. Check the live labels and edit.
+
+Middlesex Summer League 2026:
+  - { LTAEvent: Mens Doubles,   LTADivision: West Intermediate,     DisplayEvent: Mens Team 1 }
+  - { LTAEvent: Mens Doubles,   LTADivision: West Division 3,       DisplayEvent: Mens Team 2 }
+  - { LTAEvent: Mens Doubles,   LTADivision: North West Division 3, DisplayEvent: Mens Team 3 }
+  - { LTAEvent: Mens Doubles,   LTADivision: North West Division 5, DisplayEvent: Mens Team 4 }
+  - { LTAEvent: Womens Doubles, LTADivision: West Intermediate,     DisplayEvent: Womens Team 1 }
+  - { LTAEvent: Womens Doubles, LTADivision: North West Division 1, DisplayEvent: Womens Team 2 }
+  - { LTAEvent: Womens Doubles, LTADivision: North West Division 2, DisplayEvent: Womens Team 3 }
+  - { LTAEvent: Womens Doubles, LTADivision: West Division 3,       DisplayEvent: Womens Team 4 }
