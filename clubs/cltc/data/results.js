@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-28T18:22:35.635Z",
+  "generatedAt": "2026-06-29T11:11:37.146Z",
   "sample": false,
   "health": {
     "ok": true,
@@ -20,25 +20,25 @@ window.__RESULTS__ = {
         "id": "61ce80d5",
         "name": "Middlesex Youth & National League - Summer 2026",
         "stale": false,
-        "asOf": "2026-06-28"
+        "asOf": "2026-06-29"
       },
       {
         "id": "90416c0a",
         "name": "Middlesex Summer League 2026",
         "stale": false,
-        "asOf": "2026-06-28"
+        "asOf": "2026-06-29"
       },
       {
         "id": "3057a6b7",
         "name": "Seniors League 2026",
         "stale": false,
-        "asOf": "2026-06-28"
+        "asOf": "2026-06-29"
       },
       {
         "id": "knockouts",
         "name": "Knockout Competitions",
         "stale": false,
-        "asOf": "2026-06-28"
+        "asOf": "2026-06-29"
       }
     ]
   },
@@ -47,8 +47,8 @@ window.__RESULTS__ = {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-28",
-      "asOf": "2026-06-28",
+      "lastSeen": "2026-06-29",
+      "asOf": "2026-06-29",
       "stale": false,
       "teams": [
         {
@@ -2352,19 +2352,36 @@ window.__RESULTS__ = {
             {
               "rank": 5,
               "name": "David Lloyd Club Finchley 1",
-              "played": 2,
+              "played": 3,
               "won": 1,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "22-18",
+              "lost": 2,
+              "rubbers": "28-32",
               "points": 2,
               "form": [
                 "L",
-                "W"
+                "W",
+                "L"
               ]
             },
             {
               "rank": 6,
+              "name": "Hackney Tennis 1",
+              "played": 4,
+              "won": 1,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "26-54",
+              "points": 2,
+              "form": [
+                "L",
+                "W",
+                "L",
+                "L"
+              ]
+            },
+            {
+              "rank": 7,
               "name": "Temple Fortune Club 1",
               "played": 2,
               "won": 0,
@@ -2373,21 +2390,6 @@ window.__RESULTS__ = {
               "rubbers": "4-36",
               "points": 0,
               "form": [
-                "L",
-                "L"
-              ]
-            },
-            {
-              "rank": 7,
-              "name": "Hackney Tennis 1",
-              "played": 3,
-              "won": 0,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "12-48",
-              "points": 0,
-              "form": [
-                "L",
                 "L",
                 "L"
               ]
@@ -2460,8 +2462,8 @@ window.__RESULTS__ = {
             {
               "home": "Hackney Tennis 1",
               "away": "David Lloyd Club Finchley 1",
-              "hs": null,
-              "as": null,
+              "hs": 14,
+              "as": 6,
               "date": "Sat 30/05/2026"
             },
             {
@@ -2511,7 +2513,7 @@ window.__RESULTS__ = {
               "away": "David Lloyd Club Finchley 1",
               "hs": null,
               "as": null,
-              "date": "Sat 04/07/2026"
+              "date": "Sun 05/07/2026"
             },
             {
               "home": "Highgate Cricket and Lawn Tennis Club 1",
@@ -2607,8 +2609,8 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-28",
-      "asOf": "2026-06-28",
+      "lastSeen": "2026-06-29",
+      "asOf": "2026-06-29",
       "stale": false,
       "teams": [
         {
@@ -6322,8 +6324,8 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-28",
-      "asOf": "2026-06-28",
+      "lastSeen": "2026-06-29",
+      "asOf": "2026-06-29",
       "stale": false,
       "teams": [
         {
@@ -6764,8 +6766,8 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-28",
-      "asOf": "2026-06-28",
+      "lastSeen": "2026-06-29",
+      "asOf": "2026-06-29",
       "stale": false,
       "teams": [],
       "knockouts": [
