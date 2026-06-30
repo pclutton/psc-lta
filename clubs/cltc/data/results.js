@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Cumberland Lawn Tennis Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-29T21:53:42.291Z",
+  "generatedAt": "2026-06-30T09:50:55.468Z",
   "sample": false,
   "health": {
     "ok": true,
@@ -20,25 +20,25 @@ window.__RESULTS__ = {
         "id": "61ce80d5",
         "name": "Middlesex Youth & National League - Summer 2026",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       },
       {
         "id": "90416c0a",
         "name": "Middlesex Summer League 2026",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       },
       {
         "id": "3057a6b7",
         "name": "Seniors League 2026",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       },
       {
         "id": "knockouts",
         "name": "Knockout Competitions",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       }
     ]
   },
@@ -47,8 +47,8 @@ window.__RESULTS__ = {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [
         {
@@ -2632,8 +2632,8 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [
         {
@@ -5554,7 +5554,7 @@ window.__RESULTS__ = {
           "played": 2,
           "won": 1,
           "lost": 1,
-          "points": 23,
+          "points": 24,
           "form": [
             "W",
             "L"
@@ -5567,8 +5567,8 @@ window.__RESULTS__ = {
               "won": 3,
               "drawn": 0,
               "lost": 1,
-              "rubbers": "66-26",
-              "points": 66,
+              "rubbers": "69-27",
+              "points": 69,
               "form": [
                 "W",
                 "W",
@@ -5599,8 +5599,8 @@ window.__RESULTS__ = {
               "won": 2,
               "drawn": 0,
               "lost": 2,
-              "rubbers": "48-44",
-              "points": 48,
+              "rubbers": "49-47",
+              "points": 49,
               "form": [
                 "L",
                 "W",
@@ -5631,8 +5631,8 @@ window.__RESULTS__ = {
               "won": 2,
               "drawn": 0,
               "lost": 0,
-              "rubbers": "30-14",
-              "points": 30,
+              "rubbers": "33-15",
+              "points": 33,
               "form": [
                 "W",
                 "W"
@@ -5660,8 +5660,8 @@ window.__RESULTS__ = {
               "won": 1,
               "drawn": 0,
               "lost": 1,
-              "rubbers": "23-21",
-              "points": 23,
+              "rubbers": "24-24",
+              "points": 24,
               "form": [
                 "W",
                 "L"
@@ -5748,13 +5748,6 @@ window.__RESULTS__ = {
               "date": "Tue 09/06/2026"
             },
             {
-              "home": "Conway 1",
-              "away": "Cumberland 3",
-              "hs": null,
-              "as": null,
-              "date": "Thu 11/06/2026"
-            },
-            {
               "home": "Coolhurst 2",
               "away": "Conway 1",
               "hs": 16,
@@ -5771,15 +5764,15 @@ window.__RESULTS__ = {
             {
               "home": "Hackney 1",
               "away": "Finchley Manor 1",
-              "hs": 6,
-              "as": 14,
+              "hs": 7,
+              "as": 17,
               "date": "Mon 22/06/2026"
             },
             {
               "home": "Brondesbury 1",
               "away": "Cumberland 3",
-              "hs": 14,
-              "as": 6,
+              "hs": 17,
+              "as": 7,
               "date": "Tue 23/06/2026"
             },
             {
@@ -5865,6 +5858,13 @@ window.__RESULTS__ = {
               "hs": null,
               "as": null,
               "date": "Mon 27/07/2026"
+            },
+            {
+              "home": "Conway 1",
+              "away": "Cumberland 3",
+              "hs": null,
+              "as": null,
+              "date": "Tue 28/07/2026"
             },
             {
               "home": "Conway 1",
@@ -6347,8 +6347,8 @@ window.__RESULTS__ = {
       "id": "3057a6b7",
       "name": "Seniors League 2026",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [
         {
@@ -6789,8 +6789,8 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [],
       "knockouts": [

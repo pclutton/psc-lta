@@ -2,7 +2,7 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-29T21:55:05.414Z",
+  "generatedAt": "2026-06-30T09:52:19.713Z",
   "sample": false,
   "health": {
     "ok": true,
@@ -12,7 +12,7 @@ window.__RESULTS__ = {
       "comps": 3,
       "teams": 12,
       "matches": 275,
-      "players": 102,
+      "players": 103,
       "stale": 0
     },
     "competitions": [
@@ -20,19 +20,19 @@ window.__RESULTS__ = {
         "id": "61ce80d5",
         "name": "Middlesex Youth & National League - Summer 2026",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       },
       {
         "id": "90416c0a",
         "name": "Middlesex Summer League 2026",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       },
       {
         "id": "knockouts",
         "name": "Knockout Competitions",
         "stale": false,
-        "asOf": "2026-06-29"
+        "asOf": "2026-06-30"
       }
     ]
   },
@@ -41,8 +41,8 @@ window.__RESULTS__ = {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [
         {
@@ -52,11 +52,12 @@ window.__RESULTS__ = {
           "leagueUrl": "https://competitions.lta.org.uk/league/61CE80D5-7D2D-4175-BE5E-940840BE294D/draw/37",
           "position": 1,
           "of": 5,
-          "played": 3,
-          "won": 3,
+          "played": 4,
+          "won": 4,
           "lost": 0,
-          "points": 6,
+          "points": 8,
           "form": [
+            "W",
             "W",
             "W",
             "W"
@@ -65,13 +66,14 @@ window.__RESULTS__ = {
             {
               "rank": 1,
               "name": "Paddington Sports Club 1",
-              "played": 3,
-              "won": 3,
+              "played": 4,
+              "won": 4,
               "drawn": 0,
               "lost": 0,
-              "rubbers": "30-4",
-              "points": 6,
+              "rubbers": "40-6",
+              "points": 8,
               "form": [
+                "W",
                 "W",
                 "W",
                 "W"
@@ -127,13 +129,14 @@ window.__RESULTS__ = {
             {
               "rank": 5,
               "name": "Coolhurst LTC 1",
-              "played": 2,
+              "played": 3,
               "won": 0,
               "drawn": 0,
-              "lost": 2,
-              "rubbers": "8-16",
+              "lost": 3,
+              "rubbers": "10-26",
               "points": 0,
               "form": [
+                "L",
                 "L",
                 "L"
               ]
@@ -192,8 +195,8 @@ window.__RESULTS__ = {
             {
               "home": "Paddington Sports Club 1",
               "away": "Coolhurst LTC 1",
-              "hs": null,
-              "as": null,
+              "hs": 10,
+              "as": 2,
               "date": "Sat 27/06/2026"
             },
             {
@@ -216,21 +219,27 @@ window.__RESULTS__ = {
           "players": [
             {
               "name": "jack li woon",
-              "won": 4,
+              "won": 6,
               "lost": 0,
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1080"
+            },
+            {
+              "name": "Theo Aydinoglu",
+              "won": 6,
+              "lost": 0,
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1079"
+            },
+            {
+              "name": "George Fotakakis",
+              "won": 5,
+              "lost": 1,
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/951"
             },
             {
               "name": "Lucas Daminescu",
               "won": 4,
               "lost": 0,
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1542"
-            },
-            {
-              "name": "Theo Aydinoglu",
-              "won": 4,
-              "lost": 0,
-              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1079"
             },
             {
               "name": "Harry Fottrell-Kingstone",
@@ -245,10 +254,10 @@ window.__RESULTS__ = {
               "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/420"
             },
             {
-              "name": "George Fotakakis",
-              "won": 3,
+              "name": "Lukas Hederer",
+              "won": 1,
               "lost": 1,
-              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/951"
+              "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1937"
             }
           ]
         },
@@ -1052,8 +1061,8 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [
         {
@@ -1095,8 +1104,8 @@ window.__RESULTS__ = {
               "won": 3,
               "drawn": 1,
               "lost": 0,
-              "rubbers": "54-42",
-              "points": 54,
+              "rubbers": "52-40",
+              "points": 52,
               "form": [
                 "W",
                 "W",
@@ -1110,8 +1119,8 @@ window.__RESULTS__ = {
               "won": 1,
               "drawn": 2,
               "lost": 1,
-              "rubbers": "52-44",
-              "points": 52,
+              "rubbers": "50-42",
+              "points": 50,
               "form": [
                 "W",
                 "L"
@@ -1293,8 +1302,8 @@ window.__RESULTS__ = {
             {
               "home": "West Middlesex Lawn Tennis Club Ltd 1",
               "away": "David Lloyd Club Acton Park 1",
-              "hs": 14,
-              "as": 10,
+              "hs": 12,
+              "as": 8,
               "date": "Thu 25/06/2026"
             },
             {
@@ -4412,8 +4421,8 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-29",
-      "asOf": "2026-06-29",
+      "lastSeen": "2026-06-30",
+      "asOf": "2026-06-30",
       "stale": false,
       "teams": [],
       "knockouts": [
@@ -4491,6 +4500,13 @@ window.__RESULTS__ = {
       "played": 8
     },
     {
+      "name": "George Fotakakis",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/951",
+      "won": 7,
+      "lost": 1,
+      "played": 8
+    },
+    {
       "name": "Alexander Smith",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/4042",
       "won": 7,
@@ -4526,8 +4542,22 @@ window.__RESULTS__ = {
       "played": 14
     },
     {
+      "name": "jack li woon",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1080",
+      "won": 6,
+      "lost": 0,
+      "played": 6
+    },
+    {
       "name": "Oliver Plaskett",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/319",
+      "won": 6,
+      "lost": 0,
+      "played": 6
+    },
+    {
+      "name": "Theo Aydinoglu",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1079",
       "won": 6,
       "lost": 0,
       "played": 6
@@ -4575,13 +4605,6 @@ window.__RESULTS__ = {
       "played": 5
     },
     {
-      "name": "George Fotakakis",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/951",
-      "won": 5,
-      "lost": 1,
-      "played": 6
-    },
-    {
       "name": "Francesco Buffi",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/615",
       "won": 5,
@@ -4619,20 +4642,6 @@ window.__RESULTS__ = {
     {
       "name": "Arabella Moen",
       "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5345",
-      "won": 4,
-      "lost": 0,
-      "played": 4
-    },
-    {
-      "name": "jack li woon",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1080",
-      "won": 4,
-      "lost": 0,
-      "played": 4
-    },
-    {
-      "name": "Theo Aydinoglu",
-      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1079",
       "won": 4,
       "lost": 0,
       "played": 4
@@ -4920,6 +4929,13 @@ window.__RESULTS__ = {
     {
       "name": "Lucas Baker",
       "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/952",
+      "won": 1,
+      "lost": 1,
+      "played": 2
+    },
+    {
+      "name": "Lukas Hederer",
+      "url": "https://competitions.lta.org.uk/league/61ce80d5-7d2d-4175-be5e-940840be294d/player/1937",
       "won": 1,
       "lost": 1,
       "played": 2
