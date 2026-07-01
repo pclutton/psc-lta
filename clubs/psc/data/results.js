@@ -2,42 +2,37 @@ window.__RESULTS__ = {
   "clubName": "Paddington Sports Club",
   "season": "2026",
   "sourceUrl": "https://competitions.lta.org.uk/association/group/8D228B20-1C00-44D4-B592-3E7216CBDDBF",
-  "generatedAt": "2026-06-30T19:56:57.432Z",
+  "generatedAt": "2026-07-01T10:01:33.173Z",
   "sample": false,
   "health": {
     "ok": true,
-    "degraded": true,
-    "warnings": [
-      "matches collapsed to 0 across all competitions (possible LTA markup change)",
-      "\"Middlesex Youth & National League - Summer 2026\" was not found this run — kept last-good (as of 2026-06-30)",
-      "\"Middlesex Summer League 2026\" was not found this run — kept last-good (as of 2026-06-30)",
-      "\"Knockout Competitions\" was not found this run — kept last-good (as of 2026-06-30)"
-    ],
+    "degraded": false,
+    "warnings": [],
     "totals": {
       "comps": 3,
       "teams": 12,
-      "matches": 0,
+      "matches": 275,
       "players": 103,
-      "stale": 3
+      "stale": 0
     },
     "competitions": [
       {
         "id": "61ce80d5",
         "name": "Middlesex Youth & National League - Summer 2026",
-        "stale": true,
-        "asOf": "2026-06-30"
+        "stale": false,
+        "asOf": "2026-07-01"
       },
       {
         "id": "90416c0a",
         "name": "Middlesex Summer League 2026",
-        "stale": true,
-        "asOf": "2026-06-30"
+        "stale": false,
+        "asOf": "2026-07-01"
       },
       {
         "id": "knockouts",
         "name": "Knockout Competitions",
-        "stale": true,
-        "asOf": "2026-06-30"
+        "stale": false,
+        "asOf": "2026-07-01"
       }
     ]
   },
@@ -46,9 +41,9 @@ window.__RESULTS__ = {
       "id": "61ce80d5",
       "name": "Middlesex Youth & National League - Summer 2026",
       "status": "current",
-      "lastSeen": "2026-06-30",
-      "asOf": "2026-06-30",
-      "stale": true,
+      "lastSeen": "2026-07-01",
+      "asOf": "2026-07-01",
+      "stale": false,
       "teams": [
         {
           "name": "14&U Boys Division 1",
@@ -1066,9 +1061,9 @@ window.__RESULTS__ = {
       "id": "90416c0a",
       "name": "Middlesex Summer League 2026",
       "status": "current",
-      "lastSeen": "2026-06-30",
-      "asOf": "2026-06-30",
-      "stale": true,
+      "lastSeen": "2026-07-01",
+      "asOf": "2026-07-01",
+      "stale": false,
       "teams": [
         {
           "name": "Mens Doubles",
@@ -2130,13 +2125,6 @@ window.__RESULTS__ = {
               "date": "Thu 18/06/2026"
             },
             {
-              "home": "David Lloyd Club Northwood 3",
-              "away": "Lowlands Club 2",
-              "hs": null,
-              "as": null,
-              "date": "Wed 24/06/2026"
-            },
-            {
               "home": "Harrow Weald Lawn Tennis Club 1",
               "away": "Kenton Lawn Tennis Club 2",
               "hs": 2,
@@ -2233,6 +2221,13 @@ window.__RESULTS__ = {
               "hs": null,
               "as": null,
               "date": "Thu 30/07/2026"
+            },
+            {
+              "home": "David Lloyd Club Northwood 3",
+              "away": "Lowlands Club 2",
+              "hs": null,
+              "as": null,
+              "date": "Fri 31/07/2026"
             }
           ],
           "results": [],
@@ -2347,18 +2342,18 @@ window.__RESULTS__ = {
             {
               "rank": 1,
               "name": "Lowlands Club 3",
-              "played": 5,
+              "played": 6,
               "won": 5,
               "drawn": 0,
-              "lost": 0,
-              "rubbers": "94-26",
-              "points": 94,
+              "lost": 1,
+              "rubbers": "102-42",
+              "points": 102,
               "form": [
                 "W",
                 "W",
                 "W",
                 "W",
-                "W"
+                "L"
               ]
             },
             {
@@ -2412,6 +2407,23 @@ window.__RESULTS__ = {
             },
             {
               "rank": 5,
+              "name": "Greenford Tennis Club 1",
+              "played": 5,
+              "won": 2,
+              "drawn": 0,
+              "lost": 3,
+              "rubbers": "64-52",
+              "points": 64,
+              "form": [
+                "W",
+                "L",
+                "L",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 6,
               "name": "Lowlands Club 4",
               "played": 5,
               "won": 3,
@@ -2425,22 +2437,6 @@ window.__RESULTS__ = {
                 "W",
                 "L",
                 "W"
-              ]
-            },
-            {
-              "rank": 6,
-              "name": "Greenford Tennis Club 1",
-              "played": 4,
-              "won": 1,
-              "drawn": 0,
-              "lost": 3,
-              "rubbers": "48-44",
-              "points": 48,
-              "form": [
-                "W",
-                "L",
-                "L",
-                "L"
               ]
             },
             {
@@ -2650,8 +2646,8 @@ window.__RESULTS__ = {
             {
               "home": "Greenford Tennis Club 1",
               "away": "Lowlands Club 3",
-              "hs": null,
-              "as": null,
+              "hs": 16,
+              "as": 8,
               "date": "Tue 30/06/2026"
             },
             {
@@ -3706,7 +3702,7 @@ window.__RESULTS__ = {
               "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5262"
             }
           ],
-          "displayName": "Womens Team 2",
+          "displayName": "Womens Team 3",
           "renamed": true
         },
         {
@@ -3726,6 +3722,21 @@ window.__RESULTS__ = {
           "standings": [
             {
               "rank": 1,
+              "name": "Wayfarers LTC 2",
+              "played": 3,
+              "won": 2,
+              "drawn": 0,
+              "lost": 1,
+              "rubbers": "45-27",
+              "points": 45,
+              "form": [
+                "W",
+                "L",
+                "W"
+              ]
+            },
+            {
+              "rank": 2,
               "name": "Kenton Lawn Tennis Club 1",
               "played": 3,
               "won": 2,
@@ -3740,21 +3751,23 @@ window.__RESULTS__ = {
               ]
             },
             {
-              "rank": 2,
-              "name": "Wayfarers LTC 2",
-              "played": 2,
+              "rank": 3,
+              "name": "Eastcote Lawn Tennis Club 2",
+              "played": 4,
               "won": 1,
               "drawn": 0,
-              "lost": 1,
-              "rubbers": "32-16",
-              "points": 32,
+              "lost": 3,
+              "rubbers": "37-59",
+              "points": 37,
               "form": [
+                "L",
+                "L",
                 "W",
                 "L"
               ]
             },
             {
-              "rank": 3,
+              "rank": 4,
               "name": "David Lloyd Club Northwood 2",
               "played": 2,
               "won": 1,
@@ -3763,21 +3776,6 @@ window.__RESULTS__ = {
               "rubbers": "28-20",
               "points": 28,
               "form": [
-                "W"
-              ]
-            },
-            {
-              "rank": 4,
-              "name": "Eastcote Lawn Tennis Club 2",
-              "played": 3,
-              "won": 1,
-              "drawn": 0,
-              "lost": 2,
-              "rubbers": "26-46",
-              "points": 26,
-              "form": [
-                "L",
-                "L",
                 "W"
               ]
             },
@@ -3890,8 +3888,8 @@ window.__RESULTS__ = {
             {
               "home": "Wayfarers LTC 2",
               "away": "Eastcote Lawn Tennis Club 2",
-              "hs": null,
-              "as": null,
+              "hs": 13,
+              "as": 11,
               "date": "Tue 30/06/2026"
             },
             {
@@ -4024,7 +4022,7 @@ window.__RESULTS__ = {
               "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/3810"
             }
           ],
-          "displayName": "Womens Team 3",
+          "displayName": "Womens Team 4",
           "renamed": true
         },
         {
@@ -4417,7 +4415,7 @@ window.__RESULTS__ = {
               "url": "https://competitions.lta.org.uk/league/90416c0a-a17c-4e71-93c5-7c8a860df1cf/player/5181"
             }
           ],
-          "displayName": "Womens Team 4",
+          "displayName": "Womens Team 2",
           "renamed": true
         }
       ]
@@ -4426,9 +4424,9 @@ window.__RESULTS__ = {
       "id": "knockouts",
       "name": "Knockout Competitions",
       "status": "current",
-      "lastSeen": "2026-06-30",
-      "asOf": "2026-06-30",
-      "stale": true,
+      "lastSeen": "2026-07-01",
+      "asOf": "2026-07-01",
+      "stale": false,
       "teams": [],
       "knockouts": [
         {
